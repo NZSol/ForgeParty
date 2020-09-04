@@ -12,6 +12,13 @@ public class Movement : MonoBehaviour
     GameObject Player;
     CharacterController Char;
 
+    public float maxSpeed = 5;
+    public float minSpeed = -5;
+
+    Vector3 dir = new Vector3(0,0,0);
+    float rotSpeed = 3;
+    public float damping;
+    Quaternion rotation;
 
     // Start is called before the first frame update
     void Start()
@@ -33,14 +40,31 @@ public class Movement : MonoBehaviour
 
     IEnumerator Move()
     {
-        yield return new WaitForFixedUpdate();
-
         float VertInput = Input.GetAxis(Vert);
         float HorizInput = Input.GetAxis(Horiz);
-        Vector3 moveValues = new Vector3(HorizInput, 0, VertInput) * speed;
+        Vector3 moveValues = new Vector3(HorizInput, 0, VertInput);
+        float moveMag = Vector3.Magnitude(moveValues);
 
-        Char.SimpleMove(moveValues);
 
+        if (rb.velocity.magnitude != 0)
+        {
+            transform.eulerAngles = new Vector3(0, Mathf.Atan2(Input.GetAxis(Horiz), Input.GetAxis(Vert)) * 180 / Mathf.PI, 0);
+        }
+
+        rb.velocity += transform.forward * moveMag;
+
+        ////Clamp RigidBody Velocity
+        if (rb.velocity.magnitude > maxSpeed)
+        {
+            rb.velocity = Vector3.ClampMagnitude(rb.velocity, maxSpeed);
+        }
+        else if (rb.velocity.magnitude < minSpeed)
+        {
+            rb.velocity = Vector3.ClampMagnitude(rb.velocity, minSpeed);
+        }
+
+        print(rb.velocity);
+        yield return null;
     }
 
 }
