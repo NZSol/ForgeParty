@@ -36,22 +36,33 @@ public class Movement : MonoBehaviour
 
 
 
-
+    public bool control;
+    Vector3 moveValues;
 
     IEnumerator Move()
     {
         float VertInput = Input.GetAxis(Vert);
         float HorizInput = Input.GetAxis(Horiz);
-        Vector3 moveValues = new Vector3(HorizInput, 0, VertInput);
-        float moveMag = Vector3.Magnitude(moveValues);
+        //Vector3 moveValues = new Vector3(HorizInput, 0, VertInput);
+        //float moveMag = Vector3.Magnitude(moveValues);
+
+        if(control == true)
+        {
+            moveValues = new Vector3(0, Mathf.Atan2(HorizInput, VertInput) * 180 / Mathf.PI, 0);
+        }
+        else
+        {
+            moveValues = new Vector3(HorizInput, 0, VertInput);
+        }
+
 
 
         if (rb.velocity.magnitude != 0)
         {
-            transform.eulerAngles = new Vector3(0, Mathf.Atan2(Input.GetAxis(Horiz), Input.GetAxis(Vert)) * 180 / Mathf.PI, 0);
+            //transform.eulerAngles = new Vector3(0, Mathf.Atan2(Input.GetAxis(Horiz), Input.GetAxis(Vert)) * 180 / Mathf.PI, 0);
         }
 
-        rb.velocity += transform.forward * moveMag;
+        rb.velocity += moveValues;
 
         ////Clamp RigidBody Velocity
         if (rb.velocity.magnitude > maxSpeed)
@@ -63,8 +74,37 @@ public class Movement : MonoBehaviour
             rb.velocity = Vector3.ClampMagnitude(rb.velocity, minSpeed);
         }
 
-        print(rb.velocity);
+
         yield return null;
     }
 
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.GetComponent<Collider>().material != null)
+        {
+            rb.velocity = -rb.velocity;
+            print(collision.gameObject);
+            print(collision.gameObject.GetComponent<Collider>().material);
+
+        }
+    }
+
 }
+
+/*
+
+    IEnumerator Move()
+    {
+        yield return new WaitForFixedUpdate();
+
+        float VertInput = Input.GetAxis(Vert);
+        float HorizInput = Input.GetAxis(Horiz);
+        Vector3 moveValues = new Vector3(HorizInput, 0, VertInput) * speed;
+
+        Char.SimpleMove(moveValues);
+
+    }
+
+}
+*/
