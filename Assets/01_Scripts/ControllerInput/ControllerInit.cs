@@ -23,5 +23,13 @@ public class ControllerInit : MonoBehaviour
         {
             playerSet.Add(player);
         }
+
+
+
     }
+
+
+
+    
+
 }
