@@ -3,24 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-[CreateAssetMenu(fileName = "XB1Binds", menuName = "Scriptables/Controllers/Xbox")]
-public class XB1 : ScriptableObject
+[CreateAssetMenu(fileName = "SwitchBinds", menuName = "Scriptables/Controllers/Switch")]
+public class JoyCon : ScriptableObject
 {
-    //access
+            //access
     public int instance;
     public string nameVal;
 
-    //buttons
+            //buttons
     public string ABtn;
     public string BBtn;
     public string XBtn;
     public string YBtn;
-    public string LB;
-    public string RB;
+    public string L;
+    public string R;
 
             //Triggers
-    public string RT;
-    public string LT;
+    public string ZR;
+    public string ZL;
 
             //DPad
     public string DLeft;

@@ -3,24 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-[CreateAssetMenu(fileName = "XB1Binds", menuName = "Scriptables/Controllers/Xbox")]
-public class XB1 : ScriptableObject
+[CreateAssetMenu(fileName = "PS4Binds", menuName = "Scriptables/Controllers/PS")]
+public class PS4 : ScriptableObject
 {
     //access
     public int instance;
     public string nameVal;
 
     //buttons
-    public string ABtn;
-    public string BBtn;
     public string XBtn;
-    public string YBtn;
-    public string LB;
-    public string RB;
+    public string CircBtn;
+    public string SqrBtn;
+    public string TriBtn;
+    public string L1;
+    public string R1;
 
             //Triggers
-    public string RT;
-    public string LT;
+    public string R2;
+    public string L2;
 
             //DPad
     public string DLeft;
