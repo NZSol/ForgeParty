@@ -8,7 +8,7 @@ using System.Linq;
 public class Interaction : MonoBehaviour
 {
     LayerMask layer;
-
+    public float range = 2.5f;
 
     bool inputArmed = true;
     [SerializeField] Text _text;
@@ -34,9 +34,6 @@ public class Interaction : MonoBehaviour
         }
         return bucketList.ToArray();
     }
-    List<GameObject> Buckets = new List<GameObject>();
-    bool inCu = false;
-    bool inSn = false;
 
     GameObject CuBucket, SnBucket;
 
@@ -47,7 +44,6 @@ public class Interaction : MonoBehaviour
     void Start()
     {
         layer = LayerMask.NameToLayer("Ores");
-        Buckets = OreBuckets(layer).ToList();
         foreach (GameObject bucket in OreBuckets(layer))
         {
             if (bucket.tag == "Tin")
@@ -70,9 +66,6 @@ public class Interaction : MonoBehaviour
             inputArmed = false;
             _text.enabled = true;
             Invoke("cancel", 0.1f);
-            Vector3 SnDir = SnBucket.transform.position - transform.position;
-            Vector3 CuDir = CuBucket.transform.position - transform.position;
-            RaycastHit hit;
 
             if (heldObj != null)
             {
@@ -80,26 +73,22 @@ public class Interaction : MonoBehaviour
                 heldObj.transform.parent = null;
                 heldObj = null;
             }
+            else
+            {
+                float SnDist = Vector3.Distance(transform.position, SnBucket.transform.position);
+                float CuDist = Vector3.Distance(transform.position, CuBucket.transform.position);
 
-            else if (Physics.Raycast(transform.position, SnDir, out hit, 1))
-            {
-                heldObj = Instantiate(SnOre, new Vector3(transform.position.x, transform.position.y + 1.25f, transform.position.z), transform.rotation, gameObject.transform);
-                heldObj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-            }
-            else if (Physics.Raycast(transform.position, CuDir, out hit, 1))
-            {
-                if (heldObj == null)
+                if (SnDist < range)
+                {
+                    heldObj = Instantiate(SnOre, new Vector3(transform.position.x, transform.position.y + 1.25f, transform.position.z), transform.rotation, gameObject.transform);
+                    heldObj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+                }
+                if (CuDist < range)
                 {
                     heldObj = Instantiate(CuOre, new Vector3(transform.position.x, transform.position.y + 1.25f, transform.position.z), transform.rotation, gameObject.transform);
                     heldObj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
                 }
             }
-
-
-
-            //RaycastHit hit;
-            //if (Physics.Raycast(transform.position, CuDir))
-
         }
         if (context.canceled)
         {
@@ -136,9 +125,28 @@ public class Interaction : MonoBehaviour
 
         Vector3 CuDir = CuBucket.transform.position - transform.position;
         Vector3 SnDir = SnBucket.transform.position - transform.position;
-        
-        Debug.DrawRay(transform.position, CuDir * 1, Color.red);
-        Debug.DrawRay(transform.position, SnDir * 1, Color.gray);
+
+        float CuDist = Vector3.Distance(transform.position, CuBucket.transform.position);
+        float SnDist = Vector3.Distance(transform.position, SnBucket.transform.position);
+
+
+        if (CuDist < range)
+        {
+            Debug.DrawRay(transform.position, CuDir, Color.yellow);
+        }
+        else
+        {
+            Debug.DrawRay(transform.position, CuDir, Color.red);
+        }
+
+        if (SnDist < range)
+        {
+            Debug.DrawRay(transform.position, SnDir, Color.white);
+        }
+        else
+        {
+            Debug.DrawRay(transform.position, SnDir, Color.gray);
+        }
 
         if (count)
         {
@@ -146,31 +154,5 @@ public class Interaction : MonoBehaviour
             _slide.value = timer;
         }
     }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.tag == "Copper")
-        {
-            inCu = true;
-        }
-        if (other.tag == "Tin")
-        {
-            inCu = true;
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if(other.tag == "Copper")
-        {
-            inCu = false;
-        }
-
-        if (other.tag == "Tin")
-        {
-            inSn = false;
-        }
-    }
-
 
 }

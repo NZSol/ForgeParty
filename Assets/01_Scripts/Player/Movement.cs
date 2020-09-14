@@ -39,6 +39,7 @@ public class Movement : MonoBehaviour
     {
         var stick = context.ReadValue<Vector2>();
 
+
         moveValues = new Vector3(stick.x, 0, stick.y);
         lookDir = stick;
     }
@@ -90,6 +91,7 @@ public class Movement : MonoBehaviour
         {
             dashCool -= Time.deltaTime;
         }
+
     }
 
     
@@ -115,7 +117,11 @@ public class Movement : MonoBehaviour
             rb.velocity = Vector3.ClampMagnitude(rb.velocity, minSpeed);
         }
 
-        storedVel = moveValues * Time.deltaTime;
         rb.velocity += (moveValues.normalized + storedVel) * (Time.deltaTime * speed);
+    }
+
+    private void FixedUpdate()
+    {
+        storedVel = moveValues * Time.deltaTime;
     }
 }
