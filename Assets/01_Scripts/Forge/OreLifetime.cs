@@ -10,7 +10,6 @@ public class OreLifetime : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        print(transform.parent);
         if (transform.parent == null)
         {
             deathTime -= Time.deltaTime;

@@ -97,7 +97,7 @@ public class ForgeContents : MonoBehaviour
                     Sn = false;
 
                     meltTime = 0;
-                    CuMet = true;
+                    BronzeAll = true;
                     metalForging = 0;
                     OutputObj = true;
                 }
@@ -113,11 +113,4 @@ public class ForgeContents : MonoBehaviour
         }
     }
 
-
-
-
-    void timerCount()
-    {
- 
-    }
 }

@@ -7,26 +7,29 @@ using System.Linq;
 
 public class Interaction : MonoBehaviour
 {
+    public bool active = false;
+    bool inputArmed = true;
+
     LayerMask layer;
+
+    //Distance Checks
     public float range = 2.5f;
+
     float CuDist;
     float SnDist;
     float ForgeDist;
+    float BellowsDist;
 
 
     public int ForgeState;
 
 
-    bool inputArmed = true;
-    [SerializeField] Text _text;
     [SerializeField] Slider _slide;
 
     [SerializeField] GameObject CuOre;
     [SerializeField] GameObject SnOre;
-    GameObject Forge;
-
-    ForgeContents fC;
-
+    [SerializeField] GameObject Forge;
+    [SerializeField] GameObject bellows;
     GameObject[] OreBuckets(int layer)
     {
         var bucketArray = FindObjectsOfType(typeof(GameObject)) as GameObject[];
@@ -44,8 +47,14 @@ public class Interaction : MonoBehaviour
         }
         return bucketList.ToArray();
     }
-
     GameObject CuBucket, SnBucket;
+    List<GameObject> BucketList = new List<GameObject>();
+
+    //Scripts
+    ForgeContents fC;
+    Bellows bellowsScript;
+
+
 
     GameObject heldObj;
 
@@ -53,61 +62,117 @@ public class Interaction : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Forge = GameObject.FindWithTag("Forge");
-        fC = Forge.GetComponent<ForgeContents>();
-        layer = LayerMask.NameToLayer("Barrels");
-        foreach (GameObject bucket in OreBuckets(layer))
+        if (active)
         {
-            if (bucket.tag == "Tin")
+            Forge = GameObject.FindWithTag("Forge");
+            fC = Forge.GetComponent<ForgeContents>();
+
+            bellows = GameObject.FindWithTag("Bellow");
+            bellowsScript = bellows.GetComponent<Bellows>();
+
+            layer = LayerMask.NameToLayer("Barrels");
+            foreach (GameObject bucket in OreBuckets(layer))
             {
-                SnBucket = bucket;
+                if (bucket.tag == "Tin")
+                {
+                    SnBucket = bucket;
+                }
+                else if (bucket.tag == "Copper")
+                {
+                    CuBucket = bucket;
+                }
             }
-            else if (bucket.tag == "Copper")
-            {
-                CuBucket = bucket;
-            }
+            BucketList = OreBuckets(layer).ToList();
         }
     }
 
 
     public void InteractPress(CallbackContext context)
     {
-        if (context.started && inputArmed)
+        if (active)
         {
-            buttonPress();
-            inputArmed = false;
+            if (context.started && inputArmed)
+            {
+                buttonPress();
+                inputArmed = false;
+            }
+            if (context.canceled)
+            {
+                inputArmed = true;
+            }
         }
-        if (context.canceled)
-        {
-            inputArmed = true;
-        }
-    }
-
-    void cancel()
-    {
-        _text.enabled = false;
     }
 
     void buttonPress()
     {
-        CuDist = Vector3.Distance(transform.position, CuBucket.transform.position);
-        SnDist = Vector3.Distance(transform.position, SnBucket.transform.position);
-        ForgeDist = Vector3.Distance(transform.position, Forge.transform.position);
 
         if (heldObj != null)
         {
-            ForgeState = 1;
+            ForgeDist = Vector3.Distance(transform.position, Forge.transform.position);
+
+            if(ForgeDist < range)
+            {
+                ForgeState = 3;
+            }
+            else
+            {
+                ForgeState = 1;
+            }
         }
-        if (CuDist < range || SnDist < range)
+        else
         {
-            ForgeState = 2;
-        }
-        if (ForgeDist < range)
-        {
-            ForgeState = 3;
+            CuDist = Vector3.Distance(transform.position, CuBucket.transform.position);
+            SnDist = Vector3.Distance(transform.position, SnBucket.transform.position);
+
+                    //NEED TO AUTOMATE PROCESS
+            if (CuDist < range || SnDist < range)
+            {
+                ForgeState = 2;
+            }
+
         }
 
 
+    }
+
+    float timer = 0;
+    public bool count = false;
+    public void InteractHold(CallbackContext context)
+    {
+        if (active)
+        {
+            if (context.started)
+            {
+                BellowsDist = Vector3.Distance(transform.position, bellows.transform.position);
+
+                if (BellowsDist < range)
+                {
+                    count = true;
+                }
+            }
+            if (context.canceled)
+            {
+                count = false;
+                bellowsScript.TempIncrease = false;
+                ForgeState = 0;
+            }
+        }
+    }
+
+
+    void Update()
+    {
+        SwitchTime();
+        if (count)
+        {
+            ForgeState = 4;
+        }
+    }
+    
+    
+    
+    void SwitchTime()
+    {
         switch (ForgeState)
         {
             //Drop Held Object
@@ -117,12 +182,15 @@ public class Interaction : MonoBehaviour
                 heldObj = null;
 
                 Debug.Log("Case " + ForgeState);
+                ForgeState = 0;
                 break;
 
             //Ore Collect State
             case 2:
                 if (!heldObj)
                 {
+                            //NEED TO AUTOMATE PROCESS
+
                     if (SnDist < range)
                     {
                         heldObj = Instantiate(SnOre, new Vector3(transform.position.x, transform.position.y + 1.25f, transform.position.z), transform.rotation, gameObject.transform);
@@ -133,9 +201,11 @@ public class Interaction : MonoBehaviour
                         heldObj = Instantiate(CuOre, new Vector3(transform.position.x, transform.position.y + 1.25f, transform.position.z), transform.rotation, gameObject.transform);
                         heldObj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
                     }
+
                 }
 
                 Debug.Log("Case " + ForgeState);
+                ForgeState = 0;
                 break;
 
             //Forge State
@@ -153,41 +223,33 @@ public class Interaction : MonoBehaviour
                     Destroy(heldObj);
                 }
 
-
                 Debug.Log("Case " + ForgeState);
+                ForgeState = 0;
                 break;
-        }
-    }
 
-    float timer = 0;
-    bool count = false;
-    public void InteractHold(CallbackContext context)
-    {
-        if (context.started)
-        {
-            count = true;
-        }
-        if (context.canceled)
-        {
-            count = false;
-        }
-    }
+            //Bellows State
+            case 4:
+                BellowsDist = Vector3.Distance(transform.position, bellows.transform.position);
+
+                if (BellowsDist > range)
+                {
+                    bellowsScript.TempIncrease = false;
+                    ForgeState = 0;
+                    break;
+                }
+                if (count)
+                {
+                    bellowsScript.TempIncrease = true;
+                }
 
 
-    void Update()
-    {
+                ForgeState = 0;
+                break;
 
-        if (count)
-        {
-            timer += Time.deltaTime * 5;
-            _slide.value = timer;
-            fC.temperature = timer;
-        }
-        else if (timer > 0)
-        {
-            timer -= Time.deltaTime * 2.5f;
-            _slide.value = timer;
-            fC.temperature = timer;
+                //Default behaviour of switch
+            default:
+
+                break;
         }
     }
 

@@ -287,12 +287,12 @@ GameObject:
   - component: {fileID: 3059762728143522863}
   - component: {fileID: 3059762728143522856}
   - component: {fileID: 3059762728143522835}
-  - component: {fileID: -1938284355625185686}
+  - component: {fileID: -6396338227942642657}
   - component: {fileID: 3059762728143522857}
   - component: {fileID: -7110109816405663932}
   m_Layer: 0
   m_Name: Capsule
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -393,7 +393,7 @@ MonoBehaviour:
   damping: 10
   slide: {fileID: 4740319837972107812}
   text: {fileID: 1897028202230802024}
---- !u!114 &-1938284355625185686
+--- !u!114 &-6396338227942642657
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -411,6 +411,7 @@ MonoBehaviour:
   _slide: {fileID: 4740319837972107812}
   CuOre: {fileID: 6874371186039724700, guid: b4153f77725299647b15d39ddc3e54f4, type: 3}
   SnOre: {fileID: 3203804075945696445, guid: 213f1c8a11c92ef4298a07223f3d43d4, type: 3}
+  testing: Old Text
 --- !u!54 &3059762728143522857
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -470,7 +471,7 @@ MonoBehaviour:
     m_ActionName: Player/Move[/DualShock4GamepadHID/leftStick]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: -1938284355625185686}
+      - m_Target: {fileID: -6396338227942642657}
         m_MethodName: InteractPress
         m_Mode: 0
         m_Arguments:
@@ -485,7 +486,7 @@ MonoBehaviour:
     m_ActionName: Player/Interact[/DualShock4GamepadHID/buttonEast]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: -1938284355625185686}
+      - m_Target: {fileID: -6396338227942642657}
         m_MethodName: InteractHold
         m_Mode: 0
         m_Arguments:
