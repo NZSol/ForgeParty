@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class Bellows : MonoBehaviour
 {
     [SerializeField] Slider _slide;
+    [SerializeField] Image _image;
 
     GameObject Forge;
     ForgeContents FC;
@@ -37,5 +38,8 @@ public class Bellows : MonoBehaviour
         }
         _slide.value = Temperature;
         FC.temperature = Temperature;
+        _image.color = Color.Lerp(Color.red, Color.green, Temperature / 100);
+        
+
     }
 }

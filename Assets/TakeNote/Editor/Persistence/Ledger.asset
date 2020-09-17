@@ -12,6 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 757c7930830877b47944add6103cde80, type: 3}
   m_Name: Ledger
   m_EditorClassIdentifier: 
-  OutstandingTasks: []
+  OutstandingTasks:
+  - Title: Player Spawning/Activating
+    CreationDate: 18/09/2020 | 10:23 a.m.
+    CompletionDate: 
+    HasDetails: 1
+    Details: "if player enter Input, add to list\nelse if player exit input, remove
+      from list\n\nOn newscene start{\nforeach (GameObject player in playerList){\n\tInstantiate\n\tplayer.enabled
+      = true\n}\n}"
+    IsCompleted: 0
+    IsDeferred: 0
+    IsColored: 1
+    DrawColor: {r: 0.8867924, g: 0.5568387, b: 0.52287287, a: 1}
   CompletedTasks: []
   DeferredTasks: []

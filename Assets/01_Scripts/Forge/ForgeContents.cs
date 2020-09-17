@@ -49,7 +49,7 @@ public class ForgeContents : MonoBehaviour
             metalForging = 1;
             requiredTemp = 25;
         }
-        if (Sn && !Cu && temperature >= 10)
+        if (Sn && !Cu && !CuMet && temperature >= 10)
         {
             metalForging = 2;
             requiredTemp = 10;

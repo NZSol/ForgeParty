@@ -29,7 +29,8 @@ public class Interaction : MonoBehaviour
 
 
     //GameObjects
-    GameObject SnOre, CuOre;
+    [SerializeField] GameObject CuOre;
+    [SerializeField] GameObject SnOre;
     GameObject Forge;
     GameObject bellows;
     GameObject CuBucket, SnBucket;
@@ -76,6 +77,8 @@ public class Interaction : MonoBehaviour
     //Scripts
     ForgeContents fC;
     Bellows bellowsScript;
+    Casting castAxe;
+    Casting castSword;
 
 
 
@@ -109,13 +112,15 @@ public class Interaction : MonoBehaviour
             castLayer = LayerMask.NameToLayer("Casts");
             foreach (GameObject cast in Casts(castLayer))
             {
-                if (cast.tag == "sword")
+                if (cast.tag == "Sword")
                 {
                     swordCast = cast;
+                    castSword = cast.GetComponent<Casting>();
                 }
-                else if (cast.tag == "axe")
+                else if (cast.tag == "Axe")
                 {
                     AxeCast = cast;
+                    castAxe = cast.GetComponent<Casting>();
                 }
             }
         }
@@ -141,16 +146,17 @@ public class Interaction : MonoBehaviour
     void buttonPress()
     {
         ForgeDist = Vector3.Distance(transform.position, Forge.transform.position);
+        SwordDist = Vector3.Distance(transform.position, swordCast.transform.position);
+        AxeDist = Vector3.Distance(transform.position, AxeCast.transform.position);
 
         if (heldObj != null)
         {
-            SwordDist = Vector3.Distance(transform.position, swordCast.transform.position);
-            AxeDist = Vector3.Distance(transform.position, AxeCast.transform.position);
-            if(ForgeDist < range)
+
+            if (ForgeDist < range && heldObj.layer == LayerMask.NameToLayer("Ores"))
             {
                 ForgeState = 3;
             }
-            else if (SwordDist < range || AxeDist < range)
+            else if (SwordDist < range || AxeDist < range && heldObj.layer != LayerMask.NameToLayer("Metals"))
             {
                 ForgeState = 6;
             }
@@ -173,6 +179,10 @@ public class Interaction : MonoBehaviour
             if (ForgeDist < range)
             {
                 ForgeState = 5;
+            }
+            if (AxeDist < range || SwordDist < range)
+            {
+                ForgeState = 7;
             }
 
         }
@@ -212,6 +222,7 @@ public class Interaction : MonoBehaviour
         {
             ForgeState = 4;
         }
+        
     }
     
     
@@ -234,7 +245,7 @@ public class Interaction : MonoBehaviour
             case 2:
                 if (!heldObj)
                 {
-                            //NEED TO AUTOMATE PROCESS
+                    //NEED TO AUTOMATE PROCESS
 
                     if (SnDist < range)
                     {
@@ -305,24 +316,79 @@ public class Interaction : MonoBehaviour
 
             //Casting
             case 6:
-                if (heldObj.tag == "Tin")
+                //Sword Cast
+                if (SwordDist < AxeDist)
                 {
-
+                    if (heldObj.tag == "Tin")
+                    {
+                        castSword.Tin = true;
+                        castSword.readyTimer = 5;
+                        castSword._slide.maxValue = castSword.readyTimer;
+                        Destroy(heldObj);
+                    }
+                    if (heldObj.tag == "Copper")
+                    {
+                        castSword.Copper = true;
+                        castSword.readyTimer = 10;
+                        castSword._slide.maxValue = castSword.readyTimer;
+                        Destroy(heldObj);
+                    }
+                    if (heldObj.tag == "Bronze")
+                    {
+                        castSword.Bronze = true;
+                        castSword.readyTimer = 15;
+                        castSword._slide.maxValue = castSword.readyTimer;
+                        Destroy(heldObj);
+                    }
                 }
-                if (heldObj.tag == "Copper")
+                //Axe Cast
+                else
                 {
-
-                }
-                if (heldObj.tag == "Bronze")
-                {
-
+                    if (heldObj.tag == "Tin")
+                    {
+                        castAxe.Tin = true;
+                        castAxe.readyTimer = 5;
+                        castAxe._slide.maxValue = castAxe.readyTimer;
+                        Destroy(heldObj);
+                    }
+                    if (heldObj.tag == "Copper")
+                    {
+                        castAxe.Copper = true;
+                        castAxe.readyTimer = 10;
+                        castAxe._slide.maxValue = castAxe.readyTimer;
+                        Destroy(heldObj);
+                    }
+                    if (heldObj.tag == "Bronze")
+                    {
+                        castAxe.Bronze = true;
+                        castAxe.readyTimer = 15;
+                        castAxe._slide.maxValue = castAxe.readyTimer;
+                        Destroy(heldObj);
+                    }
                 }
 
                 break;
 
-            //Weapon Collection
+            //Weapon Collect
             case 7:
-
+                if (SwordDist < AxeDist)
+                {
+                    if (castSword.outputObj != null)
+                    {
+                        heldObj = Instantiate(castSword.outputObj, new Vector3(transform.position.x, transform.position.y + 1.25f, transform.position.z), transform.rotation, gameObject.transform);
+                        castSword.outputObj = null;
+                        heldObj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+                    }
+                }
+                else
+                {
+                    if (castAxe.outputObj != null)
+                    {
+                    heldObj = Instantiate(castAxe.outputObj, new Vector3(transform.position.x, transform.position.y + 1.25f, transform.position.z), transform.rotation, gameObject.transform);
+                    castAxe.outputObj = null;
+                    heldObj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+                    }
+                }
                 break;
             //Hammering
             case 8:
