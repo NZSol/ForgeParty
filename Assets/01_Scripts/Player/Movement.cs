@@ -14,12 +14,14 @@ public class Movement : MonoBehaviour
     public float maxSpeed = 5;
     public float minSpeed = -5;
     public float dashForce = 5;
+    public float dashCool = 0;
 
     public float damping;
     Vector2 lookDir;
 
     bool inputArmed = true;
     bool count;
+
 
     public Slider slide;
     public Text text;
@@ -37,28 +39,16 @@ public class Movement : MonoBehaviour
     {
         var stick = context.ReadValue<Vector2>();
 
+
         moveValues = new Vector3(stick.x, 0, stick.y);
         lookDir = stick;
     }
 
-    public void InteractPress(CallbackContext context)
-    {
-        if (context.started && inputArmed)
-        {
-            inputArmed = false;
-            text.enabled = true;
-            Invoke("cancel", 0.1f);
-        }
-        if (context.canceled)
-        {
-            inputArmed = true;
-        }
-    }
-    
+
     float dashing = 0;
     public void Dash(CallbackContext context)
     {
-        if (context.started && inputArmed)
+        if (context.started && inputArmed && dashCool <= 0)
         {
             inputArmed = false;
             dashing = 1;
@@ -71,26 +61,6 @@ public class Movement : MonoBehaviour
     }
 
 
-    void cancel()
-    {
-        text.enabled = false;
-    }
-
-    float timer = 0;
-    public void InteractHold(CallbackContext context)
-    {
-        if (context.started)
-        {
-            count = true;
-        }
-        if (context.canceled)
-        {
-            count = false;
-            timer = 0;
-            slide.value = timer;
-        }
-    }
-
 
     void DoDash()
     {
@@ -98,6 +68,7 @@ public class Movement : MonoBehaviour
         {
             rb.velocity += moveValues * dashForce;
             maxSpeed = 10;
+            dashCool = 5;
         }
     }
     
@@ -106,11 +77,6 @@ public class Movement : MonoBehaviour
     {
         MoveNow();
 
-        if (count)
-        {
-            timer += Time.deltaTime;
-            slide.value = timer;
-        }
         if (dashing > 0)
         {
             dashing -= Time.deltaTime;
@@ -120,6 +86,12 @@ public class Movement : MonoBehaviour
             dashing = 0;
         }
         maxSpeed = Mathf.Lerp(5, 10, dashing);
+
+        if (dashCool > 0)
+        {
+            dashCool -= Time.deltaTime;
+        }
+
     }
 
     
@@ -145,7 +117,11 @@ public class Movement : MonoBehaviour
             rb.velocity = Vector3.ClampMagnitude(rb.velocity, minSpeed);
         }
 
-        storedVel = moveValues * Time.deltaTime;
         rb.velocity += (moveValues.normalized + storedVel) * (Time.deltaTime * speed);
+    }
+
+    private void FixedUpdate()
+    {
+        storedVel = moveValues * Time.deltaTime;
     }
 }
