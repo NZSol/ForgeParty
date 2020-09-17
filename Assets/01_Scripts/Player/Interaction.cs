@@ -10,7 +10,9 @@ public class Interaction : MonoBehaviour
     public bool active = false;
     bool inputArmed = true;
 
-    LayerMask layer;
+    //Layaer Masks
+    LayerMask oreLayer;
+    LayerMask castLayer;
 
     //Distance Checks
     public float range = 2.5f;
@@ -19,17 +21,40 @@ public class Interaction : MonoBehaviour
     float SnDist;
     float ForgeDist;
     float BellowsDist;
+    float SwordDist;
+    float AxeDist;
 
 
     public int ForgeState;
 
 
-    [SerializeField] Slider _slide;
-
-    [SerializeField] GameObject CuOre;
-    [SerializeField] GameObject SnOre;
-    [SerializeField] GameObject Forge;
-    [SerializeField] GameObject bellows;
+    //GameObjects
+    GameObject SnOre, CuOre;
+    GameObject Forge;
+    GameObject bellows;
+    GameObject CuBucket, SnBucket;
+    GameObject swordCast, AxeCast;
+    
+    //Get All Casts
+    GameObject[] Casts(int layer)
+    {
+        var castArray = FindObjectsOfType(typeof(GameObject)) as GameObject[];
+        var castList = new List<GameObject>();
+        for (int i = 0; i < castArray.Length; i++)
+        {
+            if (castArray[i].layer == layer)
+            {
+                castList.Add(castArray[i]);
+            }
+        }
+        if (castList.Count == 0)
+        {
+            return null;
+        }
+        return castList.ToArray();
+    }
+    
+    //Get All Ore Barrels
     GameObject[] OreBuckets(int layer)
     {
         var bucketArray = FindObjectsOfType(typeof(GameObject)) as GameObject[];
@@ -47,8 +72,6 @@ public class Interaction : MonoBehaviour
         }
         return bucketList.ToArray();
     }
-    GameObject CuBucket, SnBucket;
-    List<GameObject> BucketList = new List<GameObject>();
 
     //Scripts
     ForgeContents fC;
@@ -70,8 +93,8 @@ public class Interaction : MonoBehaviour
             bellows = GameObject.FindWithTag("Bellow");
             bellowsScript = bellows.GetComponent<Bellows>();
 
-            layer = LayerMask.NameToLayer("Barrels");
-            foreach (GameObject bucket in OreBuckets(layer))
+            oreLayer = LayerMask.NameToLayer("Barrels");
+            foreach (GameObject bucket in OreBuckets(oreLayer))
             {
                 if (bucket.tag == "Tin")
                 {
@@ -82,7 +105,19 @@ public class Interaction : MonoBehaviour
                     CuBucket = bucket;
                 }
             }
-            BucketList = OreBuckets(layer).ToList();
+
+            castLayer = LayerMask.NameToLayer("Casts");
+            foreach (GameObject cast in Casts(castLayer))
+            {
+                if (cast.tag == "sword")
+                {
+                    swordCast = cast;
+                }
+                else if (cast.tag == "axe")
+                {
+                    AxeCast = cast;
+                }
+            }
         }
     }
 
@@ -105,14 +140,19 @@ public class Interaction : MonoBehaviour
 
     void buttonPress()
     {
+        ForgeDist = Vector3.Distance(transform.position, Forge.transform.position);
 
         if (heldObj != null)
         {
-            ForgeDist = Vector3.Distance(transform.position, Forge.transform.position);
-
+            SwordDist = Vector3.Distance(transform.position, swordCast.transform.position);
+            AxeDist = Vector3.Distance(transform.position, AxeCast.transform.position);
             if(ForgeDist < range)
             {
                 ForgeState = 3;
+            }
+            else if (SwordDist < range || AxeDist < range)
+            {
+                ForgeState = 6;
             }
             else
             {
@@ -128,6 +168,11 @@ public class Interaction : MonoBehaviour
             if (CuDist < range || SnDist < range)
             {
                 ForgeState = 2;
+            }
+
+            if (ForgeDist < range)
+            {
+                ForgeState = 5;
             }
 
         }
@@ -201,7 +246,6 @@ public class Interaction : MonoBehaviour
                         heldObj = Instantiate(CuOre, new Vector3(transform.position.x, transform.position.y + 1.25f, transform.position.z), transform.rotation, gameObject.transform);
                         heldObj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
                     }
-
                 }
 
                 Debug.Log("Case " + ForgeState);
@@ -242,14 +286,65 @@ public class Interaction : MonoBehaviour
                     bellowsScript.TempIncrease = true;
                 }
 
+                ForgeState = 0;
+                break;
+
+            //Metal Collection
+            case 5:
+                for (int i = 0; i < fC.metals.Count; i++)
+                {
+                    fC.metals[i] = false;
+                    fC.metals.Remove(fC.metals[i]);
+                }
+                heldObj = Instantiate(fC.instanceObj, new Vector3(transform.position.x, transform.position.y + 1.25f, transform.position.z), transform.rotation, gameObject.transform);
+                fC.instanceObj = null;
+                heldObj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
 
                 ForgeState = 0;
                 break;
 
-                //Default behaviour of switch
+            //Casting
+            case 6:
+                if (heldObj.tag == "Tin")
+                {
+
+                }
+                if (heldObj.tag == "Copper")
+                {
+
+                }
+                if (heldObj.tag == "Bronze")
+                {
+
+                }
+
+                break;
+
+            //Weapon Collection
+            case 7:
+
+                break;
+            //Hammering
+            case 8:
+
+                break;
+
+            //Quenching
+            case 9:
+
+                break;
+
+            //Delivery
+            case 10:
+
+                break;
+            //Default behaviour of switch
             default:
 
                 break;
+
+
+
         }
     }
 

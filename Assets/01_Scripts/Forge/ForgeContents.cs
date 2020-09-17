@@ -14,10 +14,15 @@ public class ForgeContents : MonoBehaviour
 
         //Metals
     bool CuMet;
-    bool SnMet;
-    
+    public bool SnMet;
+
         //Alloys
     bool BronzeAll;
+
+        //Output Objects
+    [SerializeField] GameObject CuMetal;
+    [SerializeField] GameObject SnMetal;
+    [SerializeField] GameObject BrnzMetal;
 
     //UI
     [SerializeField] Slider _slide;
@@ -26,6 +31,10 @@ public class ForgeContents : MonoBehaviour
     public float temperature;
     public float requiredTemp;
     public int metalForging;
+    public GameObject instanceObj;
+
+
+    public List<bool> metals = new List<bool>();
 
     private void Update()
     {
@@ -45,7 +54,7 @@ public class ForgeContents : MonoBehaviour
             metalForging = 2;
             requiredTemp = 10;
         }
-        if (Sn && Cu && temperature >= 40)
+        if (Sn && Cu && temperature >= 40 || SnMet && Cu && temperature >= 40 || Sn && CuMet && temperature >= 40)
         {
             metalForging = 3;
             requiredTemp = 40;
@@ -60,6 +69,7 @@ public class ForgeContents : MonoBehaviour
 
         switch (metalForging)
         {
+                //Copper Smelting
             case 1:
                 meltTime += Time.deltaTime;
 
@@ -69,12 +79,15 @@ public class ForgeContents : MonoBehaviour
 
                     meltTime = 0;
                     CuMet = true;
+                    metals.Add(CuMet);
                     metalForging = 0;
+                    instanceObj = CuMetal;
                     OutputObj = true;
                 }
 
                 break;
 
+                //Tin Smelting
             case 2:
                 meltTime += Time.deltaTime;
                 if (meltTime > 5)
@@ -83,27 +96,36 @@ public class ForgeContents : MonoBehaviour
 
                     meltTime = 0;
                     SnMet = true;
+                    metals.Add(SnMet);
                     metalForging = 0;
+                    instanceObj = SnMetal;
                     OutputObj = true;
                 }
 
                 break;
 
+                //Bronze Alloying
             case 3:
                 meltTime += Time.deltaTime;
                 if (meltTime > 5)
                 {
                     Cu = false;
                     Sn = false;
+                    CuMet = false;
+                    SnMet = false;
 
                     meltTime = 0;
                     BronzeAll = true;
+                    listRemove();
+                    metals.Add(BronzeAll);
                     metalForging = 0;
+                    instanceObj = BrnzMetal;
                     OutputObj = true;
                 }
 
                 break;
 
+                //Too cold/Do nothing
             default:
                 if (meltTime > 0)
                 {
@@ -113,4 +135,17 @@ public class ForgeContents : MonoBehaviour
         }
     }
 
+
+    void listRemove()
+    {
+        for (int i = 0; i<metals.Count; i++)
+        {
+            metals.Remove(metals[i]);
+        }
+    }
+
+    void reset()
+    {
+ 
+    }
 }
