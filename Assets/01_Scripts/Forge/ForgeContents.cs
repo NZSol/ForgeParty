@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,15 +10,15 @@ public class ForgeContents : MonoBehaviour
     bool OutputObj;
 
         //Ores
-    public bool Sn;
-    public bool Cu;
+    [NonSerialized] public bool Sn;
+    [NonSerialized] public bool Cu;
 
         //Metals
-    bool CuMet;
-    public bool SnMet;
+    [NonSerialized] public bool CuMet;
+    [NonSerialized] public bool SnMet;
 
         //Alloys
-    bool BronzeAll;
+    [NonSerialized] public bool BronzeAll;
 
         //Output Objects
     [SerializeField] GameObject CuMetal;
@@ -79,7 +80,6 @@ public class ForgeContents : MonoBehaviour
 
                     meltTime = 0;
                     CuMet = true;
-                    metals.Add(CuMet);
                     metalForging = 0;
                     instanceObj = CuMetal;
                     OutputObj = true;
@@ -96,7 +96,6 @@ public class ForgeContents : MonoBehaviour
 
                     meltTime = 0;
                     SnMet = true;
-                    metals.Add(SnMet);
                     metalForging = 0;
                     instanceObj = SnMetal;
                     OutputObj = true;
@@ -116,8 +115,6 @@ public class ForgeContents : MonoBehaviour
 
                     meltTime = 0;
                     BronzeAll = true;
-                    listRemove();
-                    metals.Add(BronzeAll);
                     metalForging = 0;
                     instanceObj = BrnzMetal;
                     OutputObj = true;
