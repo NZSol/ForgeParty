@@ -4,17 +4,40 @@ using UnityEngine;
 
 public class PauseMenu : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public Animator animPanel;
+    bool quitPause;
+
+
+    private void OnEnable()
     {
-        
+        animPanel = gameObject.GetComponent<Animator>();
+        quitPause = false;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
+        if(quitPause== true)
+        {
+            animPanel.SetBool("ExitPause", true);
+
+        }
+
+        else
+        {
+            animPanel.SetBool("ExitPause", false);
+        }
+
+
+
     }
+
+
+    public void ClosePause()
+    {
+        quitPause = true;
+
+    }
+
 
     public void Pause()
     {
