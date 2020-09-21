@@ -152,11 +152,11 @@ public class Interaction : MonoBehaviour
         if (heldObj != null)
         {
 
-            if (ForgeDist < range && heldObj.layer == LayerMask.NameToLayer("Ores"))
+            if (ForgeDist < range && heldObj.layer == LayerMask.NameToLayer("Ores") && fC.instanceObj == null)
             {
                 ForgeState = 3;
             }
-            else if (SwordDist < range || AxeDist < range && heldObj.layer != LayerMask.NameToLayer("Metals"))
+            else if ((SwordDist < range || AxeDist < range) && heldObj.layer == LayerMask.NameToLayer("Metals"))
             {
                 ForgeState = 6;
             }
@@ -187,6 +187,7 @@ public class Interaction : MonoBehaviour
 
         }
 
+        SwitchTime();
 
     }
 
@@ -217,10 +218,10 @@ public class Interaction : MonoBehaviour
 
     void Update()
     {
-        SwitchTime();
         if (count)
         {
             ForgeState = 4;
+            SwitchTime();
         }
         
     }
@@ -302,11 +303,10 @@ public class Interaction : MonoBehaviour
 
             //Metal Collection
             case 5:
-                for (int i = 0; i < fC.metals.Count; i++)
-                {
-                    fC.metals[i] = false;
-                    fC.metals.Remove(fC.metals[i]);
-                }
+                fC.SnMet = false;
+                fC.CuMet = false;
+                fC.BronzeAll = false;
+
                 heldObj = Instantiate(fC.instanceObj, new Vector3(transform.position.x, transform.position.y + 1.25f, transform.position.z), transform.rotation, gameObject.transform);
                 fC.instanceObj = null;
                 heldObj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
@@ -316,54 +316,61 @@ public class Interaction : MonoBehaviour
 
             //Casting
             case 6:
+                
                 //Sword Cast
                 if (SwordDist < AxeDist)
                 {
-                    if (heldObj.tag == "Tin")
+                    if (castSword.outputObj == null)
                     {
-                        castSword.Tin = true;
-                        castSword.readyTimer = 5;
-                        castSword._slide.maxValue = castSword.readyTimer;
-                        Destroy(heldObj);
-                    }
-                    if (heldObj.tag == "Copper")
-                    {
-                        castSword.Copper = true;
-                        castSword.readyTimer = 10;
-                        castSword._slide.maxValue = castSword.readyTimer;
-                        Destroy(heldObj);
-                    }
-                    if (heldObj.tag == "Bronze")
-                    {
-                        castSword.Bronze = true;
-                        castSword.readyTimer = 15;
-                        castSword._slide.maxValue = castSword.readyTimer;
-                        Destroy(heldObj);
+                        if (heldObj.tag == "Tin")
+                        {
+                            castSword.Tin = true;
+                            castSword.readyTimer = 5;
+                            castSword._slide.maxValue = castSword.readyTimer;
+                            Destroy(heldObj);
+                        }
+                        if (heldObj.tag == "Copper")
+                        {
+                            castSword.Copper = true;
+                            castSword.readyTimer = 10;
+                            castSword._slide.maxValue = castSword.readyTimer;
+                            Destroy(heldObj);
+                        }
+                        if (heldObj.tag == "Bronze")
+                        {
+                            castSword.Bronze = true;
+                            castSword.readyTimer = 15;
+                            castSword._slide.maxValue = castSword.readyTimer;
+                            Destroy(heldObj);
+                        }
                     }
                 }
                 //Axe Cast
-                else
+                else if (SwordDist > AxeDist)
                 {
-                    if (heldObj.tag == "Tin")
+                    if (castAxe.outputObj == null)
                     {
-                        castAxe.Tin = true;
-                        castAxe.readyTimer = 5;
-                        castAxe._slide.maxValue = castAxe.readyTimer;
-                        Destroy(heldObj);
-                    }
-                    if (heldObj.tag == "Copper")
-                    {
-                        castAxe.Copper = true;
-                        castAxe.readyTimer = 10;
-                        castAxe._slide.maxValue = castAxe.readyTimer;
-                        Destroy(heldObj);
-                    }
-                    if (heldObj.tag == "Bronze")
-                    {
-                        castAxe.Bronze = true;
-                        castAxe.readyTimer = 15;
-                        castAxe._slide.maxValue = castAxe.readyTimer;
-                        Destroy(heldObj);
+                        if (heldObj.tag == "Tin")
+                        {
+                            castAxe.Tin = true;
+                            castAxe.readyTimer = 5;
+                            castAxe._slide.maxValue = castAxe.readyTimer;
+                            Destroy(heldObj);
+                        }
+                        if (heldObj.tag == "Copper")
+                        {
+                            castAxe.Copper = true;
+                            castAxe.readyTimer = 10;
+                            castAxe._slide.maxValue = castAxe.readyTimer;
+                            Destroy(heldObj);
+                        }
+                        if (heldObj.tag == "Bronze")
+                        {
+                            castAxe.Bronze = true;
+                            castAxe.readyTimer = 15;
+                            castAxe._slide.maxValue = castAxe.readyTimer;
+                            Destroy(heldObj);
+                        }
                     }
                 }
 
@@ -373,21 +380,15 @@ public class Interaction : MonoBehaviour
             case 7:
                 if (SwordDist < AxeDist)
                 {
-                    if (castSword.outputObj != null)
-                    {
-                        heldObj = Instantiate(castSword.outputObj, new Vector3(transform.position.x, transform.position.y + 1.25f, transform.position.z), transform.rotation, gameObject.transform);
-                        castSword.outputObj = null;
-                        heldObj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-                    }
+                    heldObj = Instantiate(castSword.outputObj, new Vector3(transform.position.x, transform.position.y + 1.25f, transform.position.z), transform.rotation, gameObject.transform);
+                    castSword.outputObj = null;
+                    heldObj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
                 }
                 else
                 {
-                    if (castAxe.outputObj != null)
-                    {
                     heldObj = Instantiate(castAxe.outputObj, new Vector3(transform.position.x, transform.position.y + 1.25f, transform.position.z), transform.rotation, gameObject.transform);
                     castAxe.outputObj = null;
                     heldObj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-                    }
                 }
                 break;
             //Hammering
