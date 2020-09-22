@@ -26,7 +26,9 @@ public class ForgeContents : MonoBehaviour
     [SerializeField] GameObject BrnzMetal;
 
     //UI
-    [SerializeField] Slider _slide;
+    [SerializeField] Canvas _canvas;
+    [SerializeField] Slider _Slide;
+    [SerializeField] Image _img;
     float meltTime;
     
     public float temperature;
@@ -45,33 +47,43 @@ public class ForgeContents : MonoBehaviour
         }
 
 
-        if (Cu && !Sn && temperature >= 25)
-        {
-            metalForging = 1;
-            requiredTemp = 25;
-        }
-        if (Sn && !Cu && !CuMet && temperature >= 10)
-        {
-            metalForging = 2;
-            requiredTemp = 10;
-        }
-        if (Sn && Cu && temperature >= 40 || SnMet && Cu && temperature >= 40 || Sn && CuMet && temperature >= 40)
-        {
-            metalForging = 3;
-            requiredTemp = 40;
-        }
 
-        if (temperature < requiredTemp)
+        if(_Slide.value <= 4)
         {
             metalForging = 0;
         }
+        else
+        {
+            if (Cu && !Sn)
+            {
+                metalForging = 1;
+                requiredTemp = 25;
+            }
+            if (Sn && !Cu && !CuMet)
+            {
+                metalForging = 2;
+                requiredTemp = 10;
+            }
+            if (Sn && (Cu || CuMet))
+            {
+                metalForging = 3;
+                requiredTemp = 40;
+            }
+        }
 
-        _slide.value = meltTime;
+
+
+        //_canvas.GetComponent<TemperatureSlider>().colorLerp = meltTime;
+        _img.color = Color.Lerp(Color.white, Color.green + Color.blue, meltTime);
+
+
+
 
         switch (metalForging)
         {
                 //Copper Smelting
             case 1:
+
                 meltTime += Time.deltaTime;
 
                 if (meltTime > 5)
@@ -89,7 +101,9 @@ public class ForgeContents : MonoBehaviour
 
                 //Tin Smelting
             case 2:
+
                 meltTime += Time.deltaTime;
+
                 if (meltTime > 5)
                 {
                     Sn = false;
@@ -105,7 +119,9 @@ public class ForgeContents : MonoBehaviour
 
                 //Bronze Alloying
             case 3:
+
                 meltTime += Time.deltaTime;
+
                 if (meltTime > 5)
                 {
                     Cu = false;

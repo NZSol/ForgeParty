@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class Bellows : MonoBehaviour
 {
     [SerializeField] Slider _slide;
-    [SerializeField] Image _image;
 
     GameObject Forge;
     ForgeContents FC;
@@ -27,18 +26,17 @@ public class Bellows : MonoBehaviour
     {
         if (TempIncrease == true)
         {
-            Temperature += Time.deltaTime * 5;
+            Temperature += Time.deltaTime / 1.5f;
         }
         else
         {
             if (Temperature > 0)
             {
-                Temperature -= Time.deltaTime * 2.5f;
+                Temperature -= Time.deltaTime / 4;
             }
         }
+
         _slide.value = Temperature;
-        FC.temperature = Temperature;
-        _image.color = Color.Lerp(Color.red, Color.green, Temperature / 100);
         
 
     }

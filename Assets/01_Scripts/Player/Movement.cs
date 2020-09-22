@@ -32,8 +32,12 @@ public class Movement : MonoBehaviour
         Player = this.gameObject;
         rb = Player.GetComponent<Rigidbody>();
         text.enabled = false;
+        Player.transform.position = new Vector3(0, 1.2f, 7.3f);
     }
 
+    private void OnEnable()
+    {
+    }
 
     public void Move(CallbackContext context)
     {
