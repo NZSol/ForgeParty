@@ -30,10 +30,10 @@ public class FurnaceTemperature : MonoBehaviour
     void Update()
     {
 
-        MaxTemp = fc.maxTemp;
+     //   MaxTemp = fc.maxTemp;
      
 
-        if (lerpTime < MaxTemp && fc.present == true)
+    //    if (lerpTime < MaxTemp && fc.present == true)
         {
             float LerpVal = Mathf.Lerp(startVal, endVal, _bellowScript.Temperature / MaxTemp);
             transform.localScale = new Vector3(ScaleVal.x, LerpVal, ScaleVal.z);
