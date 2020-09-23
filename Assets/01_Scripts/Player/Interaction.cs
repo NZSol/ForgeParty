@@ -9,10 +9,13 @@ public class Interaction : MonoBehaviour
 {
     public bool active = false;
     bool inputArmed = true;
+    bool inRangeForge;
 
     //Layaer Masks
     LayerMask oreLayer;
     LayerMask castLayer;
+    LayerMask furnaceLayer;
+    LayerMask anvilLayer;
 
     //Distance Checks
     public float range = 2.5f;
@@ -23,18 +26,22 @@ public class Interaction : MonoBehaviour
     float BellowsDist;
     float SwordDist;
     float AxeDist;
+    float AnvilDist;
 
 
     public int ForgeState;
 
+    //Lists
+    List<float> forgeDistList = new List<float>();
 
     //GameObjects
     [SerializeField] GameObject CuOre;
     [SerializeField] GameObject SnOre;
-    GameObject Forge;
+
     GameObject bellows;
     GameObject CuBucket, SnBucket;
     GameObject swordCast, AxeCast;
+    GameObject anvil;
     
     //Get All Casts
     GameObject[] Casts(int layer)
@@ -74,15 +81,93 @@ public class Interaction : MonoBehaviour
         return bucketList.ToArray();
     }
 
+
+    //Get All Furnaces
+    GameObject[] Furnaces(int layer)
+    {
+        var furnaceArray = FindObjectsOfType(typeof(GameObject)) as GameObject[];
+        var furnaceList = new List<GameObject>();
+        for (int i = 0; i < furnaceArray.Length; i++)
+        {
+            if (furnaceArray[i].layer == layer)
+            {
+                furnaceList.Add(furnaceArray[i]);
+            }
+        }
+        if (furnaceList.Count == 0)
+        {
+            return null;
+        }
+        return furnaceList.ToArray();
+    }
+    public List<GameObject> FurnaceList = new List<GameObject>();
+    GameObject activeForge;
+
+    //Get All Anvils
+    GameObject[] Anvils(int layer)
+    {
+        var anvilArray = FindObjectsOfType(typeof(GameObject)) as GameObject[];
+        var anvilList = new List<GameObject>();
+        for (int i = 0; i < anvilArray.Length; i++)
+        {
+            if (anvilArray[i].layer == layer)
+            {
+                anvilList.Add(anvilArray[i]);
+            }
+        }
+        if (anvilList.Count == 0)
+        {
+            return null;
+        }
+        return anvilList.ToArray();
+    }
+    public List<GameObject> AnvilList = new List<GameObject>();
+    GameObject activeAnvil;
+
     //Scripts
-    ForgeContents fC;
     Bellows bellowsScript;
     Casting castAxe;
     Casting castSword;
-
+    Anvil anvilScript;
 
 
     GameObject heldObj;
+
+    //NearestForge
+    GameObject ClosestForge(GameObject[] forges)
+    {
+        GameObject tMin = null;
+        float minDist = Mathf.Infinity;
+        Vector3 curPos = transform.position;
+        foreach (GameObject t in forges)
+        {
+            float dist = Vector3.Distance(t.transform.position, curPos);
+            if (dist < minDist)
+            {
+                tMin = t;
+                minDist = dist;
+            }
+        }
+        return tMin;
+    }
+
+    //Nearest Anvil
+    GameObject ClosestAnvil(GameObject[] Anvils)
+    {
+        GameObject tMin = null;
+        float minDist = Mathf.Infinity;
+        Vector3 curPos = transform.position;
+        foreach (GameObject t in Anvils)
+        {
+            float dist = Vector3.Distance(t.transform.position, curPos);
+            if (dist < minDist)
+            {
+                tMin = t;
+                minDist = dist;
+            }
+        }
+        return tMin;
+    }
 
 
     // Start is called before the first frame update
@@ -90,9 +175,6 @@ public class Interaction : MonoBehaviour
     {
         if (active)
         {
-            Forge = GameObject.FindWithTag("Forge");
-            fC = Forge.GetComponent<ForgeContents>();
-
             bellows = GameObject.FindWithTag("Bellow");
             bellowsScript = bellows.GetComponent<Bellows>();
 
@@ -123,6 +205,14 @@ public class Interaction : MonoBehaviour
                     castAxe = cast.GetComponent<Casting>();
                 }
             }
+
+            anvilLayer = LayerMask.NameToLayer("Anvils");
+            AnvilList = Anvils(anvilLayer).ToList();
+
+
+            furnaceLayer = LayerMask.NameToLayer("Forges");
+            FurnaceList = Furnaces(furnaceLayer).ToList();
+
         }
     }
 
@@ -145,14 +235,15 @@ public class Interaction : MonoBehaviour
 
     void buttonPress()
     {
-        ForgeDist = Vector3.Distance(transform.position, Forge.transform.position);
+        ForgeDist = Vector3.Distance(transform.position, activeForge.transform.position);
+        AnvilDist = Vector3.Distance(transform.position, activeAnvil.transform.position);
+                //Get Distance of casts
         SwordDist = Vector3.Distance(transform.position, swordCast.transform.position);
         AxeDist = Vector3.Distance(transform.position, AxeCast.transform.position);
-
+        //If holding Object, do these checks
         if (heldObj != null)
         {
-
-            if (ForgeDist < range && heldObj.layer == LayerMask.NameToLayer("Ores") && fC.instanceObj == null)
+            if (ForgeDist < range && heldObj.layer == LayerMask.NameToLayer("Ores") && activeForge.GetComponent<ForgeContents>().instanceObj == null)
             {
                 ForgeState = 3;
             }
@@ -160,13 +251,19 @@ public class Interaction : MonoBehaviour
             {
                 ForgeState = 6;
             }
+            else if (AnvilDist < range && heldObj.layer == LayerMask.NameToLayer("Weapons"))
+            {
+                ForgeState = 8;
+            }
             else
             {
                 ForgeState = 1;
             }
         }
+                //If no held object, do these checks
         else
         {
+                    //Get Distances from Ore Crates
             CuDist = Vector3.Distance(transform.position, CuBucket.transform.position);
             SnDist = Vector3.Distance(transform.position, SnBucket.transform.position);
 
@@ -180,6 +277,7 @@ public class Interaction : MonoBehaviour
             {
                 ForgeState = 5;
             }
+
             if (AxeDist < range || SwordDist < range)
             {
                 ForgeState = 7;
@@ -192,7 +290,9 @@ public class Interaction : MonoBehaviour
     }
 
     float timer = 0;
-    public bool count = false;
+    public bool forgeCount = false;
+    public bool anvilCount = false;
+
     public void InteractHold(CallbackContext context)
     {
         if (active)
@@ -200,15 +300,21 @@ public class Interaction : MonoBehaviour
             if (context.started)
             {
                 BellowsDist = Vector3.Distance(transform.position, bellows.transform.position);
+                AnvilDist = Vector3.Distance(transform.position, activeAnvil.transform.position);
 
                 if (BellowsDist < range)
                 {
-                    count = true;
+                    forgeCount = true;
+                }
+                if (AnvilDist < range)
+                {
+                    anvilCount = true;
                 }
             }
             if (context.canceled)
             {
-                count = false;
+                forgeCount = false;
+                anvilCount = false;
                 bellowsScript.TempIncrease = false;
                 ForgeState = 0;
             }
@@ -218,12 +324,19 @@ public class Interaction : MonoBehaviour
 
     void Update()
     {
-        if (count)
+        activeForge = ClosestForge(FurnaceList.ToArray());
+        activeAnvil = ClosestAnvil(AnvilList.ToArray());
+
+        if (forgeCount)
         {
             ForgeState = 4;
             SwitchTime();
         }
-        
+        if (anvilCount)
+        {
+            ForgeState = 9;
+            SwitchTime();
+        }
     }
     
     
@@ -269,13 +382,13 @@ public class Interaction : MonoBehaviour
                 if (heldObj.tag == "Tin")
                 {
                     print("hit SN");
-                    fC.Sn = true;
+                    activeForge.GetComponent<ForgeContents>().Sn = true;
                     Destroy(heldObj);
                 }
                 if (heldObj.tag == "Copper")
                 {
                     print("hit Cu");
-                    fC.Cu = true;
+                    activeForge.GetComponent<ForgeContents>().Cu = true;
                     Destroy(heldObj);
                 }
 
@@ -293,7 +406,7 @@ public class Interaction : MonoBehaviour
                     ForgeState = 0;
                     break;
                 }
-                if (count)
+                if (forgeCount)
                 {
                     bellowsScript.TempIncrease = true;
                 }
@@ -303,12 +416,12 @@ public class Interaction : MonoBehaviour
 
             //Metal Collection
             case 5:
-                fC.SnMet = false;
-                fC.CuMet = false;
-                fC.BronzeAll = false;
+                activeForge.GetComponent<ForgeContents>().SnMet = false;
+                activeForge.GetComponent<ForgeContents>().CuMet = false;
+                activeForge.GetComponent<ForgeContents>().BronzeAll = false;
 
-                heldObj = Instantiate(fC.instanceObj, new Vector3(transform.position.x, transform.position.y + 1.25f, transform.position.z), transform.rotation, gameObject.transform);
-                fC.instanceObj = null;
+                heldObj = Instantiate(activeForge.GetComponent<ForgeContents>().instanceObj, new Vector3(transform.position.x, transform.position.y + 1.25f, transform.position.z), transform.rotation, gameObject.transform);
+                activeForge.GetComponent<ForgeContents>().instanceObj = null;
                 heldObj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
 
                 ForgeState = 0;
@@ -391,20 +504,57 @@ public class Interaction : MonoBehaviour
                     heldObj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
                 }
                 break;
-            //Hammering
+
+            //Deliver Anvil
             case 8:
 
+                //Check weapon type and material
+                if (heldObj.tag == "Sword")
+                {
+                    activeAnvil.GetComponent<Anvil>().sword = true;
+                    Destroy(heldObj);
+                }
+                else if (heldObj.tag == "Axe")
+                {
+                    activeAnvil.GetComponent<Anvil>().axe = true;
+                    Destroy(heldObj);
+                }
+
+                if (heldObj.tag == "Bronze")
+                {
+                    activeAnvil.GetComponent<Anvil>().material = 3;
+                }
+                else if (heldObj.tag == "Copper")
+                {
+                    activeAnvil.GetComponent<Anvil>().material = 2;
+                }
+                else if (heldObj.tag == "Tin")
+                {
+                    activeAnvil.GetComponent<Anvil>().material = 1;
+                }
+
                 break;
 
-            //Quenching
+            //Hammer
             case 9:
+                activeAnvil.GetComponent<Anvil>().Hammering = true;
 
                 break;
 
-            //Delivery
+            //Pickup Anvil
             case 10:
 
                 break;
+
+            //Quench
+            case 11:
+                
+                break;
+
+                //Deliver
+            case 12:
+                break;
+
             //Default behaviour of switch
             default:
 
