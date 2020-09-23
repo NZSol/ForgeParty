@@ -10,7 +10,7 @@ public class ColorOvertime : MonoBehaviour
     [SerializeField] [Range(0f, 10f)] float lerpTime;
     public Color StartColor;
     public Color EndColor;
-
+    public Canvas WeaponRequest;
     [SerializeField] Slider _slide;
     [SerializeField] Image _img;
 
@@ -23,15 +23,26 @@ public class ColorOvertime : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        _img.color = Color.Lerp(StartColor, EndColor, _slide.value/totaltime);
+        if (WeaponRequest.enabled==true)
+        {
+            _img.color = Color.Lerp(StartColor, EndColor, _slide.value / totaltime);
 
-        lerpTime += Time.deltaTime;
+            lerpTime += Time.deltaTime;
 
-        _slide.value = lerpTime;
+            _slide.value = lerpTime;
 
 
-        lerpTime = Mathf.Clamp(lerpTime, 0, totaltime);
+            lerpTime = Mathf.Clamp(lerpTime, 0, totaltime);
+        }
+
+        if(WeaponRequest.enabled==false)
+        {
+            _slide.value = 0;
+        }
     }
+
+
+    
 }
 
 
