@@ -14,8 +14,6 @@ public class Casting : MonoBehaviour
     public bool Tin;
     public bool Copper;
 
-    public bool metal;
-    public bool outputMetal;
     
     public float coolDownTimer;
     public float readyTimer;
