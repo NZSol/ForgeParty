@@ -16,6 +16,7 @@ public class Interaction : MonoBehaviour
     LayerMask castLayer;
     LayerMask furnaceLayer;
     LayerMask anvilLayer;
+    LayerMask bellowsLayer;
 
     //Distance Checks
     public float range = 2.5f;
@@ -82,7 +83,7 @@ public class Interaction : MonoBehaviour
     }
 
 
-    //Get All Furnaces
+    //Get All Furnaces //Assign Active Furnace
     GameObject[] Furnaces(int layer)
     {
         var furnaceArray = FindObjectsOfType(typeof(GameObject)) as GameObject[];
@@ -102,8 +103,25 @@ public class Interaction : MonoBehaviour
     }
     public List<GameObject> FurnaceList = new List<GameObject>();
     GameObject activeForge;
+    GameObject ClosestForge(GameObject[] forges)
+    {
+        GameObject Forge = null;
+        float minDist = Mathf.Infinity;
+        Vector3 curPos = transform.position;
+        foreach (GameObject t in forges)
+        {
+            float dist = Vector3.Distance(t.transform.position, curPos);
+            if (dist < minDist)
+            {
+                Forge = t;
+                minDist = dist;
+            }
+        }
+        return Forge;
+    }
 
-    //Get All Anvils
+
+    //Get All Anvils //Assign Active Anvil
     GameObject[] Anvils(int layer)
     {
         var anvilArray = FindObjectsOfType(typeof(GameObject)) as GameObject[];
@@ -123,6 +141,60 @@ public class Interaction : MonoBehaviour
     }
     public List<GameObject> AnvilList = new List<GameObject>();
     GameObject activeAnvil;
+    GameObject ClosestAnvil(GameObject[] Anvils)
+    {
+        GameObject Anvil = null;
+        float minDist = Mathf.Infinity;
+        Vector3 curPos = transform.position;
+        foreach (GameObject t in Anvils)
+        {
+            float dist = Vector3.Distance(t.transform.position, curPos);
+            if (dist < minDist)
+            {
+                Anvil = t;
+                minDist = dist;
+            }
+        }
+        return Anvil;
+    }
+
+
+    //Get All Bellows //Assign Active Bellows
+    GameObject[] Bellows(int layer)
+    {
+        var bellowsArray = FindObjectsOfType(typeof(GameObject)) as GameObject[];
+        var bellowsList = new List<GameObject>();
+        for (int i = 0; i < bellowsArray.Length; i++)
+        {
+            if (bellowsArray[i].layer == layer)
+            {
+                bellowsList.Add(bellowsArray[i]);
+            }
+        }
+        if (bellowsList.Count == 0)
+        {
+            return null;
+        }
+        return bellowsList.ToArray();
+    }
+    public List<GameObject> BellowsList = new List<GameObject>();
+    GameObject activeBellows;
+    GameObject ClosestBellows(GameObject[] Bellows)
+    {
+        GameObject _bellows = null;
+        float minDist = Mathf.Infinity;
+        Vector3 curPos = transform.position;
+        foreach (GameObject t in Bellows)
+        {
+            float dist = Vector3.Distance(t.transform.position, curPos);
+            if (dist < minDist)
+            {
+                _bellows = t;
+                minDist = dist;
+            }
+        }
+        return _bellows;
+    }
 
     //Scripts
     Bellows bellowsScript;
@@ -133,50 +205,17 @@ public class Interaction : MonoBehaviour
 
     GameObject heldObj;
 
-    //NearestForge
-    GameObject ClosestForge(GameObject[] forges)
-    {
-        GameObject tMin = null;
-        float minDist = Mathf.Infinity;
-        Vector3 curPos = transform.position;
-        foreach (GameObject t in forges)
-        {
-            float dist = Vector3.Distance(t.transform.position, curPos);
-            if (dist < minDist)
-            {
-                tMin = t;
-                minDist = dist;
-            }
-        }
-        return tMin;
-    }
-
     //Nearest Anvil
-    GameObject ClosestAnvil(GameObject[] Anvils)
-    {
-        GameObject tMin = null;
-        float minDist = Mathf.Infinity;
-        Vector3 curPos = transform.position;
-        foreach (GameObject t in Anvils)
-        {
-            float dist = Vector3.Distance(t.transform.position, curPos);
-            if (dist < minDist)
-            {
-                tMin = t;
-                minDist = dist;
-            }
-        }
-        return tMin;
-    }
 
+    Vector3 holdPos;
 
     // Start is called before the first frame update
     void Start()
     {
         if (active)
         {
-            bellows = GameObject.FindWithTag("Bellow");
-            bellowsScript = bellows.GetComponent<Bellows>();
+            bellowsLayer = LayerMask.NameToLayer("Bellows");
+            BellowsList = Bellows(bellowsLayer).ToList();
 
             oreLayer = LayerMask.NameToLayer("Barrels");
             foreach (GameObject bucket in OreBuckets(oreLayer))
@@ -235,6 +274,7 @@ public class Interaction : MonoBehaviour
 
     void buttonPress()
     {
+        holdPos = new Vector3(transform.position.x, transform.position.y + 1.25f, transform.position.z);
         ForgeDist = Vector3.Distance(transform.position, activeForge.transform.position);
         AnvilDist = Vector3.Distance(transform.position, activeAnvil.transform.position);
                 //Get Distance of casts
@@ -283,6 +323,11 @@ public class Interaction : MonoBehaviour
                 ForgeState = 7;
             }
 
+            if (AnvilDist < range)
+            {
+                ForgeState = 10;
+            }
+
         }
 
         SwitchTime();
@@ -299,7 +344,7 @@ public class Interaction : MonoBehaviour
         {
             if (context.started)
             {
-                BellowsDist = Vector3.Distance(transform.position, bellows.transform.position);
+                BellowsDist = Vector3.Distance(transform.position, activeBellows.transform.position);
                 AnvilDist = Vector3.Distance(transform.position, activeAnvil.transform.position);
 
                 if (BellowsDist < range)
@@ -315,8 +360,9 @@ public class Interaction : MonoBehaviour
             {
                 forgeCount = false;
                 anvilCount = false;
-                bellowsScript.TempIncrease = false;
+                activeBellows.GetComponent<Bellows>().TempIncrease = false;
                 ForgeState = 0;
+                activeAnvil.GetComponent<Anvil>().Hammering = false;
             }
         }
     }
@@ -326,6 +372,11 @@ public class Interaction : MonoBehaviour
     {
         activeForge = ClosestForge(FurnaceList.ToArray());
         activeAnvil = ClosestAnvil(AnvilList.ToArray());
+        activeBellows = ClosestBellows(BellowsList.ToArray());
+        if (BellowsDist > range && forgeCount)
+        {
+            forgeCount = false;
+        }
 
         if (forgeCount)
         {
@@ -338,7 +389,6 @@ public class Interaction : MonoBehaviour
             SwitchTime();
         }
     }
-    
     
     
     void SwitchTime()
@@ -363,12 +413,12 @@ public class Interaction : MonoBehaviour
 
                     if (SnDist < range)
                     {
-                        heldObj = Instantiate(SnOre, new Vector3(transform.position.x, transform.position.y + 1.25f, transform.position.z), transform.rotation, gameObject.transform);
+                        heldObj = Instantiate(SnOre, holdPos, transform.rotation, gameObject.transform);
                         heldObj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
                     }
                     if (CuDist < range)
                     {
-                        heldObj = Instantiate(CuOre, new Vector3(transform.position.x, transform.position.y + 1.25f, transform.position.z), transform.rotation, gameObject.transform);
+                        heldObj = Instantiate(CuOre, holdPos, transform.rotation, gameObject.transform);
                         heldObj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
                     }
                 }
@@ -398,17 +448,17 @@ public class Interaction : MonoBehaviour
 
             //Bellows State
             case 4:
-                BellowsDist = Vector3.Distance(transform.position, bellows.transform.position);
+                BellowsDist = Vector3.Distance(transform.position, activeBellows.transform.position);
 
                 if (BellowsDist > range)
                 {
-                    bellowsScript.TempIncrease = false;
+                    activeBellows.GetComponent<Bellows>().TempIncrease = false;
                     ForgeState = 0;
                     break;
                 }
                 if (forgeCount)
                 {
-                    bellowsScript.TempIncrease = true;
+                    activeBellows.GetComponent<Bellows>().TempIncrease = true;
                 }
 
                 ForgeState = 0;
@@ -419,10 +469,15 @@ public class Interaction : MonoBehaviour
                 activeForge.GetComponent<ForgeContents>().SnMet = false;
                 activeForge.GetComponent<ForgeContents>().CuMet = false;
                 activeForge.GetComponent<ForgeContents>().BronzeAll = false;
-
-                heldObj = Instantiate(activeForge.GetComponent<ForgeContents>().instanceObj, new Vector3(transform.position.x, transform.position.y + 1.25f, transform.position.z), transform.rotation, gameObject.transform);
+                if (activeForge.GetComponent<ForgeContents>().instanceObj != null)
+                {
+                    heldObj = Instantiate(activeForge.GetComponent<ForgeContents>().instanceObj, holdPos, transform.rotation, gameObject.transform);
+                }
                 activeForge.GetComponent<ForgeContents>().instanceObj = null;
-                heldObj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+                if (heldObj != null)
+                {
+                    heldObj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+                }
 
                 ForgeState = 0;
                 break;
@@ -493,15 +548,27 @@ public class Interaction : MonoBehaviour
             case 7:
                 if (SwordDist < AxeDist)
                 {
-                    heldObj = Instantiate(castSword.outputObj, new Vector3(transform.position.x, transform.position.y + 1.25f, transform.position.z), transform.rotation, gameObject.transform);
+                    if (castSword.outputObj != null)
+                    {
+                        heldObj = Instantiate(castSword.outputObj, holdPos, transform.rotation, gameObject.transform);
+                    }
                     castSword.outputObj = null;
-                    heldObj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+                    if (heldObj != null)
+                    {
+                        heldObj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+                    }
                 }
                 else
                 {
-                    heldObj = Instantiate(castAxe.outputObj, new Vector3(transform.position.x, transform.position.y + 1.25f, transform.position.z), transform.rotation, gameObject.transform);
+                    if (castAxe.outputObj != null)
+                    {
+                        heldObj = Instantiate(castAxe.outputObj, holdPos, transform.rotation, gameObject.transform);
+                    }
                     castAxe.outputObj = null;
-                    heldObj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+                    if (heldObj != null)
+                    {
+                        heldObj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+                    }
                 }
                 break;
 
@@ -509,28 +576,37 @@ public class Interaction : MonoBehaviour
             case 8:
 
                 //Check weapon type and material
-                if (heldObj.tag == "Sword")
+                if (heldObj != null)
                 {
-                    activeAnvil.GetComponent<Anvil>().sword = true;
-                    Destroy(heldObj);
-                }
-                else if (heldObj.tag == "Axe")
-                {
-                    activeAnvil.GetComponent<Anvil>().axe = true;
-                    Destroy(heldObj);
-                }
+                    print(heldObj.name);
 
-                if (heldObj.tag == "Bronze")
-                {
-                    activeAnvil.GetComponent<Anvil>().material = 3;
-                }
-                else if (heldObj.tag == "Copper")
-                {
-                    activeAnvil.GetComponent<Anvil>().material = 2;
-                }
-                else if (heldObj.tag == "Tin")
-                {
-                    activeAnvil.GetComponent<Anvil>().material = 1;
+                    MatName = heldObj.tag;
+                    if (heldObj.name == MatName + "Sword(Clone)")
+                    {
+                        activeAnvil.GetComponent<Anvil>().sword = true;
+                        print("Hit Sword");
+                    }
+                    else if (heldObj.name == MatName + "Axe(Clone)")
+                    {
+                        activeAnvil.GetComponent<Anvil>().axe = true;
+                        print("Hit Axe");
+                    }
+
+                    if (heldObj.tag == "Bronze")
+                    {
+                        activeAnvil.GetComponent<Anvil>().material = 3;
+                    }
+                    else if (heldObj.tag == "Copper")
+                    {
+                        activeAnvil.GetComponent<Anvil>().material = 2;
+                    }
+                    else if (heldObj.tag == "Tin")
+                    {
+                        activeAnvil.GetComponent<Anvil>().material = 1;
+                    }
+                    
+
+                    Destroy(heldObj);
                 }
 
                 break;
@@ -543,7 +619,11 @@ public class Interaction : MonoBehaviour
 
             //Pickup Anvil
             case 10:
-
+                if (activeAnvil.GetComponent<Anvil>().outputObj != null)
+                {
+                    heldObj = Instantiate(activeAnvil.GetComponent<Anvil>().outputObj, holdPos, transform.rotation, gameObject.transform);
+                    heldObj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+                }
                 break;
 
             //Quench
@@ -564,5 +644,7 @@ public class Interaction : MonoBehaviour
 
         }
     }
+
+    string MatName;
 
 }

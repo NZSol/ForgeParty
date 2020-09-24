@@ -31,7 +31,10 @@ public class Anvil : MonoBehaviour
 
     [SerializeField] GameObject hammeredSwordBrze, hammeredSwordCu, hammeredSwordSn;
     [SerializeField] GameObject hammeredAxeBrze, hammeredAxeCu, hammeredAxeSn;
-    [SerializeField] GameObject OutputObj;
+    public GameObject outputObj;
+
+    public string MatName;
+
 
 
     // Start is called before the first frame update
@@ -43,64 +46,88 @@ public class Anvil : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Progress += Time.deltaTime;
+        if ((axe || sword) && Hammering)
+        {
+            Progress += Time.deltaTime;
+        }
+
         Progress = Mathf.Clamp(Progress, 0, _slideMax);
 
-        if (_slide != null)
+        _slide.value = Progress;
+        if (_slide.value == _slideMax)
         {
-            _slide.value = Progress;
-            if (_slide.value == _slideMax)
+            if (axe)
             {
-                if (axe)
-                {
-                    axe = false;
-                    sharpAxe = true;
-                }
-                else if (sword)
-                {
-                    sword = false;
-                    sharpSword = true;
-                }
+                axe = false;
+                sharpAxe = true;
             }
+            else if (sword)
+            {
+                sword = false;
+                sharpSword = true;
+            }
+            Progress = 0;
+            RunSwitch();
         }
 
 
+    }
+
+    void RunSwitch()
+    {
         switch (material)
         {
             //Tin
             case 1:
                 if (sharpAxe)
                 {
-                    OutputObj = hammeredAxeSn;
+                    outputObj = hammeredAxeSn;
                 }
                 else if (sharpSword)
                 {
-                    OutputObj = hammeredSwordSn;
+                    outputObj = hammeredSwordSn;
                 }
+                sharpAxe = false;
+                sharpSword = false;
+                axe = false;
+                sword = false;
+
                 break;
 
             case 2:
                 if (sharpAxe)
                 {
-                    OutputObj = hammeredAxeCu;
+                    outputObj = hammeredAxeCu;
                 }
                 else if (sharpSword)
                 {
-                    OutputObj = hammeredSwordCu;
+                    outputObj = hammeredSwordCu;
                 }
+                sharpAxe = false;
+                sharpSword = false;
+                axe = false;
+                sword = false;
+
                 break;
 
             case 3:
                 if (sharpAxe)
                 {
-                    OutputObj = hammeredAxeBrze;
+                    outputObj = hammeredAxeBrze;
                 }
                 else if (sharpSword)
                 {
-                    OutputObj = hammeredSwordBrze;
+                    outputObj = hammeredSwordBrze;
                 }
+                sharpAxe = false;
+                sharpSword = false;
+                axe = false;
+                sword = false;
+
+                break;
+
+            default:
                 break;
         }
-
     }
 }

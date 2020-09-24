@@ -7,7 +7,7 @@ public class Bellows : MonoBehaviour
 {
     [SerializeField] Slider _slide;
 
-    GameObject Forge;
+    [SerializeField] GameObject Forge;
     ForgeContents FC;
 
     public float Temperature;
@@ -16,7 +16,6 @@ public class Bellows : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Forge = GameObject.FindWithTag("Forge");
         FC = Forge.GetComponent<ForgeContents>();
 
     }
