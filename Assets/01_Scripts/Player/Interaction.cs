@@ -21,6 +21,7 @@ public class Interaction : MonoBehaviour
 
     //Distance Checks
     public float range = 2.5f;
+    public float quenchRange = 5;
 
     float CuDist;
     float SnDist;
@@ -30,7 +31,6 @@ public class Interaction : MonoBehaviour
     float AxeDist;
     float AnvilDist;
     float quenchDist;
-
 
     public int ForgeState;
 
@@ -45,7 +45,10 @@ public class Interaction : MonoBehaviour
     GameObject CuBucket, SnBucket;
     GameObject swordCast, AxeCast;
     GameObject anvil;
-    
+
+
+    GameObject PostOBJ;
+
     //Get All Casts
     GameObject[] Casts(int layer)
     {
@@ -217,7 +220,7 @@ public class Interaction : MonoBehaviour
         return QuenchList.ToArray();
     }
     public List<GameObject> QuenchList = new List<GameObject>();
-    GameObject activeQuenchBarrel;
+    public GameObject activeQuenchBarrel;
     GameObject ClosestQuench(GameObject[] Quench)
     {
         GameObject _quench = null;
@@ -291,7 +294,8 @@ public class Interaction : MonoBehaviour
             furnaceLayer = LayerMask.NameToLayer("Forges");
             FurnaceList = Furnaces(furnaceLayer).ToList();
 
-            quenchLayer = LayerMask.NameToLayer("QuenchBarrels");
+            quenchLayer = LayerMask.NameToLayer("QuenchBarrel");
+            QuenchList = Quench(quenchLayer).ToList();
         }
     }
 
@@ -388,7 +392,6 @@ public class Interaction : MonoBehaviour
             {
                 BellowsDist = Vector3.Distance(transform.position, activeBellows.transform.position);
                 AnvilDist = Vector3.Distance(transform.position, activeAnvil.transform.position);
-                quenchDist = Vector3.Distance(transform.position, activeQuenchBarrel.transform.position);
 
                 if (BellowsDist < range)
                 {
@@ -398,9 +401,10 @@ public class Interaction : MonoBehaviour
                 {
                     anvilCount = true;
                 }
-                if (quenchDist < range && heldObj)
+                if (quenchDist < quenchRange)
                 {
                     quenchCount = true;
+                    print("Hit");
                 }
             }
             if (context.canceled)
@@ -426,9 +430,25 @@ public class Interaction : MonoBehaviour
         activeBellows = ClosestBellows(BellowsList.ToArray());
         activeQuenchBarrel = ClosestQuench(QuenchList.ToArray());
 
+
+        quenchDist = Vector3.Distance(transform.position, activeQuenchBarrel.transform.position);
+
+        if (heldObj != null && )
+        {
+            PostOBJ = heldObj;
+        }
+
+        print(quenchDist);
+
+
         if (BellowsDist > range && forgeCount)
         {
             forgeCount = false;
+        }
+        if (quenchDist > quenchRange && quenchCount)
+        {
+            quenchCount = false;
+            activeQuenchBarrel.GetComponent<QuenchBucket>().Count = false;
         }
         
         if (forgeCount)
@@ -632,7 +652,7 @@ public class Interaction : MonoBehaviour
 
             //Deliver Anvil
             case 8:
-
+                activeAnvil.GetComponent<Anvil>().inputObj = heldObj;
                 //Check weapon type and material
                 if (heldObj != null)
                 {
@@ -681,24 +701,24 @@ public class Interaction : MonoBehaviour
                 {
                     heldObj = Instantiate(activeAnvil.GetComponent<Anvil>().outputObj, holdPos, transform.rotation, gameObject.transform);
                     heldObj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+                    activeAnvil.GetComponent<Anvil>().inputObj = null;
                 }
                 break;
 
             //Quench
             case 11:
-                if (heldObj != null)
-                {
-                    activeQuenchBarrel.GetComponent<QuenchBucket>().item = heldObj;
-                    Destroy(heldObj);
-                }
                 activeQuenchBarrel.GetComponent<QuenchBucket>().Count = true;
 
-
-                if (quenchDist < range && activeQuenchBarrel.GetComponent<QuenchBucket>().item != null && collectItem)
+                if (activeQuenchBarrel.GetComponent<QuenchBucket>().Count == true)
+                {
+                    activeQuenchBarrel.GetComponent<QuenchBucket>().item = heldObj;
+                    Invoke("destoryObj", 0.5f);
+                    Destroy(heldObj);
+                }
+                else
                 {
                     heldObj = Instantiate(activeQuenchBarrel.GetComponent<QuenchBucket>().item, holdPos, transform.rotation, gameObject.transform);
                     activeQuenchBarrel.GetComponent<QuenchBucket>().item = null;
-                    collectItem = false;
                 }
 
                 break;
@@ -715,6 +735,11 @@ public class Interaction : MonoBehaviour
 
 
         }
+    }
+
+    void destroyObj()
+    {
+        Destroy(heldObj);
     }
 
     string MatName;

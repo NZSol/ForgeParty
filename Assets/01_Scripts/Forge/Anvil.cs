@@ -5,16 +5,13 @@ using UnityEngine.UI;
 
 public class Anvil : MonoBehaviour
 {
+
+    public GameObject inputObj = null;
     public bool Hammering;
 
     //Weapon Bools
     public bool sword;
     public bool axe;
-
-    //Material Bools
-    public bool copper;
-    public bool bronze;
-    public bool tin;
 
 
     bool sharpAxe;
