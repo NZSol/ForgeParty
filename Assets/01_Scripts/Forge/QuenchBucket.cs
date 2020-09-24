@@ -12,7 +12,7 @@ public class QuenchBucket : MonoBehaviour
     float timer;
     float maxVal;
 
-    GameObject item;
+    public GameObject item;
 
     // Start is called before the first frame update
     void Start()

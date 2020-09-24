@@ -17,6 +17,7 @@ public class Interaction : MonoBehaviour
     LayerMask furnaceLayer;
     LayerMask anvilLayer;
     LayerMask bellowsLayer;
+    LayerMask quenchLayer;
 
     //Distance Checks
     public float range = 2.5f;
@@ -28,6 +29,7 @@ public class Interaction : MonoBehaviour
     float SwordDist;
     float AxeDist;
     float AnvilDist;
+    float quenchDist;
 
 
     public int ForgeState;
@@ -196,7 +198,7 @@ public class Interaction : MonoBehaviour
         return _bellows;
     }
 
-    //Get All Bellows //Assign Active Bellows
+    //Get All QuenchBarrels //Assign Active QuenchBarrels
     GameObject[] Quench(int layer)
     {
         var QuenchArray = FindObjectsOfType(typeof(GameObject)) as GameObject[];
@@ -215,7 +217,7 @@ public class Interaction : MonoBehaviour
         return QuenchList.ToArray();
     }
     public List<GameObject> QuenchList = new List<GameObject>();
-    GameObject QuenchBellows;
+    GameObject activeQuenchBarrel;
     GameObject ClosestQuench(GameObject[] Quench)
     {
         GameObject _quench = null;
@@ -376,6 +378,7 @@ public class Interaction : MonoBehaviour
     public bool forgeCount = false;
     public bool anvilCount = false;
     public bool quenchCount = false;
+    bool collectItem = false;
 
     public void InteractHold(CallbackContext context)
     {
@@ -385,7 +388,7 @@ public class Interaction : MonoBehaviour
             {
                 BellowsDist = Vector3.Distance(transform.position, activeBellows.transform.position);
                 AnvilDist = Vector3.Distance(transform.position, activeAnvil.transform.position);
-                quenchDist = Vector3.Distance(transform.position, activeQuench.transform.position);
+                quenchDist = Vector3.Distance(transform.position, activeQuenchBarrel.transform.position);
 
                 if (BellowsDist < range)
                 {
@@ -402,16 +405,15 @@ public class Interaction : MonoBehaviour
             }
             if (context.canceled)
             {
+                collectItem = true;
                 forgeCount = false;
                 anvilCount = false;
                 quenchCount = false;
-                if (activeQuenchBarrel < range && activeQuenchBarrel.GetComponent<QuenchBucket>().item != null)
-                {
-                    heldObj = Instantiate(activeQuenchBarrel.GetComponent<QuenchBucket>().item, holdPos, transform.rotation, gameObject.transform);
-                }
                 activeBellows.GetComponent<Bellows>().TempIncrease = false;
                 ForgeState = 0;
                 activeAnvil.GetComponent<Anvil>().Hammering = false;
+                activeQuenchBarrel.GetComponent<QuenchBucket>().Count = false;
+                
             }
         }
     }
@@ -422,7 +424,7 @@ public class Interaction : MonoBehaviour
         activeForge = ClosestForge(FurnaceList.ToArray());
         activeAnvil = ClosestAnvil(AnvilList.ToArray());
         activeBellows = ClosestBellows(BellowsList.ToArray());
-        activeQuenchBucket = ClosestAnvilQuench(QuenchList.ToArray());
+        activeQuenchBarrel = ClosestQuench(QuenchList.ToArray());
 
         if (BellowsDist > range && forgeCount)
         {
@@ -686,9 +688,18 @@ public class Interaction : MonoBehaviour
             case 11:
                 if (heldObj != null)
                 {
+                    activeQuenchBarrel.GetComponent<QuenchBucket>().item = heldObj;
                     Destroy(heldObj);
                 }
-                activeQuenchBucket.GetComponent<QuenchBucket>().Count = true;
+                activeQuenchBarrel.GetComponent<QuenchBucket>().Count = true;
+
+
+                if (quenchDist < range && activeQuenchBarrel.GetComponent<QuenchBucket>().item != null && collectItem)
+                {
+                    heldObj = Instantiate(activeQuenchBarrel.GetComponent<QuenchBucket>().item, holdPos, transform.rotation, gameObject.transform);
+                    activeQuenchBarrel.GetComponent<QuenchBucket>().item = null;
+                    collectItem = false;
+                }
 
                 break;
 
