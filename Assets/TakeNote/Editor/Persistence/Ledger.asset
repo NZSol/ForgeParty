@@ -24,16 +24,39 @@ MonoBehaviour:
     IsDeferred: 0
     IsColored: 1
     DrawColor: {r: 0.8867924, g: 0.5568387, b: 0.52287287, a: 1}
-  - Title: NPC Requests
-    CreationDate: 23/09/2020 | 11:45 a.m.
+  - Title: forge meter
+    CreationDate: 23/09/2020 | 9:15 a.m.
     CompletionDate: 
     HasDetails: 1
-    Details: "Inheritance  - class type\nInstantiation  - character prefab\nWeapon
-      Type\nTimer\nModel\nCollected Bool\n\tif collected, leave\n\telse wait\n\tif
-      Time > value\n\t\tflee"
+    Details: 'hold temperature over time.
+
+      Each mat has  different melting points this means they have to be in the furnace
+      for different amounts of time.
+
+      get the furnace to be hot and keep it hot for X amount of time depending on
+      the material.
+
+
+      when reaching high temperature and right amount of time turn indicator green'
     IsCompleted: 0
     IsDeferred: 0
     IsColored: 1
-    DrawColor: {r: 1, g: 0.6628423, b: 0, a: 1}
+    DrawColor: {r: 0.53159374, g: 0.9339623, b: 0.20705767, a: 1}
+  - Title: Sciptable objects for Materials
+    CreationDate: 23/09/2020 | 9:25 a.m.
+    CompletionDate: 
+    HasDetails: 1
+    Details: "if the materials are scriptable objects we can create a lot of materials
+      with different models, and set temperature/time values for each , we would need
+      to make the furnace recognize the time and what material is it (by the name)
+      \n\nif it's a mixture of 2 materials, the furnace should recognize both  objects
+      and , at the end of the melting process deliver the mixture(another scriptable
+      mat with the right characteristics)\nEX:\nMat1:  X\nDurability:1\nTimeInFurnace:5sec\n\n\nMat2:
+      \  Y\nDurability:2\nTimeInFurnace:7sec\n\nMat3:   Z\nDurabilyty: 3\nTimeInFurnace:10
+      sec\n\n\nFurnace:\n\n\nX  +  Y = Z"
+    IsCompleted: 0
+    IsDeferred: 0
+    IsColored: 1
+    DrawColor: {r: 0.7559455, g: 0.64907444, b: 0.9622642, a: 1}
   CompletedTasks: []
   DeferredTasks: []
