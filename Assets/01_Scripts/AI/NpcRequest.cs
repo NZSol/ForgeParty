@@ -57,7 +57,7 @@ public class NpcRequest : MonoBehaviour
         }
 
   
-        if (GotWeapon == false && Timer.value >= 10)
+        if (GotWeapon == false && Timer.value >= 60)
         {
             
             Flee();
