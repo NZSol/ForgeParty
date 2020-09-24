@@ -9,7 +9,11 @@ public class NpcRequest : MonoBehaviour
     public Canvas Bubble;
     public Slider Timer;
     public bool GotWeapon;
-    public GameObject Battlefield;
+    public Transform Battlefield;
+    public Transform ForgeRequestZone;
+    public float speed = 1f;
+    public float startTime;
+   private float LengthJourney;
 
 
 
@@ -17,11 +21,17 @@ public class NpcRequest : MonoBehaviour
     private void Start()
     {
         Bubble.enabled = false;
+        startTime = Time.time;
+        GotWeapon = false;
+        LengthJourney = Vector3.Distance(ForgeRequestZone.position, Battlefield.position);
+       
+     
+
     }
 
     private void OnTriggerEnter(Collider other) //Trigger Zone Near benches
     {
-        GotWeapon = false;
+       
 
        
        if (other.tag == "Sword")
@@ -40,6 +50,12 @@ public class NpcRequest : MonoBehaviour
 
     private void Update()
     {
+        if (GotWeapon == false && Timer.value <=10)
+        {
+            float distCovered = (Time.time - startTime) * speed;
+            gameObject.transform.position = Vector3.Lerp(gameObject.transform.position, ForgeRequestZone.position, (distCovered / LengthJourney));
+        }
+
   
         if (GotWeapon == false && Timer.value >= 10)
         {
@@ -47,10 +63,16 @@ public class NpcRequest : MonoBehaviour
             Flee();
         }
 
+        
+
+
+
         if (GotWeapon == true)
         {
             BacktoBattle();
+          
         }
+
     }
 
     public void Flee()
@@ -66,7 +88,8 @@ public class NpcRequest : MonoBehaviour
     {
         Debug.Log("aaaaaaaaaaaaaah!");
         Bubble.enabled = false;
-        gameObject.transform.position = Battlefield.transform.position;
-
+        float distCovered = (Time.time - startTime) * speed;
+        gameObject.transform.position = Vector3.Lerp(ForgeRequestZone.position, Battlefield.position, (distCovered / LengthJourney));
+      ;
     }
 }
