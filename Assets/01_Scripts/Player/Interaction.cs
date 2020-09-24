@@ -196,6 +196,43 @@ public class Interaction : MonoBehaviour
         return _bellows;
     }
 
+    //Get All Bellows //Assign Active Bellows
+    GameObject[] Quench(int layer)
+    {
+        var QuenchArray = FindObjectsOfType(typeof(GameObject)) as GameObject[];
+        var QuenchList = new List<GameObject>();
+        for (int i = 0; i < QuenchArray.Length; i++)
+        {
+            if (QuenchArray[i].layer == layer)
+            {
+                QuenchList.Add(QuenchArray[i]);
+            }
+        }
+        if (QuenchList.Count == 0)
+        {
+            return null;
+        }
+        return QuenchList.ToArray();
+    }
+    public List<GameObject> QuenchList = new List<GameObject>();
+    GameObject QuenchBellows;
+    GameObject ClosestQuench(GameObject[] Quench)
+    {
+        GameObject _quench = null;
+        float minDist = Mathf.Infinity;
+        Vector3 curPos = transform.position;
+        foreach (GameObject t in Quench)
+        {
+            float dist = Vector3.Distance(t.transform.position, curPos);
+            if (dist < minDist)
+            {
+                _quench = t;
+                minDist = dist;
+            }
+        }
+        return _quench;
+    }
+
     //Scripts
     Bellows bellowsScript;
     Casting castAxe;
@@ -252,6 +289,7 @@ public class Interaction : MonoBehaviour
             furnaceLayer = LayerMask.NameToLayer("Forges");
             FurnaceList = Furnaces(furnaceLayer).ToList();
 
+            quenchLayer = LayerMask.NameToLayer("QuenchBarrels");
         }
     }
 
@@ -337,6 +375,7 @@ public class Interaction : MonoBehaviour
     float timer = 0;
     public bool forgeCount = false;
     public bool anvilCount = false;
+    public bool quenchCount = false;
 
     public void InteractHold(CallbackContext context)
     {
@@ -346,6 +385,7 @@ public class Interaction : MonoBehaviour
             {
                 BellowsDist = Vector3.Distance(transform.position, activeBellows.transform.position);
                 AnvilDist = Vector3.Distance(transform.position, activeAnvil.transform.position);
+                quenchDist = Vector3.Distance(transform.position, activeQuench.transform.position);
 
                 if (BellowsDist < range)
                 {
@@ -355,11 +395,20 @@ public class Interaction : MonoBehaviour
                 {
                     anvilCount = true;
                 }
+                if (quenchDist < range && heldObj)
+                {
+                    quenchCount = true;
+                }
             }
             if (context.canceled)
             {
                 forgeCount = false;
                 anvilCount = false;
+                quenchCount = false;
+                if (activeQuenchBarrel < range && activeQuenchBarrel.GetComponent<QuenchBucket>().item != null)
+                {
+                    heldObj = Instantiate(activeQuenchBarrel.GetComponent<QuenchBucket>().item, holdPos, transform.rotation, gameObject.transform);
+                }
                 activeBellows.GetComponent<Bellows>().TempIncrease = false;
                 ForgeState = 0;
                 activeAnvil.GetComponent<Anvil>().Hammering = false;
@@ -373,11 +422,13 @@ public class Interaction : MonoBehaviour
         activeForge = ClosestForge(FurnaceList.ToArray());
         activeAnvil = ClosestAnvil(AnvilList.ToArray());
         activeBellows = ClosestBellows(BellowsList.ToArray());
+        activeQuenchBucket = ClosestAnvilQuench(QuenchList.ToArray());
+
         if (BellowsDist > range && forgeCount)
         {
             forgeCount = false;
         }
-
+        
         if (forgeCount)
         {
             ForgeState = 4;
@@ -386,6 +437,11 @@ public class Interaction : MonoBehaviour
         if (anvilCount)
         {
             ForgeState = 9;
+            SwitchTime();
+        }
+        if (quenchCount)
+        {
+            ForgeState = 11;
             SwitchTime();
         }
     }
@@ -628,7 +684,12 @@ public class Interaction : MonoBehaviour
 
             //Quench
             case 11:
-                
+                if (heldObj != null)
+                {
+                    Destroy(heldObj);
+                }
+                activeQuenchBucket.GetComponent<QuenchBucket>().Count = true;
+
                 break;
 
                 //Deliver
