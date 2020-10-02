@@ -433,7 +433,7 @@ public class Interaction : MonoBehaviour
 
         quenchDist = Vector3.Distance(transform.position, activeQuenchBarrel.transform.position);
 
-        if (heldObj != null && )
+        if (heldObj != null)
         {
             PostOBJ = heldObj;
         }
