@@ -22,7 +22,7 @@ public class BindToPlayer : MonoBehaviour
         players = GameObject.FindGameObjectsWithTag("Player").ToList();
         foreach (GameObject player in players)
         {
-            player.GetComponent<Interaction>().active = true;
+            player.GetComponent<Interact>().active = true;
         }
     }
 

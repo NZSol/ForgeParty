@@ -11,7 +11,7 @@ public class Interaction : MonoBehaviour
     bool inputArmed = true;
     bool inRangeForge;
 
-    //Layaer Masks
+    //Layer Masks
     LayerMask oreLayer;
     LayerMask castLayer;
     LayerMask furnaceLayer;
