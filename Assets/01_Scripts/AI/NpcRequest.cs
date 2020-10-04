@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.AI;
 
 
 public class NpcRequest : MonoBehaviour
@@ -11,19 +12,25 @@ public class NpcRequest : MonoBehaviour
     public bool GotWeapon;
     public Transform Battlefield;
     public Transform ForgeRequestZone;
+    public Transform OutOfBattle;
     public float speed = 1f;
     public float startTime;
-   private float LengthJourney;
-
+    NavMeshAgent agent;
+    
 
 
 
     private void Start()
     {
+       agent=  GetComponent<NavMeshAgent>();
+
+        
+
+
         Bubble.enabled = false;
         startTime = Time.time;
         GotWeapon = false;
-        LengthJourney = Vector3.Distance(ForgeRequestZone.position, Battlefield.position);
+       
        
      
 
@@ -38,11 +45,12 @@ public class NpcRequest : MonoBehaviour
        {
             GotWeapon = true;
             Destroy(other.gameObject);
+            
         }
 
         if (other.tag == "requestZone")
         {
-            GotWeapon = false;
+           
 
             Bubble.enabled = true;
         }
@@ -52,12 +60,12 @@ public class NpcRequest : MonoBehaviour
     {
         if (GotWeapon == false && Timer.value <=10)
         {
-            float distCovered = (Time.time - startTime) * speed;
-            gameObject.transform.position = Vector3.Lerp(gameObject.transform.position, ForgeRequestZone.position, (distCovered / LengthJourney));
+            agent.destination = ForgeRequestZone.position;
+           
         }
 
   
-        if (GotWeapon == false && Timer.value >= 60)
+        if (GotWeapon == false && Timer.value >= 10)
         {
             
             Flee();
@@ -77,10 +85,12 @@ public class NpcRequest : MonoBehaviour
 
     public void Flee()
     {
+        agent.destination = OutOfBattle.position;
         Bubble.enabled = false;  
         Debug.Log("Leaves");
-       Destroy(gameObject);
-        
+
+
+       
     }
 
 
@@ -88,8 +98,11 @@ public class NpcRequest : MonoBehaviour
     {
         Debug.Log("aaaaaaaaaaaaaah!");
         Bubble.enabled = false;
-        float distCovered = (Time.time - startTime) * speed;
-        gameObject.transform.position = Vector3.Lerp(ForgeRequestZone.position, Battlefield.position, (distCovered / LengthJourney));
-      ;
+
+        agent.destination = Battlefield.position;
+
+
+
+    ;
     }
 }
