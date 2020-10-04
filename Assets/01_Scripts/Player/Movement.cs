@@ -22,22 +22,16 @@ public class Movement : MonoBehaviour
     bool inputArmed = true;
     bool count;
 
-
-    public Slider slide;
-    public Text text;
+    Vector3 spawn = new Vector3(0, 1f, 10f);
 
     // Start is called before the first frame update
     void Start()
     {
         Player = this.gameObject;
         rb = Player.GetComponent<Rigidbody>();
-        text.enabled = false;
-        Player.transform.position = new Vector3(45.7f, 5.84f, 18.5f);
+        gameObject.transform.position = spawn;
     }
 
-    private void OnEnable()
-    {
-    }
 
     public void Move(CallbackContext context)
     {
