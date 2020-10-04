@@ -403,8 +403,9 @@ public class Interaction : MonoBehaviour
                 }
                 if (quenchDist < quenchRange)
                 {
+                    activeQuenchBarrel.GetComponent<QuenchBucket>().item = heldObj;
+                    heldObj.SetActive(false);
                     quenchCount = true;
-                    print("Hit");
                 }
             }
             if (context.canceled)
@@ -412,7 +413,11 @@ public class Interaction : MonoBehaviour
                 collectItem = true;
                 forgeCount = false;
                 anvilCount = false;
-                quenchCount = false;
+                if (quenchCount)
+                {
+                    heldObj.SetActive(true);
+                    quenchCount = false;
+                }
                 activeBellows.GetComponent<Bellows>().TempIncrease = false;
                 ForgeState = 0;
                 activeAnvil.GetComponent<Anvil>().Hammering = false;
@@ -437,8 +442,6 @@ public class Interaction : MonoBehaviour
         {
             PostOBJ = heldObj;
         }
-
-        print(quenchDist);
 
 
         if (BellowsDist > range && forgeCount)
@@ -707,19 +710,21 @@ public class Interaction : MonoBehaviour
 
             //Quench
             case 11:
+
+                print("doing");
+
                 activeQuenchBarrel.GetComponent<QuenchBucket>().Count = true;
 
-                if (activeQuenchBarrel.GetComponent<QuenchBucket>().Count == true)
-                {
-                    activeQuenchBarrel.GetComponent<QuenchBucket>().item = heldObj;
-                    Invoke("destoryObj", 0.5f);
-                    Destroy(heldObj);
-                }
-                else
-                {
-                    heldObj = Instantiate(activeQuenchBarrel.GetComponent<QuenchBucket>().item, holdPos, transform.rotation, gameObject.transform);
-                    activeQuenchBarrel.GetComponent<QuenchBucket>().item = null;
-                }
+                //if (activeQuenchBarrel.GetComponent<QuenchBucket>().Count == true && activeQuenchBarrel.GetComponent<QuenchBucket>().item != null)
+                //{
+                //    activeQuenchBarrel.GetComponent<QuenchBucket>().item = heldObj;
+                //    Invoke("destroyObj", 0.5f);
+                //}
+                //else
+                //{
+                //    heldObj.SetActive(true);
+                //    //Invoke("nullObj", 1f);
+                //}
 
                 break;
 
@@ -739,9 +744,13 @@ public class Interaction : MonoBehaviour
 
     void destroyObj()
     {
-        Destroy(heldObj);
+        heldObj.SetActive(false);
     }
 
+    void nullObj()
+    {
+        activeQuenchBarrel.GetComponent<QuenchBucket>().item = null;
+    }
     string MatName;
 
 }
