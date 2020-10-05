@@ -2,12 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Item : MonoBehaviour
+public class timerScript : MonoBehaviour
 {
 
-    public enum Tool{Furnace, Cast, Anvil, Bucket}
-    public Tool tool;
-    public Tool current;
+    public bool charge;
 
     // Start is called before the first frame update
     void Start()
@@ -18,11 +16,6 @@ public class Item : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
     }
-
-    public Tool desiredTool()
-    {
-        return tool;
-    }
-
 }
