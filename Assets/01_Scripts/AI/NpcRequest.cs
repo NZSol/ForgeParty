@@ -16,6 +16,8 @@ public class NpcRequest : MonoBehaviour
     public float speed = 1f;
     public float startTime;
     NavMeshAgent agent;
+
+    private bool leaving;
     
 
 
@@ -65,7 +67,7 @@ public class NpcRequest : MonoBehaviour
         }
 
   
-        if (GotWeapon == false && Timer.value >= 10)
+        if (GotWeapon == false && (Timer.value >= 10 || leaving))
         {
             
             Flee();
@@ -86,7 +88,8 @@ public class NpcRequest : MonoBehaviour
     public void Flee()
     {
         agent.destination = OutOfBattle.position;
-        Bubble.enabled = false;  
+        Bubble.enabled = false;
+        leaving = true;
         Debug.Log("Leaves");
 
 
