@@ -30,14 +30,16 @@ MonoBehaviour:
     HasDetails: 1
     Details: 'hold temperature over time.
 
-      Each mat has  different melting points this means they have to be in the furnace
-      for different amounts of time.
+      Each mat has  different melting
+      points this means they have to be in the furnace for different amounts of time.
 
-      get the furnace to be hot and keep it hot for X amount of time depending on
-      the material.
+      get
+      the furnace to be hot and keep it hot for X amount of time depending on the
+      material.
 
 
-      when reaching high temperature and right amount of time turn indicator green'
+      when reaching high temperature and right amount of time turn
+      indicator green'
     IsCompleted: 0
     IsDeferred: 0
     IsColored: 1
@@ -47,16 +49,28 @@ MonoBehaviour:
     CompletionDate: 
     HasDetails: 1
     Details: "if the materials are scriptable objects we can create a lot of materials
-      with different models, and set temperature/time values for each , we would need
-      to make the furnace recognize the time and what material is it (by the name)
-      \n\nif it's a mixture of 2 materials, the furnace should recognize both  objects
-      and , at the end of the melting process deliver the mixture(another scriptable
-      mat with the right characteristics)\nEX:\nMat1:  X\nDurability:1\nTimeInFurnace:5sec\n\n\nMat2:
-      \  Y\nDurability:2\nTimeInFurnace:7sec\n\nMat3:   Z\nDurabilyty: 3\nTimeInFurnace:10
+      with different models, and set temperature/time values for each , we would
+      need to make the furnace recognize the time and what material is it (by the
+      name) \n\nif it's a mixture of 2 materials, the furnace should recognize both 
+      objects and , at the end of the melting process deliver the mixture(another
+      scriptable mat with the right characteristics)\nEX:\nMat1:  X\nDurability:1\nTimeInFurnace:5sec\n\n\nMat2:  
+      Y\nDurability:2\nTimeInFurnace:7sec\n\nMat3:   Z\nDurabilyty: 3\nTimeInFurnace:10
       sec\n\n\nFurnace:\n\n\nX  +  Y = Z"
     IsCompleted: 0
     IsDeferred: 0
     IsColored: 1
     DrawColor: {r: 0.7559455, g: 0.64907444, b: 0.9622642, a: 1}
+  - Title: Crucible Cooling
+    CreationDate: 7/10/2020 | 11:50 a.m.
+    CompletionDate: 
+    HasDetails: 1
+    Details: 'If crucible temperature too low, cannot cast
+
+      Temperature = Furnace
+      temperature when taken'
+    IsCompleted: 0
+    IsDeferred: 0
+    IsColored: 1
+    DrawColor: {r: 0.764151, g: 0, b: 0, a: 1}
   CompletedTasks: []
   DeferredTasks: []

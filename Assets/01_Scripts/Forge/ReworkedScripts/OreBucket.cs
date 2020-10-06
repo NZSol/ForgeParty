@@ -5,21 +5,15 @@ using UnityEngine;
 public class OreBucket : Tool
 {
     [SerializeField] GameObject[] Ore;
-    public bool tin, copper;
-    public Metal Output;
+    public Metal.metal Output;
 
     public override GameObject GiveItem()
     {
+        outputPrefab = Ore[Random.Range(0, 2)];
 
         var outputOre = Instantiate(outputPrefab);
-        if (tin)
-        {
-            outputOre.GetComponent<Metal>().metal = Metal.metals.Tin;
-        }
-        if (copper)
-        {
-            outputOre.GetComponent<Metal>().metal = Metal.metals.Copper;
-        }
+        
+        outputOre.GetComponent<Metal>().myMetal = Output;
 
         return outputOre;
     }
@@ -30,4 +24,8 @@ public class OreBucket : Tool
     {
     }
 
+    void Start()
+    {
+        Output = gameObject.GetComponent<Metal>().myMetal;
+    }
 }

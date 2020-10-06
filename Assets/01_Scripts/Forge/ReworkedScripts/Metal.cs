@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class Metal : MonoBehaviour
 {
-    public enum metals { Tin, Copper, Bronze}
-    public metals metal;
+    public enum metal {Blank, Tin, Copper, Bronze}
+    public metal myMetal;
 
 
 
-    public metals desiredMetal()
+    public metal desiredMetal()
     {
-        return metal;
+        return myMetal;
     }
 }

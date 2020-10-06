@@ -1149,11 +1149,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c157514d238023c419ae3ebbad3d51e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  outputPrefab: {fileID: 0}
+  outputPrefab: {fileID: 2220734233008931694, guid: 1571165cebb3c9844b6cae5702045aa2,
+    type: 3}
+  timer: 5
   temperature: 0
   bellows: {fileID: 408206679}
+  activeMetal: 0
+  outputMet: 1
+  meltingPoint: 0
   crucible: {fileID: 2220734233008931694, guid: 1571165cebb3c9844b6cae5702045aa2,
     type: 3}
+  displayQueue: 
 --- !u!114 &407505726
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1826,6 +1832,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inputObj: {fileID: 0}
   outputObj: {fileID: 0}
+--- !u!114 &506580199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 506580197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c510dfd16f568f94da41b8587852292f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outputPrefab: {fileID: 2115836125932202798, guid: 0611fd47fae045e488abc8644e63d1cc,
+    type: 3}
+  weapon: 0
+  outputMet: 0
+  input: 0
+  timer: 5
+--- !u!114 &506580201
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 506580197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1775d1706d1346b4089982a22f23e2e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weapon: 2
 --- !u!1 &578678411
 GameObject:
   m_ObjectHideFlags: 0
@@ -3719,6 +3756,7 @@ GameObject:
   - component: {fileID: 1208828001}
   - component: {fileID: 1208828000}
   - component: {fileID: 1208827999}
+  - component: {fileID: 1208828006}
   - component: {fileID: 1208828005}
   m_Layer: 21
   m_Name: SnBucket
@@ -3846,9 +3884,20 @@ MonoBehaviour:
   Ore:
   - {fileID: 4470121786007449181, guid: 24d7cac4a379cfd41b34a0323ca06029, type: 3}
   - {fileID: 1256153791256583291, guid: 46249b69ac76d4b4b80b10e44731c58d, type: 3}
-  tin: 1
-  copper: 0
-  Output: {fileID: 0}
+  Output: 1
+--- !u!114 &1208828006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1208827998}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e388c545032a6bd4d9806e78d406611c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myMetal: 1
 --- !u!1 &1228241141
 GameObject:
   m_ObjectHideFlags: 0
@@ -5048,13 +5097,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f4ef4ee5a0963f46a8e7211cb26ca80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  outputPrefab: {fileID: 0}
+  outputPrefab: {fileID: 4470121786007449181, guid: 24d7cac4a379cfd41b34a0323ca06029,
+    type: 3}
   Ore:
   - {fileID: 4470121786007449181, guid: 24d7cac4a379cfd41b34a0323ca06029, type: 3}
   - {fileID: 1256153791256583291, guid: 46249b69ac76d4b4b80b10e44731c58d, type: 3}
-  tin: 0
-  copper: 1
-  Output: {fileID: 0}
+  Output: 2
 --- !u!1 &1548591480
 GameObject:
   m_ObjectHideFlags: 0
@@ -5111,6 +5159,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inputObj: {fileID: 0}
   outputObj: {fileID: 0}
+--- !u!114 &1568574432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1568574428}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c510dfd16f568f94da41b8587852292f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outputPrefab: {fileID: 3466054810978170449, guid: 5949ad212874dc44c9ec849f4b9e810e,
+    type: 3}
+  weapon: 0
+  outputMet: 0
+  input: 0
+  timer: 5
+--- !u!114 &1568574433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1568574428}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1775d1706d1346b4089982a22f23e2e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weapon: 1
 --- !u!1 &1575197467
 GameObject:
   m_ObjectHideFlags: 0
@@ -6819,7 +6898,8 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 21
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4655105661414687253, guid: 27a86a8b76bd9b64697b187d3fd054a3, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 27a86a8b76bd9b64697b187d3fd054a3, type: 3}
 --- !u!1001 &7226223374431472071
 PrefabInstance:

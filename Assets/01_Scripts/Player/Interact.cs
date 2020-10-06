@@ -72,7 +72,7 @@ public class Interact : MonoBehaviour
         {
             toolsLayer = LayerMask.NameToLayer("Tools");
             Interactables = Tools(toolsLayer).ToList();
-            heldPos = new Vector3(0, 0.3f, 0.9f);
+            heldPos = new Vector3(0, 0f, 1.8f);
         }
     }
 
@@ -136,10 +136,10 @@ public class Interact : MonoBehaviour
     void collectItem()
     {
         heldObj = activeTool.GiveItem();
-        heldObj.transform.position = heldPos;
-        heldObj.transform.parent = gameObject.transform;
-
-        heldObj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+        if (heldObj != null)
+        {
+            positionHeldObj();
+        }
     }
 
     void deliverItem()
@@ -193,4 +193,15 @@ public class Interact : MonoBehaviour
     }
 
 
+
+    //ACCESSORY
+
+    void positionHeldObj()
+    {
+        heldObj.transform.parent = gameObject.transform;
+        heldObj.transform.localPosition = new Vector3(0, 0, 1.8f);
+
+        heldObj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+
+    }
 }

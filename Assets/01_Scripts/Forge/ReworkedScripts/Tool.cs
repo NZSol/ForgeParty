@@ -7,6 +7,7 @@ public abstract class Tool : MonoBehaviour
     [SerializeField]
     protected GameObject outputPrefab;
 
+
     public abstract void TakeItem(GameObject item);
     public abstract GameObject GiveItem();
 }
