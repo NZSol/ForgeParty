@@ -3,37 +3,47 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BellowsFunc : MonoBehaviour
+public class BellowsFunc : Tool
 {
-    timerScript timer;
+    
+    [SerializeField] Slider _slide;
 
-    Slider _slide;
-    public float temperature;
-    Furnace furnace;
+    public float localTemp;
 
     // Start is called before the first frame update
     void Start()
     {
-        timer = gameObject.GetComponent<timerScript>();
-        furnace = GetComponentInParent<Furnace>();
+        _slide.maxValue = 10;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (timer.charge)
+        if (charging)
         {
-            temperature += Time.deltaTime;
+            if (localTemp < _slide.maxValue)
+            {
+                localTemp += Time.deltaTime;
+            }
         }
         else
         {
-            if (temperature > 0)
+            if (localTemp > 0)
             {
-                temperature -= Time.deltaTime / 3;
+                localTemp -= Time.deltaTime / 3;
             }
         }
 
-        furnace.temperature = temperature;
-        _slide.value = temperature;
+        GetComponentInParent<Furnace>().temperature = localTemp;
+        _slide.value = localTemp;
+    }
+
+    public override void TakeItem(GameObject item)
+    {
+    }
+
+    public override GameObject GiveItem()
+    {
+        return null;
     }
 }

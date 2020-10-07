@@ -36,6 +36,5 @@ public class OreBucket : Tool
 
     void Start()
     {
-        Output = gameObject.GetComponent<Metal>().myMetal;
     }
 }

@@ -13,7 +13,6 @@ public class TemperatureSlider : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _slide.maxValue = 6;
         _slide.value = 0;
         _img.color = Color.white;
     }

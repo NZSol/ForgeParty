@@ -5,13 +5,9 @@ using System.Linq;
 
 public class Furnace : Tool
 {
-    ObjectStore storedObjs;
-
-    public float timer = 5;
+    public float timer = 0;
+    public float maxTimer = 5;
     public float temperature;
-
-    [SerializeField] GameObject bellows;
-    BellowsFunc bellowsFunction;
 
     public Queue<Metal.metal> inputs = new Queue<Metal.metal>();
     public Metal.metal activeMetal;
@@ -26,8 +22,6 @@ public class Furnace : Tool
     // Start is called before the first frame update
     void Start()
     {
-        bellowsFunction = bellows.GetComponent<BellowsFunc>();
-        storedObjs = gameObject.GetComponent<ObjectStore>();
         activeMetal = Metal.metal.Blank;
     }
 
@@ -48,7 +42,7 @@ public class Furnace : Tool
         {
             if (temperature >= meltingPoint)
             {
-                timer -= Time.deltaTime;
+                timer += Time.deltaTime;
             }
 
             if (outputMet == Metal.metal.Blank && inputs.Count > 0)
@@ -59,17 +53,18 @@ public class Furnace : Tool
                 {
                     displayQueue.Add(metal);
                 }
+                print("check");
 
             }
         }
 
 
-        if (timer <= 0)
+        if (timer >= maxTimer)
         {
             outputMet = activeMetal;
             outputPrefab = crucible;
             activeMetal = Metal.metal.Blank;
-            timer = 5;
+            timer -= maxTimer;
         }
 
     }
@@ -86,14 +81,23 @@ public class Furnace : Tool
         {
             meltingPoint = 5;
         }
+
+        print("content check");
     }
 
 
     public override GameObject GiveItem()
     {
-        var outputCrucible = Instantiate(outputPrefab);
-        outputCrucible.GetComponent<Metal>().myMetal = outputMet;
-        outputMet = Metal.metal.Blank;
-        return outputCrucible;
+        if (outputMet == Metal.metal.Blank)
+        {
+            return null;
+        }
+        else
+        {
+            var outputCrucible = Instantiate(outputPrefab);
+            outputCrucible.GetComponent<Metal>().myMetal = outputMet;
+            outputMet = Metal.metal.Blank;
+            return outputCrucible;
+        }
     }
 }

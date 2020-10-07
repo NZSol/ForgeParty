@@ -41,7 +41,7 @@ public class Interact : MonoBehaviour
         Vector3 curPos = transform.position;
         foreach (GameObject obj in tools)
         {
-            float dist = Vector3.Distance(obj.transform.position, transform.position);
+            float dist = Vector3.Distance(obj.transform.position, curPos);
             if (dist < minDist)
             {
                 tool = obj;
@@ -57,12 +57,8 @@ public class Interact : MonoBehaviour
     public float range = 5;
     float toolDist;
 
-    bool usingTool = false;
 
     [SerializeField] GameObject heldObj;
-
-    Vector3 heldPos;
-
 
 
     // Start is called before the first frame update
@@ -72,7 +68,7 @@ public class Interact : MonoBehaviour
         {
             toolsLayer = LayerMask.NameToLayer("Tools");
             Interactables = Tools(toolsLayer).ToList();
-            heldPos = new Vector3(0, 0f, 1.8f);
+            //heldPos = new Vector3(0, 0f, 1.8f);
         }
     }
 
@@ -80,11 +76,19 @@ public class Interact : MonoBehaviour
     void Update()
     {
         activeTool = closestTool(Interactables.ToArray());
-        toolDist = Vector3.Distance(transform.position, activeTool.gameObject.transform.position);
 
-        if (usingTool)
+        if (activeTool != null)
         {
-            useTool();
+            toolDist = Vector3.Distance(transform.position, activeTool.gameObject.transform.position);
+        }
+        else
+        {
+            Debug.Log("No Active Tool");
+        }
+
+        if (toolDist >= range)
+        {
+            activeTool.GetComponent<Tool>().charging = false;
         }
     }
 
@@ -129,8 +133,15 @@ public class Interact : MonoBehaviour
 
     void dropItem()
     {
-        heldObj.transform.parent = null;
-        heldObj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+        if (heldObj != null)
+        {
+            heldObj.transform.parent = null;
+            heldObj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+        }
+        else
+        {
+            Debug.Log("Trying to drop empty heldObj");
+        }
     }
 
     void collectItem()
@@ -148,9 +159,6 @@ public class Interact : MonoBehaviour
         Destroy(heldObj);
     }
 
-
-
-
     //FUNCTION ON LEFT BUTTON HOLD
     public void InteractHold(CallbackContext context)
     {
@@ -158,41 +166,19 @@ public class Interact : MonoBehaviour
         {
             if (context.started)
             {
-                if (activeTool.GetComponent<timerScript>() != null)
+                if (toolDist <= range)
                 {
-                    usingTool = true;
+                    activeTool.GetComponent<Tool>().charging = true;
                 }
-                else
-                {
-                    //display question UI?
-                }
+                print("starting");
             }
             if (context.canceled)
             {
-                usingTool = false;
-                if (activeTool.GetComponent<timerScript>().charge)
-                {
-                    activeTool.GetComponent<timerScript>().charge = false;
-                }
+                activeTool.GetComponent<Tool>().charging = false;
+                print("cancelling");
             }
         }
     }
-
-
-
-    void useTool()
-    {
-        if (toolDist <= range)
-        {
-            activeTool.GetComponent<timerScript>().charge = true;
-        }
-        else
-        {
-            activeTool.GetComponent<timerScript>().charge = false;
-        }
-    }
-
-
 
     //ACCESSORY
 

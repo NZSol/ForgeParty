@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WeaponType : MonoBehaviour
+public class Weapon : MonoBehaviour
 {
 
     public enum weaponType { Blank, Sword, Axe }

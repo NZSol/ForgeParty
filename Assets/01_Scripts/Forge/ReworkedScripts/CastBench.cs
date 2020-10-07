@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CastBench : Tool
 {
-    public WeaponType.weaponType weapon;
+    public Weapon.weaponType weapon;
     public Metal.metal outputMet;
     public Metal.metal input;
 
@@ -21,7 +21,7 @@ public class CastBench : Tool
     {
         input = Metal.metal.Blank;
         outputMet = Metal.metal.Blank;
-        weapon = gameObject.GetComponent<WeaponType>().myWeapon;
+        weapon = gameObject.GetComponent<Weapon>().myWeapon;
     }
 
     // Update is called once per frame
@@ -42,14 +42,20 @@ public class CastBench : Tool
 
 
     public override GameObject GiveItem()
-    {
-        var outputWeapon = Instantiate(outputPrefab);
-        outputWeapon.GetComponent<Metal>().myMetal = outputMet;
-        outputWeapon.GetComponent<WeaponType>().myWeapon = weapon;
+    {if (outputMet == Metal.metal.Blank)
+        {
+            return null;
+        }
+        else
+        {
+            var outputWeapon = Instantiate(outputPrefab);
+            outputWeapon.GetComponent<Metal>().myMetal = outputMet;
+            outputWeapon.GetComponent<Weapon>().myWeapon = weapon;
 
-        outputMet = Metal.metal.Blank;
+            outputMet = Metal.metal.Blank;
 
-        return outputWeapon;
+            return outputWeapon;
+        }
     }
 
 }
