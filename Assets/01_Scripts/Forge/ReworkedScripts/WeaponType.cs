@@ -6,11 +6,11 @@ public class WeaponType : MonoBehaviour
 {
 
     public enum weaponType { Blank, Sword, Axe }
-    public weaponType weapon;
+    public weaponType myWeapon;
 
     public weaponType ActiveWeapon()
     {
-        return weapon;
+        return myWeapon;
     }
 
 }

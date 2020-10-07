@@ -200,6 +200,7 @@ public class Interact : MonoBehaviour
     {
         heldObj.transform.parent = gameObject.transform;
         heldObj.transform.localPosition = new Vector3(0, 0, 1.8f);
+        heldObj.transform.localRotation = Quaternion.Euler(Vector3.zero);
 
         heldObj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
 

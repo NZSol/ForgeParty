@@ -21,7 +21,7 @@ public class CastBench : Tool
     {
         input = Metal.metal.Blank;
         outputMet = Metal.metal.Blank;
-        weapon = gameObject.GetComponent<WeaponType>().weapon;
+        weapon = gameObject.GetComponent<WeaponType>().myWeapon;
     }
 
     // Update is called once per frame
@@ -45,6 +45,7 @@ public class CastBench : Tool
     {
         var outputWeapon = Instantiate(outputPrefab);
         outputWeapon.GetComponent<Metal>().myMetal = outputMet;
+        outputWeapon.GetComponent<WeaponType>().myWeapon = weapon;
 
         outputMet = Metal.metal.Blank;
 

@@ -6,10 +6,20 @@ public class OreBucket : Tool
 {
     [SerializeField] GameObject[] Ore;
     public Metal.metal Output;
+    int randomValMin = 1, randomValMax = 101, val;
 
     public override GameObject GiveItem()
     {
-        outputPrefab = Ore[Random.Range(0, 2)];
+        val = Random.Range(randomValMin, randomValMax);
+
+        if (val <= 50)
+        {
+            outputPrefab = Ore[0];
+        }
+        else
+        {
+            outputPrefab = Ore[1];
+        }
 
         var outputOre = Instantiate(outputPrefab);
         
