@@ -11,10 +11,14 @@ public class Movement : MonoBehaviour
     Rigidbody rb;
     GameObject Player;
 
-    public float maxSpeed = 5;
-    public float minSpeed = -5;
-    public float dashForce = 5;
-    public float dashCool = 0;
+    public float maxSpeed;
+    public float minSpeed;
+    public float dashForce;
+    public float dashCool;
+
+    float startMaxSpeed;
+    float startMinSpeed;
+
 
     public float damping;
     Vector2 lookDir;
@@ -29,7 +33,8 @@ public class Movement : MonoBehaviour
     {
         Player = this.gameObject;
         rb = Player.GetComponent<Rigidbody>();
-        gameObject.transform.position = spawn;
+        startMaxSpeed = maxSpeed;
+        startMinSpeed = minSpeed;
     }
 
 
@@ -38,7 +43,7 @@ public class Movement : MonoBehaviour
         var stick = context.ReadValue<Vector2>();
 
 
-        moveValues = new Vector3(stick.x, 0, stick.y);
+        moveValues = new Vector3(stick.x, 0, stick.y) * 6;
         lookDir = stick;
     }
 
@@ -65,7 +70,7 @@ public class Movement : MonoBehaviour
         if (rb != null)
         {
             rb.velocity += moveValues * dashForce;
-            maxSpeed = 10;
+            maxSpeed = startMaxSpeed;
             dashCool = 5;
         }
     }
@@ -83,12 +88,13 @@ public class Movement : MonoBehaviour
         {
             dashing = 0;
         }
-        maxSpeed = Mathf.Lerp(5, 10, dashing);
+        maxSpeed = Mathf.Lerp(maxSpeed, dashForce, dashing);
 
         if (dashCool > 0)
         {
-            dashCool -= Time.deltaTime;
+            dashCool -= Time.deltaTime / 2;
         }
+
 
     }
 
