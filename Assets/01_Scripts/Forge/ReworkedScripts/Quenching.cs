@@ -75,7 +75,7 @@ public class Quenching : Tool
     public override GameObject GiveItem()
     {
         //IF WEAPON != NULL, ALLOW COLLECTION
-        if (inputWeapon == Weapon.weaponType.Blank)
+        if (outputWeapon == Weapon.weaponType.Blank)
         {
             return null;
         }

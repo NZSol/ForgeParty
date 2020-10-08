@@ -92,6 +92,7 @@ GameObject:
   - component: {fileID: 599622842159701070}
   - component: {fileID: -1990731111773542613}
   - component: {fileID: -1900854770457206155}
+  - component: {fileID: 7111943074372097615}
   m_Layer: 0
   m_Name: Ore 1
   m_TagString: Untagged
@@ -126,7 +127,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e388c545032a6bd4d9806e78d406611c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  metal: 0
+  myMetal: 0
 --- !u!54 &-1900854770457206155
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -143,3 +144,16 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &7111943074372097615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4470121786007449181}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b8ed2ca003907e4cacb44a4dfd1e556, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tool: 0

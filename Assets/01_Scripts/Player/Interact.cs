@@ -155,8 +155,44 @@ public class Interact : MonoBehaviour
 
     void deliverItem()
     {
-        activeTool.GetComponent<Tool>().TakeItem(heldObj);
-        Destroy(heldObj);
+        switch (heldObj.GetComponent<Item>().tool)
+        {
+            case Item.Tool.Furnace:
+
+                if (activeTool.GetComponent<Tool>().tool == Tool.curTool.Furnace)
+                {
+                    activeTool.GetComponent<Tool>().TakeItem(heldObj);
+                    Destroy(heldObj);
+                }
+                    break;
+
+            case Item.Tool.Cast:
+
+                if (activeTool.GetComponent<Tool>().tool == Tool.curTool.Cast)
+                {
+                    activeTool.GetComponent<Tool>().TakeItem(heldObj);
+                    Destroy(heldObj);
+                }
+                    break;
+
+            case Item.Tool.Anvil:
+
+                if (activeTool.GetComponent<Tool>().tool == Tool.curTool.Anvil)
+                {
+                    activeTool.GetComponent<Tool>().TakeItem(heldObj);
+                    Destroy(heldObj);
+                }
+                    break;
+
+            case Item.Tool.Bucket:
+
+                if (activeTool.GetComponent<Tool>().tool == Tool.curTool.Bucket)
+                {
+                    activeTool.GetComponent<Tool>().TakeItem(heldObj);
+                    Destroy(heldObj);
+                }
+                    break;
+        }
     }
 
     //FUNCTION ON LEFT BUTTON HOLD
