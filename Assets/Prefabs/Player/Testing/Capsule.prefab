@@ -55,6 +55,8 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -79,6 +81,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!65 &3059762727742930988
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -105,9 +108,9 @@ GameObject:
   - component: {fileID: 3059762728143522863}
   - component: {fileID: 3059762728143522856}
   - component: {fileID: 3059762728143522835}
-  - component: {fileID: -6396338227942642657}
   - component: {fileID: 3059762728143522857}
   - component: {fileID: -7110109816405663932}
+  - component: {fileID: 5332483974215100654}
   m_Layer: 0
   m_Name: Capsule
   m_TagString: Player
@@ -152,6 +155,8 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -176,6 +181,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!136 &3059762728143522856
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -208,34 +214,6 @@ MonoBehaviour:
   dashForce: 10
   dashCool: 0
   damping: 10
-  slide: {fileID: 0}
-  text: {fileID: 0}
---- !u!114 &-6396338227942642657
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3059762728143522858}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b963f8bbfeb5054e85b1b1875f93031, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  active: 0
-  range: 2.5
-  quenchRange: 5
-  ForgeState: 0
-  CuOre: {fileID: 6874371186039724700, guid: b4153f77725299647b15d39ddc3e54f4, type: 3}
-  SnOre: {fileID: 3203804075945696445, guid: 213f1c8a11c92ef4298a07223f3d43d4, type: 3}
-  FurnaceList: []
-  AnvilList: []
-  BellowsList: []
-  QuenchList: []
-  activeQuenchBarrel: {fileID: 0}
-  forgeCount: 0
-  anvilCount: 0
-  quenchCount: 0
 --- !u!54 &3059762728143522857
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -281,6 +259,7 @@ MonoBehaviour:
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 3059762728143522835}
+        m_TargetAssemblyTypeName: Movement, Assembly-CSharp
         m_MethodName: Move
         m_Mode: 0
         m_Arguments:
@@ -295,7 +274,8 @@ MonoBehaviour:
     m_ActionName: Player/Move[/DualShock4GamepadHID/leftStick]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: -6396338227942642657}
+      - m_Target: {fileID: 5332483974215100654}
+        m_TargetAssemblyTypeName: Interact, Assembly-CSharp
         m_MethodName: InteractPress
         m_Mode: 0
         m_Arguments:
@@ -310,7 +290,8 @@ MonoBehaviour:
     m_ActionName: Player/Interact[/DualShock4GamepadHID/buttonEast]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: -6396338227942642657}
+      - m_Target: {fileID: 5332483974215100654}
+        m_TargetAssemblyTypeName: Interact, Assembly-CSharp
         m_MethodName: InteractHold
         m_Mode: 0
         m_Arguments:
@@ -326,6 +307,7 @@ MonoBehaviour:
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 3059762728143522835}
+        m_TargetAssemblyTypeName: 
         m_MethodName: Dash
         m_Mode: 0
         m_Arguments:
@@ -343,3 +325,20 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &5332483974215100654
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3059762728143522858}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffa823c1f7b6d2647b58220e3a23f263, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  active: 0
+  Interactables: []
+  activeTool: {fileID: 0}
+  range: 5
+  heldObj: {fileID: 0}
