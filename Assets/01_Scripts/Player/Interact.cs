@@ -64,6 +64,7 @@ public class Interact : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        active = true;
         if (active)
         {
             toolsLayer = LayerMask.NameToLayer("Tools");
