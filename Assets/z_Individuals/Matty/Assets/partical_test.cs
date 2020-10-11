@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class playerbump : MonoBehaviour
+public class partical_test : MonoBehaviour
 {
     public Transform Bump;
     public Transform swearwords;
@@ -10,7 +10,7 @@ public class playerbump : MonoBehaviour
     public Transform smoke;
     public Transform sparks;
     public Transform cannon;
-
+    public Transform dash;
 
 
     // Update is called once per frame
@@ -44,6 +44,11 @@ public class playerbump : MonoBehaviour
         if (Input.GetKeyDown("m"))
         {
             cannon.GetComponent<ParticleSystem>().Play();
+        }
+
+        if (Input.GetKeyDown("x"))
+        {
+            dash.GetComponent<ParticleSystem>().Play();
         }
     } 
 
