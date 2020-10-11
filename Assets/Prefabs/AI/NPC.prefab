@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1252993685730160478}
   - component: {fileID: 1252993685730160477}
   - component: {fileID: 1252993685730160465}
-  - component: {fileID: 751819454972080260}
+  - component: {fileID: 5354163255496683765}
   - component: {fileID: 1252993685730160467}
   m_Layer: 0
   m_Name: NPC
@@ -113,7 +113,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1.5, z: 1}
   m_Center: {x: 0, y: -0.1, z: -0.7}
---- !u!114 &751819454972080260
+--- !u!114 &5354163255496683765
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -122,16 +122,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1252993685730160476}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c68d2a6788bb1140b95fbccc0b7a10d, type: 3}
+  m_Script: {fileID: 11500000, guid: 8041a768a76388743953faf98036672c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  battleSite: {fileID: 0}
-  fleeSite: {fileID: 0}
-  requestQueue: []
-  agent: {fileID: 0}
-  myDesiredWeapon: 0
-  timer: 0
-  timerMax: 0
+  Bubble: {fileID: 1252993686226855689}
+  Timer: {fileID: 1252993684463774379}
+  GotWeapon: 0
+  speed: 1
+  startTime: 0
+  battlePos: {fileID: 0}
+  fleePos: {fileID: 0}
+  QueuePos: {fileID: 0}
 --- !u!54 &1252993685730160467
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -491,3 +492,15 @@ Canvas:
     type: 3}
   m_PrefabInstance: {fileID: 8268582152811549949}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1252993684463774379 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7195732642421210710, guid: 1e662e69417b63b47a84095f48d9ece1,
+    type: 3}
+  m_PrefabInstance: {fileID: 8268582152811549949}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
