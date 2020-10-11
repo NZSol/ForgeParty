@@ -4,21 +4,23 @@ using UnityEngine.AI;
 
 public abstract class NPC : MonoBehaviour
 {
+                        //POSITIONS TO MOVE TOWARDS
     [SerializeField] protected Transform battleSite;
     [SerializeField] protected Transform fleeSite;
     [SerializeField] protected GameObject[] requestQueue;
 
+                        //NAVMESH AGENT
     [SerializeField] protected NavMeshAgent agent;
+                        //LOOK FOR WEAPON TYPE ON WEAPON
+    [SerializeField] protected Weapon.weaponType desiredWeapon;
+                        //AI STATEMACHINE
+    [SerializeField] protected enum AIState { QueueUp, Wait, Flee, Fight}
+    [SerializeField] protected AIState activeBehaviour;
 
-    [SerializeField] protected enum desiredWeapon { Sword, Axe, Spear, Bow }
-    [SerializeField] protected desiredWeapon myDesiredWeapon;
-
+                        //TIMER CHECKING IF OUT OF TIME
     [SerializeField] protected float timer;
     [SerializeField] protected float timerMax;
-
-    protected bool hasWeapon;
-    protected bool inPlace;
-
+                        //QUEUE
     protected Queue<GameObject> npcQueue = new Queue<GameObject>();
     protected int placeInQueue = 0;
 
@@ -29,5 +31,14 @@ public abstract class NPC : MonoBehaviour
         timerMax = 10;
         npcQueue.Enqueue(gameObject);
         placeInQueue = npcQueue.Count;
+
+        JoinQueue();
     }
+
+    public abstract void LeaveBattle();
+
+    public abstract void JoinQueue();
+
+    public abstract void JoinBattle();
+
 }

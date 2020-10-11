@@ -36,5 +36,6 @@ public class OreBucket : Tool
 
     void Start()
     {
+        Output = GetComponent<Metal>().myMetal;
     }
 }
