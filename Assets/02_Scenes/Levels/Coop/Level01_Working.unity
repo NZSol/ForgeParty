@@ -4910,7 +4910,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 893069650}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 2.8, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 772479916}
@@ -10445,7 +10445,7 @@ PrefabInstance:
     - target: {fileID: 1252993684445940341, guid: f32380b5d5421bf479d9741e5393ccf4,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1252993684463774379, guid: f32380b5d5421bf479d9741e5393ccf4,
         type: 3}
@@ -10582,6 +10582,11 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 4577557460261911011}
+    - target: {fileID: 1252993686226855797, guid: f32380b5d5421bf479d9741e5393ccf4,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1252993686286462583, guid: f32380b5d5421bf479d9741e5393ccf4,
         type: 3}
       propertyPath: m_IsActive
@@ -10621,6 +10626,16 @@ PrefabInstance:
         type: 3}
       propertyPath: speed
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5354163255496683765, guid: f32380b5d5421bf479d9741e5393ccf4,
+        type: 3}
+      propertyPath: state
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5354163255496683765, guid: f32380b5d5421bf479d9741e5393ccf4,
+        type: 3}
+      propertyPath: timerMax
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 751819454972080260, guid: f32380b5d5421bf479d9741e5393ccf4, type: 3}
@@ -11520,13 +11535,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4577557460261911021}
-  m_LocalRotation: {x: 0.30006993, y: -0, z: -0, w: 0.9539172}
-  m_LocalPosition: {x: 75.7, y: 68.4, z: -74.3}
+  m_LocalRotation: {x: 0.26466346, y: -0, z: -0, w: 0.9643409}
+  m_LocalPosition: {x: 75.7, y: 72.1, z: -94.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 34.924, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 30.694, y: 0, z: 0}
 --- !u!81 &4577557460261911010
 AudioListener:
   m_ObjectHideFlags: 0
