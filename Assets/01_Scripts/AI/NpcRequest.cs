@@ -18,7 +18,7 @@ public class NpcRequest : MonoBehaviour
     
     //Timer checking if time is up and AI should leave
     public float timerMax;
-    float timer;
+    public float timer = 0;
     bool runTimer;
 
     public bool GotWeapon = false;
@@ -39,17 +39,17 @@ public class NpcRequest : MonoBehaviour
 
     [SerializeField] Image _sword;
     [SerializeField] Image _axe;
-
     [SerializeField] Image _activeWeapon;
 
+    [SerializeField] Slider _slide;
 
-    [SerializeField] MeshFilter AxeMan;
-    [SerializeField] MeshFilter Swordman;
 
-    [SerializeField] MeshFilter ActiveModel;
+    [SerializeField] ParticleSystem anger;
 
     Vector3 CurRotate;
     Vector3 faceNorth;
+
+    [SerializeField] Transform parentPos;
 
     private void Start()
     {
@@ -61,23 +61,19 @@ public class NpcRequest : MonoBehaviour
 
         Bubble.gameObject.SetActive(false);
 
-        //Declare which weapon NPC wants and set active Image to weapon type
-        weapon = (Weapon.weaponType)Random.Range(1, 3);
+        _slide.maxValue = timerMax;
+
         switch (weapon)
         {
             case Weapon.weaponType.Sword:
                 _activeWeapon = _sword;
-                ActiveModel = Swordman;
                 break;
 
             case Weapon.weaponType.Axe:
                 _activeWeapon = _axe;
-                ActiveModel = AxeMan;
                 break;
         }
-
-
-        gameObject.GetComponent<MeshFilter>().mesh = ActiveModel.mesh;
+        //anger.gameObject.SetActive(false);
     }
 
     private void OnTriggerEnter(Collider col) //Trigger Zone Near benches
@@ -89,11 +85,14 @@ public class NpcRequest : MonoBehaviour
             runTimer = true;
         }
 
-        //if (col.gameObject.GetComponent<Weapon>().myWeapon == Weapon.weaponType.Sword)
-        //{
-        //    GotWeapon = true;
-        //    Destroy(col.gameObject);
-        //}
+        if (col.gameObject.GetComponent<Weapon>().myWeapon == weapon)
+        {
+            GotWeapon = true;
+            col.gameObject.transform.parent = parentPos;
+            col.gameObject.transform.localPosition = new Vector3(0, 3.5f, 0);
+            col.gameObject.transform.rotation = Quaternion.Euler(x: -90, y: + 0, z: +90);
+            //Destroy(col.gameObject);
+        }
 
 
     }
@@ -102,6 +101,7 @@ public class NpcRequest : MonoBehaviour
     {
         //Get Distance from target destination
         dist = Vector3.Distance(new Vector3(agent.destination.x, transform.position.y, agent.destination.z), transform.position);
+        _slide.value = timer;
 
         //Start running timer when AI enters range of counter
         if (runTimer)
@@ -186,6 +186,10 @@ public class NpcRequest : MonoBehaviour
     {
         agent.SetDestination(fleePos.transform.position);
         Bubble.gameObject.SetActive(false);
+        //if (anger.gameObject.activeSelf != true)
+        //{
+        //    anger.gameObject.SetActive(true);
+        //}
 
         Debug.Log("Fleeing");
     }

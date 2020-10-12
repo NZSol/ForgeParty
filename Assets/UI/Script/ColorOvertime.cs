@@ -6,18 +6,14 @@ using UnityEngine.UI;
 public class ColorOvertime : MonoBehaviour
 {
     public float totaltime;
-    SpriteRenderer spriterenderer;
-    [SerializeField] [Range(0f, 10f)] float lerpTime;
     public Color StartColor;
     public Color EndColor;
     public Canvas WeaponRequest;
-    [SerializeField] Slider _slide;
+    public Slider _slide;
     [SerializeField] Image _img;
 
     private void Start()
     {
-        spriterenderer = GetComponent<SpriteRenderer>();
-        _slide.maxValue = totaltime;
     }
 
     // Update is called once per frame
@@ -27,17 +23,7 @@ public class ColorOvertime : MonoBehaviour
         {
             _img.color = Color.Lerp(StartColor, EndColor, _slide.value / totaltime);
 
-            lerpTime += Time.deltaTime;
-
-            _slide.value = lerpTime;
-
-
-            lerpTime = Mathf.Clamp(lerpTime, 0, totaltime);
-        }
-
-        if(WeaponRequest.enabled==false)
-        {
-            _slide.value = 0;
+            totaltime = gameObject.GetComponentInParent<NpcRequest>().timerMax;
         }
     }
 
