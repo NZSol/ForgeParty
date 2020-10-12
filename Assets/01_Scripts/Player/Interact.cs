@@ -78,6 +78,8 @@ public class Interact : MonoBehaviour
     {
         activeTool = closestTool(Interactables.ToArray());
 
+        print(Vector3.Distance(activeTool.transform.position, transform.position));
+
         if (activeTool != null)
         {
             toolDist = Vector3.Distance(transform.position, activeTool.gameObject.transform.position);
@@ -222,7 +224,7 @@ public class Interact : MonoBehaviour
     void positionHeldObj()
     {
         heldObj.transform.parent = gameObject.transform;
-        heldObj.transform.localPosition = new Vector3(0, 0, 1.8f);
+        heldObj.transform.localPosition = new Vector3(0, 0, 1f);
         heldObj.transform.localRotation = Quaternion.Euler(Vector3.zero);
 
         heldObj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;

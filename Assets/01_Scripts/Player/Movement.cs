@@ -26,7 +26,6 @@ public class Movement : MonoBehaviour
     bool inputArmed = true;
     bool count;
 
-    Vector3 spawn = new Vector3(0, 1f, 10f);
 
     // Start is called before the first frame update
     void Start()

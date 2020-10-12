@@ -1,107 +1,202 @@
-﻿//using System.Collections;
-//using System.Collections.Generic;
-//using UnityEngine;
-//using UnityEngine.UI;
-//using UnityEngine.AI;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.AI;
 
 
-//public class NpcRequest : NPC
-//{
-//    public Canvas Bubble;
-//    public Slider Timer;
-//    public bool GotWeapon;
-//    public float speed = 1f;
-//    public float startTime;
-//    NavMeshAgent agent;
+public class NpcRequest : MonoBehaviour
+{
+    public enum AIState { Queue, Wait, Flee, Fight};
+    public AIState state;
 
-//    private bool leaving;
+    public Canvas Bubble;
 
-//    Weapon.weaponType weapon;
+    //Timer for checking if can move up in queue
+    public float waitTimerMax = 2;
+    float waitTimer;
+    
+    //Timer checking if time is up and AI should leave
+    public float timerMax;
+    float timer;
+    bool runTimer;
 
+    public bool GotWeapon = false;
 
+    public float speed = 4f;
+    public float startTime;
 
-//    private void Start()
-//    {
+    NavMeshAgent agent;
 
+    float dist;
+    public float maxRange = 2;
 
-//       agent=  GetComponent<NavMeshAgent>();
+    [SerializeField] Weapon.weaponType weapon;
 
-        
+    [SerializeField] GameObject battlePos;
+    [SerializeField] GameObject fleePos;
+    [SerializeField] GameObject QueuePos;
 
+    [SerializeField] Image _sword;
+    [SerializeField] Image _axe;
 
-//        Bubble.enabled = false;
-//        startTime = Time.time;
-//        GotWeapon = false;
-       
-       
-     
-
-//    }
-
-//    private void OnTriggerEnter(Collider col) //Trigger Zone Near benches
-//    {
-//       if (col.gameObject.GetComponent<Weapon>().myWeapon == Weapon.weaponType.Sword)
-//        {
-//            GotWeapon = true;
-//            Destroy(col.gameObject);
-//        }
+    [SerializeField] Image _activeWeapon;
 
 
-//        if (col.tag == "requestZone")
-//        {
+    [SerializeField] MeshFilter AxeMan;
+    [SerializeField] MeshFilter Swordman;
 
-//            Bubble.enabled = true;
-//        }
-//    }
+    [SerializeField] MeshFilter ActiveModel;
 
-//    private void Update()
-//    {
-//        if (GotWeapon == false && Timer.value <=10)
-//        {
-//            agent.destination = ForgeRequestZone.position;
-           
-//        }
+    Vector3 CurRotate;
+    Vector3 faceNorth;
 
-  
-//        if (GotWeapon == false && (Timer.value >= 10 || leaving))
-//        {
-            
-//            Flee();
-//        }
+    private void Start()
+    {
+        faceNorth = new Vector3(0, Input.compass.trueHeading, 0);
 
-        
+        agent = GetComponent<NavMeshAgent>();
+        agent.SetDestination(QueuePos.transform.position);
+        state = AIState.Queue;
 
+        Bubble.gameObject.SetActive(false);
 
+        //Declare which weapon NPC wants and set active Image to weapon type
+        weapon = (Weapon.weaponType)Random.Range(1, 3);
+        switch (weapon)
+        {
+            case Weapon.weaponType.Sword:
+                _activeWeapon = _sword;
+                ActiveModel = Swordman;
+                break;
 
-//        if (GotWeapon == true)
-//        {
-//            BacktoBattle();
-          
-//        }
-
-//    }
-
-//    public void Flee()
-//    {
-//        agent.destination = OutOfBattle.position;
-//        Bubble.enabled = false;
-//        leaving = true;
-//        Debug.Log("Leaves");
+            case Weapon.weaponType.Axe:
+                _activeWeapon = _axe;
+                ActiveModel = AxeMan;
+                break;
+        }
 
 
-       
-//    }
+        gameObject.GetComponent<MeshFilter>().mesh = ActiveModel.mesh;
+    }
+
+    private void OnTriggerEnter(Collider col) //Trigger Zone Near benches
+    {
+        if (col.tag == "requestZone")
+        {
+            Bubble.gameObject.SetActive(true);
+            _activeWeapon.gameObject.SetActive(true);
+            runTimer = true;
+        }
+
+        //if (col.gameObject.GetComponent<Weapon>().myWeapon == Weapon.weaponType.Sword)
+        //{
+        //    GotWeapon = true;
+        //    Destroy(col.gameObject);
+        //}
 
 
-//    public void BacktoBattle()
-//    {
-//        Debug.Log("aaaaaaaaaaaaaah!");
-//        Bubble.enabled = false;
+    }
 
-//        agent.destination = Battlefield.position;
+    private void Update()
+    {
+        //Get Distance from target destination
+        dist = Vector3.Distance(new Vector3(agent.destination.x, transform.position.y, agent.destination.z), transform.position);
+
+        //Start running timer when AI enters range of counter
+        if (runTimer)
+        {
+            timer += Time.deltaTime;
+        }
+        if (timer >= timerMax)
+        {
+            state = AIState.Flee;
+            timer -= timerMax;
+            Bubble.gameObject.SetActive(false);
+        }
+
+        if (GotWeapon == true)
+        {
+            state = AIState.Fight;
+        }
+
+        switch (state)
+        {
+            case AIState.Queue:
+                QueueFunc();
+                break;
+
+            case AIState.Wait:
+                WaitFunc();
+                break;
+
+            case AIState.Flee:
+                FleeFunc();
+                break;
+
+            case AIState.Fight:
+                FightFunc();
+                break;
+        }
+
+    }
+
+    void QueueFunc()
+    {
+        if (dist > maxRange)
+        {
+            agent.SetDestination(QueuePos.transform.position);
+        }
+        else
+        {
+            if (CurRotate != faceNorth)
+            {
+                lerpTime = 0;
+                CurRotate = transform.rotation.eulerAngles;
+            }
+
+            state = AIState.Wait;
+            waitTimer = waitTimerMax;
+        }
+    }
+
+    public float lerpTime;
+    void WaitFunc()
+    {
+        waitTimer -= Time.deltaTime;
+
+        lerpTime += Time.deltaTime;
+        lerpTime = Mathf.Clamp(lerpTime, 0, 1);
+        transform.rotation = Quaternion.Lerp(Quaternion.Euler(CurRotate), Quaternion.Euler(faceNorth), lerpTime);
 
 
+        if (waitTimer <= 0)
+        {
+            waitTimer += waitTimerMax;
+            if (dist > maxRange)
+            {
+                state = AIState.Queue;
+            }
+        }
 
-//    ;
-//    }
-//}
+    }
+
+
+    void FleeFunc()
+    {
+        agent.SetDestination(fleePos.transform.position);
+        Bubble.gameObject.SetActive(false);
+
+        Debug.Log("Fleeing");
+    }
+
+
+    void FightFunc()
+    {
+        agent.SetDestination(battlePos.transform.position);
+        Bubble.gameObject.SetActive(false);
+
+        Debug.Log("Fighting");
+    }
+
+}
