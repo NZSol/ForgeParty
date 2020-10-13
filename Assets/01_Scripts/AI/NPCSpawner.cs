@@ -1,26 +1,30 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
+using UnityEngine.AI;
 
 public class NPCSpawner : MonoBehaviour
 {
-
-    public int npcCount = 0;
-    public List<GameObject> queueCount = new List<GameObject>();
+    [SerializeField] private GameObject[] queuePositions;
 
     [SerializeField] GameObject npcInstance;
     [SerializeField] GameObject[] npcType;
 
+    public GameObject fleePos;
+    public GameObject battlePos;
+    GameObject setQueuePosition;
+
     public float timer;
-    public float spawnTimer;
+    public float spawnTimer = 10;
     public float spawnDifference;
 
+    public float spawnDiffHigh;
+    public float spawnDiffLow;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public List<GameObject> activeNpcs = new List<GameObject>();
+
+
 
     // Update is called once per frame
     void Update()
@@ -29,21 +33,35 @@ public class NPCSpawner : MonoBehaviour
 
         if (timer <= 0)
         {
-            spawnDifference = Random.Range(-5, 10);
+            spawnDifference = Random.Range(spawnDiffLow, spawnDiffHigh);
             timer = spawnTimer + spawnDifference;
 
             SetClass();
-            if (npcCount <= queueCount.Count)
+            if (activeNpcs.Count < queuePositions.Length)
             {
-                Instantiate(npcInstance);
+                Debug.Log("true");
+                var instance = Instantiate(npcInstance, gameObject.transform);
+                instance.SetActive(true);
+                //instance.setQueuePosition(queuePositions[activeNpcs.Count]);
+                instance.GetComponent<NpcRequest>().GoalQueuePos = queuePositions[activeNpcs.Count];
+                activeNpcs.Add(instance);
             }
         }
     }
 
     void SetClass()
     {
-        npcInstance = npcType[Random.Range(0, npcType.Length + 1)];
+        npcInstance = npcType[Random.Range(0, npcType.Length)];
     }
 
+    public void listRemove(GameObject obj)
+    {
+        activeNpcs.Remove(obj);
+        Destroy(obj);
+        for (int i = 0; i < activeNpcs.Count; i++)
+        {
+            activeNpcs[i].GetComponent<NpcRequest>().GoalQueuePos = queuePositions[i];
+        }
+    }
 
 }

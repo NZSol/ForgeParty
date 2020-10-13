@@ -78,7 +78,6 @@ public class Interact : MonoBehaviour
     {
         activeTool = closestTool(Interactables.ToArray());
 
-        print(Vector3.Distance(activeTool.transform.position, transform.position));
 
         if (activeTool != null)
         {
