@@ -85,13 +85,17 @@ public class NpcRequest : MonoBehaviour
             runTimer = true;
         }
 
-        if (col.gameObject.GetComponent<Weapon>().myWeapon == weapon)
+        if (col.gameObject.GetComponent<Weapon>() != null)
         {
-            GotWeapon = true;
-            col.gameObject.transform.parent = parentPos;
-            col.gameObject.transform.localPosition = new Vector3(0, 3.5f, 0);
-            col.gameObject.transform.rotation = Quaternion.Euler(x: -90, y: + 0, z: +90);
-            //Destroy(col.gameObject);
+            if (col.gameObject.GetComponent<Weapon>().myWeapon == weapon)
+            {
+                col.GetComponentInParent<Interact>().heldObj = null;
+                GotWeapon = true;
+                col.gameObject.transform.parent = parentPos;
+                col.gameObject.transform.localPosition = new Vector3(0, 3.5f, 0);
+                col.gameObject.transform.rotation = Quaternion.Euler(x: -90, y: +0, z: +90);
+                //Destroy(col.gameObject);
+            }
         }
 
 

@@ -8,6 +8,8 @@ public class OreBucket : Tool
     public Metal.metal Output;
     int randomValMin = 1, randomValMax = 101, val;
 
+
+
     public override GameObject GiveItem()
     {
         val = Random.Range(randomValMin, randomValMax);
@@ -37,5 +39,6 @@ public class OreBucket : Tool
     void Start()
     {
         Output = GetComponent<Metal>().myMetal;
+        
     }
 }

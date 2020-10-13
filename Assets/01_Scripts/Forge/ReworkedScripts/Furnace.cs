@@ -64,7 +64,9 @@ public class Furnace : Tool
             outputMet = activeMetal;
             outputPrefab = crucible;
             activeMetal = Metal.metal.Blank;
+
             timer -= maxTimer;
+            Debug.Log("baked");
         }
 
     }
@@ -75,11 +77,11 @@ public class Furnace : Tool
         //check metal type
         if (activeMetal == Metal.metal.Copper)
         {
-            meltingPoint = 10;
+            meltingPoint = 6;
         }
         else if (activeMetal == Metal.metal.Tin)
         {
-            meltingPoint = 5;
+            meltingPoint = 4;
         }
 
         print("content check");

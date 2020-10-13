@@ -58,7 +58,7 @@ public class Interact : MonoBehaviour
     float toolDist;
 
 
-    [SerializeField] GameObject heldObj;
+    public GameObject heldObj;
 
 
     // Start is called before the first frame update
@@ -140,6 +140,7 @@ public class Interact : MonoBehaviour
         {
             heldObj.transform.parent = null;
             heldObj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+            heldObj = null;
         }
         else
         {

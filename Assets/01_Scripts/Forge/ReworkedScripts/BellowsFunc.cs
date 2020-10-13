@@ -9,6 +9,7 @@ public class BellowsFunc : Tool
     [SerializeField] Slider _slide;
 
     public float localTemp;
+    public float coolingMult;
 
     // Start is called before the first frame update
     void Start()
@@ -30,7 +31,7 @@ public class BellowsFunc : Tool
         {
             if (localTemp > 0)
             {
-                localTemp -= Time.deltaTime / 3;
+                localTemp -= Time.deltaTime / coolingMult;
             }
         }
 
