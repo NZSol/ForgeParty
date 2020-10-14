@@ -14,7 +14,7 @@ public class NpcRequest : MonoBehaviour
 
     //Timer for checking if can move up in queue
     public float waitTimerMax = 2;
-    float waitTimer;
+    public float waitTimer;
     
 
     //Timer checking if time is up and AI should leave
@@ -163,21 +163,24 @@ public class NpcRequest : MonoBehaviour
         {
             waitTimer -= Time.deltaTime;
 
-            lerpTime += Time.deltaTime;
+            lerpTime += (Time.deltaTime / 5);
             lerpTime = Mathf.Clamp(lerpTime, 0, 1);
-            transform.rotation = Quaternion.Lerp(Quaternion.Euler(CurRotate), Quaternion.Euler(faceNorth), lerpTime);
+            CurRotate = transform.rotation.eulerAngles;
 
             if (waitTimer <= 0)
             {
                 waitTimer += waitTimerMax;
                 updateQueuePos();
             }
+
             if (CurRotate != faceNorth)
             {
-                lerpTime = 0;
-                CurRotate = transform.rotation.eulerAngles;
+                transform.rotation = Quaternion.Lerp(Quaternion.Euler(CurRotate), Quaternion.Euler(faceNorth), lerpTime);
             }
-
+            else
+            {
+                lerpTime = 0;
+            }
         }
     }
 
@@ -185,6 +188,7 @@ public class NpcRequest : MonoBehaviour
     {
         agent.SetDestination(fleePos.transform.position);
         Bubble.gameObject.SetActive(false);
+        GetComponentInChildren<WeaponVars>().setVar();
         RemoveMe();
 
         Debug.Log("Fleeing");

@@ -24,13 +24,15 @@ public class NPCSpawner : MonoBehaviour
 
     public List<GameObject> activeNpcs = new List<GameObject>();
 
-
+    private void Start()
+    {
+        timer -= (timer + 1);
+    }
 
     // Update is called once per frame
     void Update()
     {
         timer -= Time.deltaTime;
-
         if (timer <= 0)
         {
             spawnDifference = Random.Range(spawnDiffLow, spawnDiffHigh);
@@ -39,7 +41,6 @@ public class NPCSpawner : MonoBehaviour
             SetClass();
             if (activeNpcs.Count < queuePositions.Length)
             {
-                Debug.Log("true");
                 var instance = Instantiate(npcInstance, gameObject.transform);
                 instance.SetActive(true);
                 //instance.setQueuePosition(queuePositions[activeNpcs.Count]);
