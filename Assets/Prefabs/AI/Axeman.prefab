@@ -370,7 +370,7 @@ GameObject:
   - component: {fileID: 4674398738526325763}
   m_Layer: 0
   m_Name: Axeman
-  m_TagString: Untagged
+  m_TagString: NPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -383,7 +383,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6882039028246288786}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 109.97705, y: 3.83, z: -60.94091}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3749111411238926196}
@@ -485,6 +485,7 @@ MonoBehaviour:
   _slide: {fileID: 7324520270294425433}
   anger: {fileID: 0}
   parentPos: {fileID: 821691461}
+  destination: {fileID: 0}
   lerpTime: 0
 --- !u!65 &4674398738526325763
 BoxCollider:

@@ -58,7 +58,6 @@ public class NPCSpawner : MonoBehaviour
     public void listRemove(GameObject obj)
     {
         activeNpcs.Remove(obj);
-        Destroy(obj);
         for (int i = 0; i < activeNpcs.Count; i++)
         {
             activeNpcs[i].GetComponent<NpcRequest>().GoalQueuePos = queuePositions[i];

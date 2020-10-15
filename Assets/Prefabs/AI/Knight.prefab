@@ -46,7 +46,7 @@ GameObject:
   - component: {fileID: 919132147654748178}
   m_Layer: 0
   m_Name: Knight
-  m_TagString: Untagged
+  m_TagString: NPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -59,7 +59,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 447122303565678070}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 69.3, y: 3.92, z: -63.3}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2814770477904328405}
@@ -156,6 +156,7 @@ MonoBehaviour:
   _slide: {fileID: 7577717843688884607}
   anger: {fileID: 0}
   parentPos: {fileID: 1689592925}
+  destination: {fileID: 0}
   lerpTime: 0
 --- !u!65 &919132147654748178
 BoxCollider:

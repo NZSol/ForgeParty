@@ -96,6 +96,7 @@ GameObject:
   - component: {fileID: 5013893725080736670}
   - component: {fileID: -7310580693326051996}
   - component: {fileID: -9038454941125831343}
+  - component: {fileID: -3957735454571959257}
   - component: {fileID: 6179760860232019417}
   m_Layer: 12
   m_Name: Sword
@@ -206,6 +207,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   completed: 0
   myWeapon: 0
+--- !u!114 &-3957735454571959257
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8956933262917555703}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b652c78b724c6af46a593c08510908e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  durability: 0
+  damage: 0
+  damageMult: 0
+  totalDamage: 0
 --- !u!64 &6179760860232019417
 MeshCollider:
   m_ObjectHideFlags: 0

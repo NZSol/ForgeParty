@@ -5,7 +5,7 @@ using UnityEngine;
 public class Battle : MonoBehaviour
 {
 
-    public List<WeaponVars> varContain = new List<WeaponVars>();
+    public List<GameObject> Weapons = new List<GameObject>();
 
     public float totalDurable;
     public float totalDamage;
@@ -22,5 +22,18 @@ public class Battle : MonoBehaviour
     void Update()
     {
 
+    }
+
+
+    public void AddToBattle(GameObject obj)
+    {
+        totalDamage += obj.GetComponent<WeaponVars>().totalDamage;
+        Weapons.Add(obj);
+    }
+
+    public void RemoveFromBattle(GameObject obj)
+    {
+        totalDamage -= obj.GetComponent<WeaponVars>().totalDamage;
+        Weapons.Remove(obj);
     }
 }

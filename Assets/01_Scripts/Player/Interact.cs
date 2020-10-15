@@ -230,4 +230,17 @@ public class Interact : MonoBehaviour
         heldObj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
 
     }
+
+    public void Rush(CallbackContext context)
+    {
+        if (active)
+        {
+            var npcArray = GameObject.FindGameObjectsWithTag("NPC");
+            foreach(GameObject npc in npcArray)
+            {
+                npc.GetComponent<NpcRequest>().timer  = npc.GetComponent<NpcRequest>().timerMax;
+            }
+
+        }
+    }
 }

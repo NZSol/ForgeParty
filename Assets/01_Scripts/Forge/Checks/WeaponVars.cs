@@ -4,14 +4,24 @@ using UnityEngine;
 
 public class WeaponVars : MonoBehaviour
 {
+    GameObject Fight;
+
     public float durability;
     public float damage;
     public float damageMult;
+    public float totalDamage;
 
     Weapon.weaponType myWeapon;
     Metal.metal myMetal;
 
-    bool valsAssigned;
+    bool valsAssigned = false;
+    bool active = true;
+    public bool inFight = false;
+
+    private void Start()
+    {
+        Fight = GameObject.FindWithTag("LevelGod");
+    }
 
     public void setVar()
     {
@@ -48,17 +58,31 @@ public class WeaponVars : MonoBehaviour
                 damageMult = 1.5f;
                 break;
         }
+        totalDamage = damage * damageMult;
+        valsAssigned = true;
     }
 
     private void Update()
     {
         if (valsAssigned)
         {
+            if (active)
+            {
+                Fight.GetComponent<Battle>().AddToBattle(gameObject);
+                active = false;
+            }
+
             if (durability <= 0)
             {
+                Fight.GetComponent<Battle>().RemoveFromBattle(gameObject);
                 Destroy(gameObject);
             }
         }
+        if (inFight)
+        {
+            durability -= Time.deltaTime;
+        }
+
     }
 
 }

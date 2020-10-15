@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: -8659170762842566492}
   - component: {fileID: -7825086687172903900}
   - component: {fileID: 3415816576195160392}
+  - component: {fileID: -7719896521491035693}
   - component: {fileID: -5842846721242672903}
   m_Layer: 12
   m_Name: Axe
@@ -125,6 +126,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   completed: 0
   myWeapon: 0
+--- !u!114 &-7719896521491035693
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2011267080074099986}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b652c78b724c6af46a593c08510908e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  durability: 0
+  damage: 0
+  damageMult: 0
+  totalDamage: 0
 --- !u!64 &-5842846721242672903
 MeshCollider:
   m_ObjectHideFlags: 0

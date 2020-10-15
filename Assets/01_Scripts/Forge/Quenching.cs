@@ -51,7 +51,7 @@ public class Quenching : Tool
     // Update is called once per frame
     void Update()
     {
-        if (charging == true && inputWeapon != Weapon.weaponType.Blank)
+        if (inputWeapon != Weapon.weaponType.Blank)
         {
             if (timer <= completionTime)
             {
@@ -65,7 +65,6 @@ public class Quenching : Tool
 
                 inputWeapon = Weapon.weaponType.Blank;
                 inputMet = Metal.metal.Blank;
-                charging = false;
             }
         }
 

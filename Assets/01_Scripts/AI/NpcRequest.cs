@@ -7,6 +7,8 @@ using UnityEngine.AI;
 
 public class NpcRequest : MonoBehaviour
 {
+    GameObject teamVariables;
+
     public enum AIState { Queue, Flee, Fight};
     public AIState state;
 
@@ -55,9 +57,9 @@ public class NpcRequest : MonoBehaviour
 
     bool alive;
     NPCSpawner parentScript;
-
     public void Start()
     {
+        teamVariables = GameObject.FindWithTag("LevelGod");
         parentScript = GetComponentInParent<NPCSpawner>();
         agent = gameObject.GetComponent<NavMeshAgent>();
 
@@ -88,7 +90,7 @@ public class NpcRequest : MonoBehaviour
         }
     }
 
-
+    [SerializeField] GameObject heldWeapon;
     private void OnTriggerEnter(Collider col) //Trigger Zone Near benches
     {
         if (col.tag == "requestZone")
@@ -107,7 +109,8 @@ public class NpcRequest : MonoBehaviour
                 col.gameObject.transform.parent = parentPos;
                 col.gameObject.transform.localPosition = new Vector3(0, 3.5f, 0);
                 col.gameObject.transform.rotation = Quaternion.Euler(x: -90, y: +0, z: +90);
-                //Destroy(col.gameObject);
+                heldWeapon = col.gameObject;
+                heldWeapon.GetComponent<WeaponVars>().setVar();
             }
         }
 
@@ -127,12 +130,15 @@ public class NpcRequest : MonoBehaviour
         {
             state = AIState.Flee;
             timer -= timerMax;
+            agent.SetDestination(fleePos.transform.position);
             Bubble.gameObject.SetActive(false);
         }
 
         if (GotWeapon == true)
         {
             state = AIState.Fight;
+            agent.SetDestination(battlePos.transform.position);
+            Bubble.gameObject.SetActive(false);
         }
 
         switch (state)
@@ -186,10 +192,16 @@ public class NpcRequest : MonoBehaviour
 
     void FleeFunc()
     {
-        agent.SetDestination(fleePos.transform.position);
         Bubble.gameObject.SetActive(false);
-        GetComponentInChildren<WeaponVars>().setVar();
         RemoveMe();
+
+        if (agent.pathPending)
+        {
+        }
+        else if (agent.remainingDistance < maxRange)
+        {
+            Destroy(gameObject);
+        }
 
         Debug.Log("Fleeing");
     }
@@ -197,10 +209,19 @@ public class NpcRequest : MonoBehaviour
 
     void FightFunc()
     {
-        agent.SetDestination(battlePos.transform.position);
-        Bubble.gameObject.SetActive(false);
         RemoveMe();
 
+        if (agent.pathPending)
+        {
+
+        }
+        else if (agent.remainingDistance < maxRange)
+        {
+            heldWeapon.GetComponentInChildren<MeshRenderer>().enabled = false;
+            heldWeapon.GetComponent<WeaponVars>().inFight = true;
+            heldWeapon.transform.SetParent(null);
+            Destroy(gameObject);
+        }
         Debug.Log("Fighting");
     }
 
