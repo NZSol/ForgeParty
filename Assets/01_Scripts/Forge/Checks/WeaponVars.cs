@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class WeaponVars : MonoBehaviour
 {
-    GameObject Fight;
+
+    public enum team { T1, T2 };
+    public team myTeam;
 
     public float durability;
     public float damage;
@@ -20,7 +22,10 @@ public class WeaponVars : MonoBehaviour
 
     private void Start()
     {
-        Fight = GameObject.FindWithTag("LevelGod");
+        if (durability == 0)
+        {
+            setVar();
+        }
     }
 
     public void setVar()
@@ -62,25 +67,34 @@ public class WeaponVars : MonoBehaviour
         valsAssigned = true;
     }
 
+
     private void Update()
     {
-        if (valsAssigned)
+        if (transform.parent != null && (transform.parent.name == "TeamForgeList" || transform.parent.name == "NPCForgeList"))
         {
-            if (active)
+            switch (myTeam)
             {
-                Fight.GetComponent<Battle>().AddToBattle(gameObject);
-                active = false;
+                case team.T1:
+                    if (inFight && active)
+                    {
+                        GetComponentInParent<WeaponLists>().AddToList(gameObject);
+                        active = false;
+                    }
+                    break;
+
+                case team.T2:
+                    if (valsAssigned && active)
+                    {
+                        GetComponentInParent<WeaponLists>().AddToList(gameObject);
+                        active = false;
+                    }
+                    break;
             }
 
-            if (durability <= 0)
+            if (durability <= 0 && valsAssigned)
             {
-                Fight.GetComponent<Battle>().RemoveFromBattle(gameObject);
-                Destroy(gameObject);
+                GetComponentInParent<WeaponLists>().RemoveFromList(gameObject);
             }
-        }
-        if (inFight)
-        {
-            durability -= Time.deltaTime;
         }
 
     }

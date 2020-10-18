@@ -12,6 +12,8 @@ public class Quenching : Tool
     public Weapon.weaponType outputWeapon;
     public Metal.metal outputMet;
 
+    WeaponVars.team myTeam;
+
     [SerializeField] GameObject Sword;
     [SerializeField] GameObject Axe;
 
@@ -46,6 +48,7 @@ public class Quenching : Tool
     void Start()
     {
         _slide.maxValue = completionTime;
+        myTeam = WeaponVars.team.T1;
     }
 
     // Update is called once per frame
@@ -85,6 +88,7 @@ public class Quenching : Tool
             weaponOut.GetComponent<Metal>().myMetal = outputMet;
             weaponOut.GetComponent<Weapon>().myWeapon = outputWeapon;
             weaponOut.GetComponent<Weapon>().completed = true;
+            weaponOut.GetComponent<WeaponVars>().myTeam = myTeam;
 
             outputMet = Metal.metal.Blank;
             outputWeapon = Weapon.weaponType.Blank;

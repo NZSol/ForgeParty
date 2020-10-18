@@ -55,6 +55,9 @@ public class NpcRequest : MonoBehaviour
 
     [SerializeField] Transform parentPos;
 
+    
+    public GameObject myTeamList;
+
     bool alive;
     NPCSpawner parentScript;
     public void Start()
@@ -219,7 +222,7 @@ public class NpcRequest : MonoBehaviour
         {
             heldWeapon.GetComponentInChildren<MeshRenderer>().enabled = false;
             heldWeapon.GetComponent<WeaponVars>().inFight = true;
-            heldWeapon.transform.SetParent(null);
+            heldWeapon.transform.SetParent(myTeamList.transform);
             Destroy(gameObject);
         }
         Debug.Log("Fighting");

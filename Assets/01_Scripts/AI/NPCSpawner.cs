@@ -23,7 +23,8 @@ public class NPCSpawner : MonoBehaviour
     public float spawnDiffLow;
 
     public List<GameObject> activeNpcs = new List<GameObject>();
-
+    [SerializeField]
+    GameObject TeamWeaponList;
     private void Start()
     {
         timer -= (timer + 1);
@@ -46,6 +47,7 @@ public class NPCSpawner : MonoBehaviour
                 //instance.setQueuePosition(queuePositions[activeNpcs.Count]);
                 instance.GetComponent<NpcRequest>().GoalQueuePos = queuePositions[activeNpcs.Count];
                 activeNpcs.Add(instance);
+                instance.GetComponent<NpcRequest>().myTeamList = TeamWeaponList;
             }
         }
     }
