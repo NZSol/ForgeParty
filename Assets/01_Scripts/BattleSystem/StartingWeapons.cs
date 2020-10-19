@@ -9,6 +9,8 @@ public class StartingWeapons : MonoBehaviour
     Metal.metal myMetal;
     [SerializeField] WeaponVars.team myTeam;
 
+    public int startCount;
+
     int weapon;
     int metal;
 
@@ -17,7 +19,7 @@ public class StartingWeapons : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < startCount; i++)
         {
             weapon = Random.Range((int)Weapon.weaponType.Sword, (int)Weapon.weaponType.Axe + 1);
             metal = Random.Range((int)Metal.metal.Tin, (int)Metal.metal.Bronze + 1);
