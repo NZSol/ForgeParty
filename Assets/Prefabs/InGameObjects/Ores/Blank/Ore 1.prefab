@@ -93,6 +93,7 @@ GameObject:
   - component: {fileID: -1990731111773542613}
   - component: {fileID: -1900854770457206155}
   - component: {fileID: 7111943074372097615}
+  - component: {fileID: 8645739456828719866}
   m_Layer: 0
   m_Name: Ore 1
   m_TagString: Untagged
@@ -157,3 +158,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tool: 0
+--- !u!114 &8645739456828719866
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4470121786007449181}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0924f979297bd64586def0f6a3fc1c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tin: {fileID: 2100000, guid: 9f0b945d72f73724a9b2b6997038ad2b, type: 2}
+  copper: {fileID: 2100000, guid: b6ddf7654a4c51043aeea1041573dcfe, type: 2}
+  bronze: {fileID: 2100000, guid: 698907d391ab41c419e17e3a76492004, type: 2}
+  render: {fileID: 0}
+  curMat: {fileID: 0}
+  myMetal: 0

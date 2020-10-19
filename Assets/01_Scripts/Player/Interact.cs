@@ -58,7 +58,7 @@ public class Interact : MonoBehaviour
     float toolDist;
 
 
-    [SerializeField] GameObject heldObj;
+    public GameObject heldObj;
 
 
     // Start is called before the first frame update
@@ -78,7 +78,6 @@ public class Interact : MonoBehaviour
     {
         activeTool = closestTool(Interactables.ToArray());
 
-        print(Vector3.Distance(activeTool.transform.position, transform.position));
 
         if (activeTool != null)
         {
@@ -140,6 +139,7 @@ public class Interact : MonoBehaviour
         {
             heldObj.transform.parent = null;
             heldObj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+            heldObj = null;
         }
         else
         {
@@ -229,5 +229,18 @@ public class Interact : MonoBehaviour
 
         heldObj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
 
+    }
+
+    public void Rush(CallbackContext context)
+    {
+        if (active)
+        {
+            var npcArray = GameObject.FindGameObjectsWithTag("NPC");
+            foreach(GameObject npc in npcArray)
+            {
+                npc.GetComponent<NpcRequest>().timer  = npc.GetComponent<NpcRequest>().timerMax;
+            }
+
+        }
     }
 }

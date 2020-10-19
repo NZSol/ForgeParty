@@ -208,10 +208,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5da712437b2b9d64da4c8995a68b7254, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
-  maxSpeed: 15
-  minSpeed: -15
-  dashForce: 25
+  speed: 20
+  maxSpeed: 30
+  minSpeed: -10
+  dashForce: 50
   dashCool: 0
   damping: 10
 --- !u!54 &3059762728143522857
@@ -320,6 +320,23 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: ecd733e0-0c84-4575-8eee-71d37c176b4e
     m_ActionName: Player/Dash[/DualShock4GamepadHID/buttonSouth,/XInputControllerWindows/buttonSouth]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5332483974215100654}
+        m_TargetAssemblyTypeName: Interact, Assembly-CSharp
+        m_MethodName: Rush
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 07696023-cbe8-4188-beb9-c56004ea5d87
+    m_ActionName: Player/Rush[/DualShock4GamepadHID/buttonNorth,/Nintendo Wireless
+      Gamepad/button4]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player

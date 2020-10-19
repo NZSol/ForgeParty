@@ -11,10 +11,12 @@ GameObject:
   - component: {fileID: 3292743859734712065}
   - component: {fileID: 3106134220736814944}
   - component: {fileID: -1840635662573858413}
-  - component: {fileID: -1475286934120712985}
   - component: {fileID: -8659170762842566492}
+  - component: {fileID: -7825086687172903900}
   - component: {fileID: 3415816576195160392}
-  m_Layer: 0
+  - component: {fileID: -7719896521491035693}
+  - component: {fileID: -5842846721242672903}
+  m_Layer: 12
   m_Name: Axe
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -65,19 +67,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &-1475286934120712985
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2011267080074099986}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b8ed2ca003907e4cacb44a4dfd1e556, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tool: 3
 --- !u!114 &-8659170762842566492
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -91,6 +80,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myMetal: 0
+--- !u!114 &-7825086687172903900
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2011267080074099986}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0924f979297bd64586def0f6a3fc1c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tin: {fileID: 2100000, guid: 9f0b945d72f73724a9b2b6997038ad2b, type: 2}
+  copper: {fileID: 2100000, guid: b6ddf7654a4c51043aeea1041573dcfe, type: 2}
+  bronze: {fileID: 2100000, guid: 698907d391ab41c419e17e3a76492004, type: 2}
+  render: {fileID: 0}
+  curMat: {fileID: 0}
+  myMetal: 0
 --- !u!114 &3415816576195160392
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -103,7 +110,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1775d1706d1346b4089982a22f23e2e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  completed: 0
   myWeapon: 0
+--- !u!114 &-7719896521491035693
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2011267080074099986}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b652c78b724c6af46a593c08510908e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  durability: 0
+  damage: 0
+  damageMult: 0
+  totalDamage: 0
+  inFight: 0
+--- !u!64 &-5842846721242672903
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2011267080074099986}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -8287839383430266118, guid: 77cb58cda55e12e41949482ab51406fa, type: 3}
 --- !u!1 &8404119753018513619
 GameObject:
   m_ObjectHideFlags: 0

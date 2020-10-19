@@ -7,18 +7,21 @@ using UnityEngine.AI;
 
 public class NpcRequest : MonoBehaviour
 {
-    public enum AIState { Queue, Wait, Flee, Fight};
+    GameObject teamVariables;
+
+    public enum AIState { Queue, Flee, Fight};
     public AIState state;
 
     public Canvas Bubble;
 
     //Timer for checking if can move up in queue
     public float waitTimerMax = 2;
-    float waitTimer;
+    public float waitTimer;
     
+
     //Timer checking if time is up and AI should leave
     public float timerMax;
-    float timer;
+    public float timer = 0;
     bool runTimer;
 
     public bool GotWeapon = false;
@@ -26,60 +29,71 @@ public class NpcRequest : MonoBehaviour
     public float speed = 4f;
     public float startTime;
 
-    NavMeshAgent agent;
+    [SerializeField] NavMeshAgent agent;
 
-    float dist;
     public float maxRange = 2;
 
     [SerializeField] Weapon.weaponType weapon;
 
     [SerializeField] GameObject battlePos;
     [SerializeField] GameObject fleePos;
-    [SerializeField] GameObject QueuePos;
+    public GameObject GoalQueuePos;
+    [SerializeField] GameObject CurrentQueuePos;
+    public int placeInQueue;
 
     [SerializeField] Image _sword;
     [SerializeField] Image _axe;
-
     [SerializeField] Image _activeWeapon;
 
+    [SerializeField] Slider _slide;
 
-    [SerializeField] MeshFilter AxeMan;
-    [SerializeField] MeshFilter Swordman;
 
-    [SerializeField] MeshFilter ActiveModel;
+    [SerializeField] ParticleSystem anger;
 
     Vector3 CurRotate;
     Vector3 faceNorth;
 
-    private void Start()
+    [SerializeField] Transform parentPos;
+
+    
+    public GameObject myTeamList;
+
+    bool alive;
+    NPCSpawner parentScript;
+    public void Start()
     {
+        teamVariables = GameObject.FindWithTag("LevelGod");
+        parentScript = GetComponentInParent<NPCSpawner>();
+        agent = gameObject.GetComponent<NavMeshAgent>();
+
+        updateQueuePos();
+        fleePos = parentScript.fleePos;
+        battlePos = parentScript.battlePos;
+
         faceNorth = new Vector3(0, Input.compass.trueHeading, 0);
 
-        agent = GetComponent<NavMeshAgent>();
-        agent.SetDestination(QueuePos.transform.position);
+        agent.SetDestination(CurrentQueuePos.transform.position);
         state = AIState.Queue;
 
         Bubble.gameObject.SetActive(false);
 
-        //Declare which weapon NPC wants and set active Image to weapon type
-        weapon = (Weapon.weaponType)Random.Range(1, 3);
+        _slide.maxValue = timerMax;
+
+        alive = true;
+
         switch (weapon)
         {
             case Weapon.weaponType.Sword:
                 _activeWeapon = _sword;
-                ActiveModel = Swordman;
                 break;
 
             case Weapon.weaponType.Axe:
                 _activeWeapon = _axe;
-                ActiveModel = AxeMan;
                 break;
         }
-
-
-        gameObject.GetComponent<MeshFilter>().mesh = ActiveModel.mesh;
     }
 
+    [SerializeField] GameObject heldWeapon;
     private void OnTriggerEnter(Collider col) //Trigger Zone Near benches
     {
         if (col.tag == "requestZone")
@@ -89,19 +103,26 @@ public class NpcRequest : MonoBehaviour
             runTimer = true;
         }
 
-        //if (col.gameObject.GetComponent<Weapon>().myWeapon == Weapon.weaponType.Sword)
-        //{
-        //    GotWeapon = true;
-        //    Destroy(col.gameObject);
-        //}
+        if (col.gameObject.GetComponent<Weapon>() != null)
+        {
+            if (col.gameObject.GetComponent<Weapon>().myWeapon == weapon)
+            {
+                //col.GetComponentInParent<Interact>().heldObj = null;
+                GotWeapon = true;
+                col.gameObject.transform.parent = parentPos;
+                col.gameObject.transform.localPosition = new Vector3(0, 3.5f, 0);
+                col.gameObject.transform.rotation = Quaternion.Euler(x: -90, y: +0, z: +90);
+                heldWeapon = col.gameObject;
+                heldWeapon.GetComponent<WeaponVars>().setVar();
+            }
+        }
 
 
     }
 
     private void Update()
     {
-        //Get Distance from target destination
-        dist = Vector3.Distance(new Vector3(agent.destination.x, transform.position.y, agent.destination.z), transform.position);
+        _slide.value = timer;
 
         //Start running timer when AI enters range of counter
         if (runTimer)
@@ -112,12 +133,15 @@ public class NpcRequest : MonoBehaviour
         {
             state = AIState.Flee;
             timer -= timerMax;
+            agent.SetDestination(fleePos.transform.position);
             Bubble.gameObject.SetActive(false);
         }
 
         if (GotWeapon == true)
         {
             state = AIState.Fight;
+            agent.SetDestination(battlePos.transform.position);
+            Bubble.gameObject.SetActive(false);
         }
 
         switch (state)
@@ -125,11 +149,6 @@ public class NpcRequest : MonoBehaviour
             case AIState.Queue:
                 QueueFunc();
                 break;
-
-            case AIState.Wait:
-                WaitFunc();
-                break;
-
             case AIState.Flee:
                 FleeFunc();
                 break;
@@ -141,51 +160,51 @@ public class NpcRequest : MonoBehaviour
 
     }
 
+
+    public float lerpTime;
     void QueueFunc()
     {
-        if (dist > maxRange)
+        if (agent.remainingDistance > maxRange)
         {
-            agent.SetDestination(QueuePos.transform.position);
+            agent.SetDestination(CurrentQueuePos.transform.position);
         }
         else
         {
+            waitTimer -= Time.deltaTime;
+
+            lerpTime += (Time.deltaTime / 5);
+            lerpTime = Mathf.Clamp(lerpTime, 0, 1);
+            CurRotate = transform.rotation.eulerAngles;
+
+            if (waitTimer <= 0)
+            {
+                waitTimer += waitTimerMax;
+                updateQueuePos();
+            }
+
             if (CurRotate != faceNorth)
             {
-                lerpTime = 0;
-                CurRotate = transform.rotation.eulerAngles;
+                transform.rotation = Quaternion.Lerp(Quaternion.Euler(CurRotate), Quaternion.Euler(faceNorth), lerpTime);
             }
-
-            state = AIState.Wait;
-            waitTimer = waitTimerMax;
-        }
-    }
-
-    public float lerpTime;
-    void WaitFunc()
-    {
-        waitTimer -= Time.deltaTime;
-
-        lerpTime += Time.deltaTime;
-        lerpTime = Mathf.Clamp(lerpTime, 0, 1);
-        transform.rotation = Quaternion.Lerp(Quaternion.Euler(CurRotate), Quaternion.Euler(faceNorth), lerpTime);
-
-
-        if (waitTimer <= 0)
-        {
-            waitTimer += waitTimerMax;
-            if (dist > maxRange)
+            else
             {
-                state = AIState.Queue;
+                lerpTime = 0;
             }
         }
-
     }
-
 
     void FleeFunc()
     {
-        agent.SetDestination(fleePos.transform.position);
         Bubble.gameObject.SetActive(false);
+        RemoveMe();
+
+        if (agent.pathPending)
+        {
+        }
+        else if (agent.remainingDistance < maxRange)
+        {
+            Destroy(gameObject);
+        }
 
         Debug.Log("Fleeing");
     }
@@ -193,10 +212,36 @@ public class NpcRequest : MonoBehaviour
 
     void FightFunc()
     {
-        agent.SetDestination(battlePos.transform.position);
-        Bubble.gameObject.SetActive(false);
+        RemoveMe();
 
+        if (agent.pathPending)
+        {
+
+        }
+        else if (agent.remainingDistance < maxRange)
+        {
+            heldWeapon.GetComponentInChildren<MeshRenderer>().enabled = false;
+            heldWeapon.GetComponent<WeaponVars>().inFight = true;
+            heldWeapon.transform.SetParent(myTeamList.transform);
+            Destroy(gameObject);
+        }
         Debug.Log("Fighting");
+    }
+
+    //Invoke when Fleeing/Battling for 5 seconds
+    void RemoveMe()
+    {
+        if (alive)
+        {
+            parentScript.listRemove(gameObject);
+        }
+        alive = false;
+    }
+
+    public void updateQueuePos()
+    {
+        CurrentQueuePos = GoalQueuePos;
+        agent.SetDestination(CurrentQueuePos.transform.position);
     }
 
 }
