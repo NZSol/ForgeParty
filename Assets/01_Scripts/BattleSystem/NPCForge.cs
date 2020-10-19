@@ -23,6 +23,7 @@ public class NPCForge : MonoBehaviour
     private void Start()
     {
         myTeam = WeaponVars.team.T2;
+        timer = startTimer;
     }
 
     void SetWeapon()
@@ -53,14 +54,4 @@ public class NPCForge : MonoBehaviour
             //instance.SetActive(false);
         }
     }
-
-    void RandomizeTimer(float i)
-    {
-        randomTime = (startTimer += Random.Range(-5, 5));
-        startTimer = 10;
-    }
-
-
-
-
 }
