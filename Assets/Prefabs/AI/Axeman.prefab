@@ -464,7 +464,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   state: 1
   Bubble: {fileID: 7324520268264805115}
-  waitTimerMax: 1
+  waitTimerMax: 1.5
   waitTimer: 0
   timerMax: 90
   timer: 0
@@ -485,7 +485,8 @@ MonoBehaviour:
   _slide: {fileID: 7324520270294425433}
   anger: {fileID: 0}
   parentPos: {fileID: 821691461}
-  destination: {fileID: 0}
+  myTeamList: {fileID: 0}
+  heldWeapon: {fileID: 0}
   lerpTime: 0
 --- !u!65 &4674398738526325763
 BoxCollider:

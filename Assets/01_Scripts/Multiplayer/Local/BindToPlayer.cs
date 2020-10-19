@@ -11,21 +11,25 @@ public class BindToPlayer : MonoBehaviour
 
     public int playerCounter = 0;
 
-
-
     private void Start()
     {
         spawns = GameObject.FindGameObjectsWithTag("Spawns");
     }
     public void JoinGame(PlayerInput input)
     {
+
         PlayerAdd(input);
         ++playerCounter;
+
+        DontDestroyOnLoad(input.gameObject);
+
     }
 
-    public void LeaveGame()
-    {
+    
 
+    public void LeaveGame(PlayerInput input)
+    {
+        Destroy(input.gameObject);
     }
 
     void PlayerAdd(PlayerInput input)
@@ -33,14 +37,9 @@ public class BindToPlayer : MonoBehaviour
         var mostRecentPlayer = input.gameObject;
 
         mostRecentPlayer.transform.position = spawns[playerCounter].transform.position;
-        mostRecentPlayer.GetComponent<Interact>().active = true;
 
         players.Add(GameObject.FindWithTag("Player"));
 
-        foreach (GameObject player in players)
-        {
-            player.GetComponent<Interact>().active = true;
-        }
     }
 
 

@@ -3900,6 +3900,7 @@ GameObject:
   m_Component:
   - component: {fileID: 689874661}
   - component: {fileID: 689874662}
+  - component: {fileID: 689874663}
   m_Layer: 0
   m_Name: NPCForgeList
   m_TagString: Untagged
@@ -3937,6 +3938,22 @@ MonoBehaviour:
   timer: 0
   startTimer: 10
   randomTime: 0
+--- !u!114 &689874663
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 689874660}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03efe55a05fbcd147814afa59b56668b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myTeam: 1
+  startCount: 10
+  weaponInstance: {fileID: 9032075231414980903, guid: 2bec2aa24c521564ba74add41dbd6612,
+    type: 3}
 --- !u!1 &717263513
 GameObject:
   m_ObjectHideFlags: 0
@@ -4561,6 +4578,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 782122247}
+  - component: {fileID: 782122248}
   m_Layer: 0
   m_Name: TeamForgeList
   m_TagString: Untagged
@@ -4582,6 +4600,22 @@ Transform:
   m_Father: {fileID: 1558826699264140045}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &782122248
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 782122246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03efe55a05fbcd147814afa59b56668b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myTeam: 0
+  startCount: 10
+  weaponInstance: {fileID: 9032075231414980903, guid: 2bec2aa24c521564ba74add41dbd6612,
+    type: 3}
 --- !u!1001 &805378605
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10185,7 +10219,7 @@ MonoBehaviour:
       m_SingletonActionBindings: []
     m_Reference: {fileID: 3609299783585974607, guid: 20a4b7c63c1472d499a7674003629386,
       type: 3}
-  m_PlayerPrefab: {fileID: 3059762728143522858, guid: acef5ae79f2b7d84baa0f8883311983f,
+  m_PlayerPrefab: {fileID: 1333407521725570239, guid: 74ad3fbbee9713440834b43c9169237a,
     type: 3}
   m_SplitScreen: 0
   m_MaintainAspectRatioInSplitScreen: 0
