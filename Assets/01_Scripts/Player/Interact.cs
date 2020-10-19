@@ -64,6 +64,7 @@ public class Interact : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        active = true;
         if (active)
         {
             toolsLayer = LayerMask.NameToLayer("Tools");
@@ -76,6 +77,8 @@ public class Interact : MonoBehaviour
     void Update()
     {
         activeTool = closestTool(Interactables.ToArray());
+
+        print(Vector3.Distance(activeTool.transform.position, transform.position));
 
         if (activeTool != null)
         {
@@ -221,7 +224,7 @@ public class Interact : MonoBehaviour
     void positionHeldObj()
     {
         heldObj.transform.parent = gameObject.transform;
-        heldObj.transform.localPosition = new Vector3(0, 0, 1.8f);
+        heldObj.transform.localPosition = new Vector3(0, 0, 1f);
         heldObj.transform.localRotation = Quaternion.Euler(Vector3.zero);
 
         heldObj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;

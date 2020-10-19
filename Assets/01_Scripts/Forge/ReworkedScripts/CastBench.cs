@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CastBench : Tool
 {
@@ -8,7 +9,10 @@ public class CastBench : Tool
     public Metal.metal outputMet;
     public Metal.metal input;
 
-    public float timer = 5;
+    [SerializeField] Slider _slide;
+
+    public float timer = 0;
+    public float maxTimer = 5;
 
     public override void TakeItem(GameObject item)
     {
@@ -19,9 +23,12 @@ public class CastBench : Tool
     // Start is called before the first frame update
     void Start()
     {
+        _slide.maxValue = timer;
+
         input = Metal.metal.Blank;
         outputMet = Metal.metal.Blank;
         weapon = gameObject.GetComponent<Weapon>().myWeapon;
+        _slide.maxValue = maxTimer;
     }
 
     // Update is called once per frame
@@ -29,15 +36,16 @@ public class CastBench : Tool
     {
         if (input != Metal.metal.Blank)
         {
-            timer -= Time.deltaTime;
+            timer += Time.deltaTime;
         }
 
-        if (timer <= 0)
+        if (timer >= maxTimer)
         {
-            timer = 5;
+            timer = 0;
             outputMet = input;
             input = Metal.metal.Blank;
         }
+        _slide.value = timer;
     }
 
 

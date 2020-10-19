@@ -85,9 +85,11 @@ public class Quenching : Tool
             var weaponOut = Instantiate(outputPrefab);
             weaponOut.GetComponent<Metal>().myMetal = outputMet;
             weaponOut.GetComponent<Weapon>().myWeapon = outputWeapon;
+            weaponOut.GetComponent<Weapon>().completed = true;
 
             outputMet = Metal.metal.Blank;
             outputWeapon = Weapon.weaponType.Blank;
+            weaponOut.GetComponent<Weapon>().completed = true;
 
             return weaponOut;
         }
