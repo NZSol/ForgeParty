@@ -9,10 +9,11 @@ public class NPCForge : MonoBehaviour
     Metal.metal myMetal;
     WeaponVars.team myTeam;
 
+    int weaponWant;
+    int matWant;
+
     [SerializeField]
     GameObject weapon;
-
-    GameObject weaponInstance;
 
 
     public float timer;
@@ -26,9 +27,11 @@ public class NPCForge : MonoBehaviour
 
     void SetWeapon()
     {
-        weaponInstance = weapon;
-        myWeapon = Weapon.weaponType.Sword;
-        myMetal = Metal.metal.Copper;
+        matWant = Random.Range((int)Metal.metal.Tin, (int)Metal.metal.Bronze + 1);
+        weaponWant = Random.Range((int)Weapon.weaponType.Sword, (int)Weapon.weaponType.Axe + 1);
+
+        myMetal = (Metal.metal)matWant;
+        myWeapon = (Weapon.weaponType)weaponWant;
     }
 
 
