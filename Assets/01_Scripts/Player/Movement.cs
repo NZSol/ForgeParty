@@ -19,6 +19,7 @@ public class Movement : MonoBehaviour
     float startMaxSpeed;
     float startMinSpeed;
 
+    public Vector2 stick;
 
     public float damping;
     Vector2 lookDir;
@@ -39,9 +40,6 @@ public class Movement : MonoBehaviour
 
     public void Move(CallbackContext context)
     {
-        var stick = context.ReadValue<Vector2>();
-
-
         moveValues = new Vector3(stick.x, 0, stick.y) * 6;
         lookDir = stick;
     }

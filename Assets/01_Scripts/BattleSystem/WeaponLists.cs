@@ -23,7 +23,6 @@ public class WeaponLists : MonoBehaviour
     void Start()
     {
         _slide.value = 0;
-        print(slideVal + " Start");
     }
 
     private void Update()
@@ -31,7 +30,7 @@ public class WeaponLists : MonoBehaviour
         timer -= Time.deltaTime;
         slideVal = Mathf.Clamp(slideVal, _slide.minValue, _slide.maxValue);
         _slide.value = slideVal;
-        print(slideVal + " Update");
+
 
         if (timer <= 0)
         {
