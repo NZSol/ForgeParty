@@ -20,14 +20,6 @@ public class PlayerButton:MonoBehaviour
     }
 
     private void Update()
-    {
-        if (confirmed)
-        {
-            image.color = ConfirmedColor;
-        }
-        else
-        {
-            image.color = TeamColor;
-        }   
+    {  
     }
 }

@@ -11,9 +11,16 @@ public class BindToPlayer : MonoBehaviour
 
     public int playerCounter = 0;
 
-    private void Start()
+    private void Awake()
     {
-        spawns = GameObject.FindGameObjectsWithTag("Spawns");
+        if (GameObject.FindGameObjectsWithTag("Spawns") == null)
+        {
+            spawns = GameObject.FindGameObjectsWithTag("Spawns");
+        }
+        else
+        {
+            Debug.Log("Spawns Null");
+        }
     }
     public void JoinGame(PlayerInput input)
     {
@@ -36,7 +43,10 @@ public class BindToPlayer : MonoBehaviour
     {
         var mostRecentPlayer = input.gameObject;
 
-        mostRecentPlayer.transform.position = spawns[playerCounter].transform.position;
+        if (spawns != null || spawns.Length < playerCounter)
+        {
+            mostRecentPlayer.transform.position = spawns[playerCounter].transform.position;
+        }
 
         players.Add(GameObject.FindWithTag("Player"));
 

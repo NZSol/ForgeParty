@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEngine.InputSystem.InputAction;
+using UnityEngine.SceneManagement;
 
 public class PlayerThroughput : MonoBehaviour
 {
@@ -12,17 +13,39 @@ public class PlayerThroughput : MonoBehaviour
 
     Interact interactScript;
 
+    [SerializeField] Scene curScene;
+    [SerializeField] Scene titleScene;
+
+
     private void Awake()
     {
+        curScene = SceneManager.GetActiveScene();
+        titleScene = SceneManager.GetSceneAt(0);
         DontDestroyOnLoad(this.gameObject);
-        PlayerJoin();
+        if (titleScene != null)
+        {
+            if (curScene.name != titleScene.name)
+            {
+                PlayerJoin();
+            }
+        }
+    }
+
+    private void Start()
+    {
+        //titleScene = SceneManager.GetActiveScene();
+
+        //if (curScene.name != titleScene.name)
+        //{
+        //    PlayerJoin();
+        //}
+
     }
 
 
     public void PlayerJoin()
     {
         var PlayerChar = Instantiate(myPlayer);
-        PlayerChar.transform.position = transform.position;
         moveScript = PlayerChar.GetComponent<Movement>();
         interactScript = PlayerChar.GetComponent<Interact>();
         interactScript.active = true;
@@ -30,23 +53,35 @@ public class PlayerThroughput : MonoBehaviour
 
     public void readMove (CallbackContext context)
     {
-        moveScript.stick = context.ReadValue<Vector2>();
-        moveScript.Move(context);
+        if (moveScript != null)
+        {
+            moveScript.stick = context.ReadValue<Vector2>();
+            moveScript.Move(context);
+        }
     }
 
     public void readDash(CallbackContext context)
     {
-        moveScript.Dash(context);
+        if (moveScript != null)
+        {
+            moveScript.Dash(context);
+        }
     }
 
     public void readPress(CallbackContext context)
     {
-        interactScript.InteractPress(context);
+        if (interactScript != null)
+        {
+            interactScript.InteractPress(context);
+        }
     }
 
     public void readHold(CallbackContext context)
     {
-        interactScript.InteractHold(context);
+        if (interactScript != null)
+        {
+            interactScript.InteractHold(context);
+        }
     }
 
 
