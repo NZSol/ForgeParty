@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class ScreenSwaper : MonoBehaviour
 {
 
-    public void Load1v1Local()
+    public void LoadSingleplayer()
     {
         SceneManager.LoadScene(1);
 

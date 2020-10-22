@@ -16,30 +16,28 @@ public class PlayerThroughput : MonoBehaviour
     [SerializeField] Scene curScene;
     [SerializeField] Scene titleScene;
 
-
+    StartPos position;
     private void Awake()
     {
+        print("running awake");
         curScene = SceneManager.GetActiveScene();
         titleScene = SceneManager.GetSceneAt(0);
         DontDestroyOnLoad(this.gameObject);
-        if (titleScene != null)
-        {
-            if (curScene.name != titleScene.name)
-            {
-                PlayerJoin();
-            }
-        }
+
     }
 
     private void Start()
     {
-        //titleScene = SceneManager.GetActiveScene();
-
-        //if (curScene.name != titleScene.name)
-        //{
-        //    PlayerJoin();
-        //}
-
+    }
+    
+    void Update()
+    {
+        if (curScene.name != SceneManager.GetActiveScene().name)
+        {
+            curScene = SceneManager.GetActiveScene();
+            position = GameObject.FindWithTag("LevelGod").GetComponent<StartPos>();
+            PlayerJoin();
+        }
     }
 
 
@@ -49,6 +47,7 @@ public class PlayerThroughput : MonoBehaviour
         moveScript = PlayerChar.GetComponent<Movement>();
         interactScript = PlayerChar.GetComponent<Interact>();
         interactScript.active = true;
+        position.Positioning(PlayerChar);
     }
 
     public void readMove (CallbackContext context)
