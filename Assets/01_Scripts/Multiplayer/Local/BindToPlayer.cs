@@ -43,7 +43,7 @@ public class BindToPlayer : MonoBehaviour
     {
         var mostRecentPlayer = input.gameObject;
 
-        if (spawns != null || spawns.Length < playerCounter)
+        if (spawns.Length != 0)
         {
             mostRecentPlayer.transform.position = spawns[playerCounter].transform.position;
         }
