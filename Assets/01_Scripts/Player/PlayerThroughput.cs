@@ -17,6 +17,7 @@ public class PlayerThroughput : MonoBehaviour
     [SerializeField] Scene titleScene;
 
     StartPos position;
+
     private void Awake()
     {
         print("running awake");
@@ -26,10 +27,6 @@ public class PlayerThroughput : MonoBehaviour
 
     }
 
-    private void Start()
-    {
-    }
-    
     void Update()
     {
         if (curScene.name != SceneManager.GetActiveScene().name)
