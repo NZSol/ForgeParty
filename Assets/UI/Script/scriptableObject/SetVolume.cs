@@ -5,13 +5,18 @@ using UnityEngine.UI;
 
 public class SetVolume : MonoBehaviour
 {
-    public Slider Volume;
-    public ScriptableObject SettingsValues;
-    // Start is called before the first frame update
-    void Start()
+    private static SetVolume instance;
+    public static SetVolume Instance { get { return Instance; } }
+    void Awake()
     {
-       
+        instance = this;
     }
 
+
+    [SerializeField] private Settings settings;
+
+    public Settings Settings { get { return settings; } }
+
+   
     
 }

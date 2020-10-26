@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-[CreateAssetMenu(fileName = "Settings Values", menuName = "Settings")]
+[CreateAssetMenu(menuName = "Settings Values")]
 public class Settings : ScriptableObject
 {
-    public float Volume = 100f;
-
+    public int Volume;
+    
 
  }
