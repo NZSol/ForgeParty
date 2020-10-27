@@ -6,7 +6,7 @@ using UnityEngine.UI;
 [CreateAssetMenu(menuName = "Settings Values")]
 public class Settings : ScriptableObject
 {
-    public int Volume;
+    public float Volume;
     
 
  }
