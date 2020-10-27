@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class StartPos : MonoBehaviour
 {
-    public GameObject[] playerArray;
-    public GameObject[] spawns;
+    public GameObject[] playerArray = new GameObject[0];
+    public GameObject[] spawns = new GameObject[0];
 
     // Start is called before the first frame update
     void Start()

@@ -7,15 +7,15 @@ public class Furnace : Tool
 {
     public float timer = 0;
     public float maxTimer = 5;
-    public float temperature;
+    public float temperature = 0;
 
     public Queue<Metal.metal> inputs = new Queue<Metal.metal>();
-    public Metal.metal activeMetal;
-    public Metal.metal outputMet;
+    public Metal.metal activeMetal = new Metal.metal();
+    public Metal.metal outputMet = new Metal.metal();
 
-    public float meltingPoint;
+    public float meltingPoint = 0;
 
-    [SerializeField] GameObject crucible;
+    [SerializeField] GameObject crucible = null;
 
     public List<Metal.metal> displayQueue = new List<Metal.metal>();
 

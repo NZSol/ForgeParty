@@ -9982,8 +9982,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawns: []
   players: []
+  join: {fileID: 0}
   playerCounter: 0
-  imgArray: []
+  Events: {fileID: 0}
+  InputObjs: []
 --- !u!114 &1671417002
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9998,7 +10000,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_NotificationBehavior: 2
   m_MaxPlayerCount: 4
-  m_AllowJoining: 1
+  m_AllowJoining: 0
   m_JoinBehavior: 1
   m_PlayerJoinedEvent:
     m_PersistentCalls:

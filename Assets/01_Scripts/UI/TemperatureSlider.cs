@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class TemperatureSlider : MonoBehaviour
 {
-    [SerializeField] Slider _slide;
-    [SerializeField] Image _img;
+    [SerializeField] Slider _slide = null;
+    [SerializeField] Image _img = null;
 
     public float colorLerp = 0;
 

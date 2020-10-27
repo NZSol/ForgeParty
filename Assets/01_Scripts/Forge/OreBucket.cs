@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class OreBucket : Tool
 {
-    [SerializeField] GameObject[] Ore;
-    public Metal.metal Output;
-    int randomValMin = 1, randomValMax = 101, val;
+    [SerializeField] GameObject[] Ore = new GameObject[0];
+    public Metal.metal Output = new Metal.metal();
+    int randomValMin = 1, randomValMax = 101, val = 0;
 
 
 

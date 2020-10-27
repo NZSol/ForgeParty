@@ -9,14 +9,14 @@ public class WeaponLists : MonoBehaviour
     public List<WeaponVars> Team1 = new List<WeaponVars>();
     public List<WeaponVars> Team2 = new List<WeaponVars>();
 
-    float timer;
+    float timer = 0;
     public float timerMax = 5;
 
-    WeaponVars.team myTeam;
+    WeaponVars.team myTeam = new WeaponVars.team();
 
-    [SerializeField] Slider _slide;
-    float slideVal;
-    int multiplier;
+    [SerializeField] Slider _slide = null;
+    float slideVal = 0;
+    int multiplier = 0;
 
 
     // Start is called before the first frame update

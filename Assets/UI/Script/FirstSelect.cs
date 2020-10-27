@@ -8,21 +8,24 @@ using UnityEngine.InputSystem;
 public class FirstSelect : MonoBehaviour
 {
     [SerializeField]
-    private GameObject FirstObject;
+    private GameObject FirstObject = null;
 
-    [SerializeField] Image[] insideImg;
-    [SerializeField] Image[] borderImg;
+    [SerializeField] Image[] insideImg = new Image[0];
+    [SerializeField] Image[] borderImg = new Image[0];
 
-    [SerializeField] Sprite imgActive;
-    [SerializeField] Sprite ImageInactive;
-    [SerializeField] Sprite borderActive;
-    [SerializeField] Sprite borderInactive;
+    [SerializeField] Sprite imgActive = null;
+    [SerializeField] Sprite ImageInactive = null;
+    [SerializeField] Sprite borderActive = null;
+    [SerializeField] Sprite borderInactive = null;
 
     int playerCount = 0;
 
     private void OnEnable()
     {
-        
+        if (gameObject.tag == "navMenu")
+        {
+            SetBtn();
+        }
     }
 
     public void SetBtn()

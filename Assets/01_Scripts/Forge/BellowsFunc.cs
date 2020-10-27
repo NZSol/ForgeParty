@@ -6,10 +6,10 @@ using UnityEngine.UI;
 public class BellowsFunc : Tool
 {
     
-    [SerializeField] Slider _slide;
+    [SerializeField] Slider _slide = null;
 
-    public float localTemp;
-    public float coolingMult;
+    public float localTemp = 0;
+    public float coolingMult = 0;
 
     // Start is called before the first frame update
     void Start()

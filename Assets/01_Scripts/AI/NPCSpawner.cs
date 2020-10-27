@@ -6,25 +6,25 @@ using UnityEngine.AI;
 
 public class NPCSpawner : MonoBehaviour
 {
-    [SerializeField] private GameObject[] queuePositions;
+    [SerializeField] private GameObject[] queuePositions = new GameObject[0];
 
-    [SerializeField] GameObject npcInstance;
-    [SerializeField] GameObject[] npcType;
+    [SerializeField] GameObject npcInstance = null;
+    [SerializeField] GameObject[] npcType = new GameObject[0];
 
-    public GameObject fleePos;
-    public GameObject battlePos;
-    GameObject setQueuePosition;
+    public GameObject fleePos = null;
+    public GameObject battlePos = null;
+    GameObject setQueuePosition = null;
 
-    public float timer;
+    public float timer = 0;
     public float spawnTimer = 10;
-    public float spawnDifference;
+    public float spawnDifference = 0;
 
-    public float spawnDiffHigh;
-    public float spawnDiffLow;
+    public float spawnDiffHigh = 0;
+    public float spawnDiffLow = 0;
 
     public List<GameObject> activeNpcs = new List<GameObject>();
     [SerializeField]
-    GameObject TeamWeaponList;
+    GameObject TeamWeaponList = null;
     private void Start()
     {
         timer -= (timer + 1);

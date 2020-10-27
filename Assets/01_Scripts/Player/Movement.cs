@@ -6,26 +6,26 @@ using static UnityEngine.InputSystem.InputAction;
 
 public class Movement : MonoBehaviour
 {
-    public float speed;
+    public float speed = 0;
 
-    Rigidbody rb;
-    GameObject Player;
+    Rigidbody rb = null;
+    GameObject Player = null;
 
-    public float maxSpeed;
-    public float minSpeed;
-    public float dashForce;
-    public float dashCool;
+    public float maxSpeed = 0;
+    public float minSpeed = 0;
+    public float dashForce = 0;
+    public float dashCool = 0;
 
-    float startMaxSpeed;
-    float startMinSpeed;
+    float startMaxSpeed = 0;
+    float startMinSpeed = 0;
 
-    public Vector2 stick;
+    public Vector2 stick = Vector2.zero;
 
-    public float damping;
-    Vector2 lookDir;
+    public float damping = 0;
+    Vector2 lookDir = Vector2.zero;
 
     bool inputArmed = true;
-    bool count;
+    bool count = false;
 
 
     // Start is called before the first frame update

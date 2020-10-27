@@ -5,12 +5,12 @@ using UnityEngine.UI;
 
 public class ColorOvertime : MonoBehaviour
 {
-    public float totaltime;
-    public Color StartColor;
-    public Color EndColor;
-    public Canvas WeaponRequest;
-    public Slider _slide;
-    [SerializeField] Image _img;
+    public float totaltime = 0;
+    public Color StartColor = new Color();
+    public Color EndColor = new Color();
+    public Canvas WeaponRequest = null;
+    public Slider _slide = null;
+    [SerializeField] Image _img = null;
 
     private void Start()
     {

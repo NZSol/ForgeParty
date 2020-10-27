@@ -5,16 +5,16 @@ using UnityEngine;
 public class StartingWeapons : MonoBehaviour
 {
 
-    Weapon.weaponType myWeapon;
-    Metal.metal myMetal;
-    [SerializeField] WeaponVars.team myTeam;
+    Weapon.weaponType myWeapon = new Weapon.weaponType();
+    Metal.metal myMetal = new Metal.metal();
+    [SerializeField] WeaponVars.team myTeam = new WeaponVars.team();
 
-    public int startCount;
+    public int startCount = 0;
 
-    int weapon;
-    int metal;
+    int weapon = 0;
+    int metal = 0;
 
-    [SerializeField] GameObject weaponInstance;
+    [SerializeField] GameObject weaponInstance = null;
 
     // Start is called before the first frame update
     void Start()

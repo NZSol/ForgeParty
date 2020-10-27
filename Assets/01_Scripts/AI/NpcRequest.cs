@@ -10,55 +10,55 @@ public class NpcRequest : MonoBehaviour
     GameObject teamVariables;
 
     public enum AIState { Queue, Flee, Fight};
-    public AIState state;
+    public AIState state = new AIState();
 
-    public Canvas Bubble;
+    public Canvas Bubble = null;
 
     //Timer for checking if can move up in queue
     public float waitTimerMax = 2;
-    public float waitTimer;
+    public float waitTimer = 0;
     
 
     //Timer checking if time is up and AI should leave
-    public float timerMax;
+    public float timerMax = 0;
     public float timer = 0;
-    bool runTimer;
+    bool runTimer = false;
 
     public bool GotWeapon = false;
 
     public float speed = 4f;
-    public float startTime;
+    public float startTime = 0;
 
-    [SerializeField] NavMeshAgent agent;
+    [SerializeField] NavMeshAgent agent = null;
 
     public float maxRange = 2;
 
-    [SerializeField] Weapon.weaponType weapon;
+    [SerializeField] Weapon.weaponType weapon = new Weapon.weaponType();
 
-    [SerializeField] GameObject battlePos;
-    [SerializeField] GameObject fleePos;
-    public GameObject GoalQueuePos;
-    [SerializeField] GameObject CurrentQueuePos;
-    public int placeInQueue;
+    [SerializeField] GameObject battlePos = null;
+    [SerializeField] GameObject fleePos = null;
+    public GameObject GoalQueuePos = null;
+    [SerializeField] GameObject CurrentQueuePos = null;
+    public int placeInQueue = 0;
 
-    [SerializeField] Image _sword;
-    [SerializeField] Image _axe;
-    [SerializeField] Image _activeWeapon;
+    [SerializeField] Image _sword = null;
+    [SerializeField] Image _axe = null;
+    [SerializeField] Image _activeWeapon = null;
 
-    [SerializeField] Slider _slide;
+    [SerializeField] Slider _slide = null;
 
 
     [SerializeField] ParticleSystem anger;
 
-    Vector3 CurRotate;
-    Vector3 faceNorth;
+    Vector3 CurRotate = Vector3.zero;
+    Vector3 faceNorth = Vector3.zero;
 
-    [SerializeField] Transform parentPos;
+    [SerializeField] Transform parentPos = null;
 
     
     public GameObject myTeamList;
 
-    bool alive;
+    bool alive = true;
     NPCSpawner parentScript;
     public void Start()
     {
@@ -93,7 +93,7 @@ public class NpcRequest : MonoBehaviour
         }
     }
 
-    [SerializeField] GameObject heldWeapon;
+    [SerializeField] GameObject heldWeapon = null;
     private void OnTriggerEnter(Collider col) //Trigger Zone Near benches
     {
         if (col.tag == "requestZone")
@@ -161,7 +161,7 @@ public class NpcRequest : MonoBehaviour
     }
 
 
-    public float lerpTime;
+    public float lerpTime = 0;
     void QueueFunc()
     {
         if (agent.remainingDistance > maxRange)

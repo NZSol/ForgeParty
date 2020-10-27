@@ -5,11 +5,11 @@ using UnityEngine.UI;
 
 public class CastBench : Tool
 {
-    public Weapon.weaponType weapon;
-    public Metal.metal outputMet;
-    public Metal.metal input;
+    public Weapon.weaponType weapon = new Weapon.weaponType();
+    public Metal.metal outputMet = new Metal.metal();
+    public Metal.metal input = new Metal.metal();
 
-    [SerializeField] Slider _slide;
+    [SerializeField] Slider _slide = null;
 
     public float timer = 0;
     public float maxTimer = 5;

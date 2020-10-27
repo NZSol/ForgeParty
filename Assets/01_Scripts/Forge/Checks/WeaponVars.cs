@@ -6,15 +6,15 @@ public class WeaponVars : MonoBehaviour
 {
 
     public enum team { T1, T2 };
-    public team myTeam;
+    public team myTeam = new team();
 
-    public float durability;
-    public float damage;
-    public float damageMult;
-    public float totalDamage;
+    public float durability = 0;
+    public float damage = 0;
+    public float damageMult = 0;
+    public float totalDamage = 0;
 
-    Weapon.weaponType myWeapon;
-    Metal.metal myMetal;
+    Weapon.weaponType myWeapon = new Weapon.weaponType();
+    Metal.metal myMetal = new Metal.metal();
 
     bool valsAssigned = false;
     bool active = true;

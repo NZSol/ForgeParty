@@ -8,19 +8,19 @@ using UnityEngine.UI;
 
 public class BindToPlayer : MonoBehaviour
 {
-    [SerializeField] GameObject[] spawns;
+    [SerializeField] GameObject[] spawns = null;
     public List<GameObject> players = new List<GameObject>();
     [SerializeField]
-    private PlayerJoinHandler join;
+    private PlayerJoinHandler join = null;
 
     public int playerCounter = 0;
 
-    [SerializeField] GameObject Events;
-    
+    [SerializeField] GameObject Events = null;
+
     Scene curScene;
     Scene titleScene;
 
-    [SerializeField] GameObject[] InputObjs;
+    [SerializeField] GameObject[] InputObjs = new GameObject[0];
 
 
 
@@ -30,26 +30,30 @@ public class BindToPlayer : MonoBehaviour
 
     private void OnEnable()
     {
-        join.SetPlayerBind(this);
-        titleScene = SceneManager.GetActiveScene();
-        if (titleScene == SceneManager.GetActiveScene())
+
+        titleScene = SceneManager.GetSceneByBuildIndex(0);
+        curScene = SceneManager.GetActiveScene();
+
+        if (curScene == titleScene)
         {
+            join.SetPlayerBind(this);
             Events.GetComponent<PlayerInputManager>().EnableJoining();
             GetComponent<FirstSelect>().deselect();
-            InputObjs = GameObject.FindGameObjectsWithTag("Button");
-            print("active");
-            print((titleScene == SceneManager.GetActiveScene()) + " Active Scene");
+            foreach (GameObject obj in players)
+            {
+                Destroy(obj);
+            }
         }
     }
 
     private void OnDisable()
     {
-        Events.GetComponent<PlayerInputManager>().DisableJoining();
-        foreach (GameObject obj in players)
+        if (curScene != titleScene)
         {
-            Destroy(obj);
+            Events.GetComponent<PlayerInputManager>().DisableJoining();
         }
     }
+
     private void Awake()
     {
         if (GameObject.FindGameObjectsWithTag("Spawns") != null)
@@ -60,9 +64,6 @@ public class BindToPlayer : MonoBehaviour
         {
             Debug.Log("Spawns Null");
         }
-
-
-        print("waking");
     }
 
     public void JoinGame(PlayerInput input)
@@ -70,7 +71,7 @@ public class BindToPlayer : MonoBehaviour
         players.Add(input.gameObject);
         ++playerCounter;
         DontDestroyOnLoad(input.gameObject);
-        if (SceneManager.GetActiveScene() == SceneManager.GetSceneAt(0))
+        if (SceneManager.GetActiveScene() == titleScene)
         {
             for (int i = 0; i < playerCounter; i++)
             {
@@ -81,12 +82,24 @@ public class BindToPlayer : MonoBehaviour
     }
     private void Update()
     {
-        if (players.Count == InputObjs.Length)
+
+        if (curScene != SceneManager.GetActiveScene())
         {
-            gameObject.GetComponent<FirstSelect>().SetBtn();
+            curScene = SceneManager.GetActiveScene();
         }
 
-        print(players.Count + "    " + InputObjs.Length);
+
+        if (SceneManager.GetActiveScene() == titleScene)
+        {
+            print("hit");
+            if (players.Count == InputObjs.Length)
+            {
+                gameObject.GetComponent<FirstSelect>().SetBtn();
+                print(players.Count + "    " + InputObjs.Length);
+            }
+        }
+
+
     }
 
     public void LeaveGame(PlayerInput input)

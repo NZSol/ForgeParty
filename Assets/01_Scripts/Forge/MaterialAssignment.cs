@@ -5,14 +5,14 @@ using UnityEngine;
 public class MaterialAssignment : MonoBehaviour
 {
 
-    [SerializeField] Material tin;
-    [SerializeField] Material copper;
-    [SerializeField] Material bronze;
+    [SerializeField] Material tin = null;
+    [SerializeField] Material copper = null;
+    [SerializeField] Material bronze = null;
 
-    [SerializeField] Renderer render;
-    [SerializeField] Material curMat;
+    [SerializeField] Renderer render = null;
+    [SerializeField] Material curMat = null;
 
-    public Metal.metal myMetal;
+    public Metal.metal myMetal = new Metal.metal();
 
 
     // Start is called before the first frame update

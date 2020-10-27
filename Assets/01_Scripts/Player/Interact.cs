@@ -11,7 +11,7 @@ public class Interact : MonoBehaviour
     bool inputArmed = true;
 
     //LayerMasks
-    LayerMask toolsLayer;
+    LayerMask toolsLayer = 0;
 
     //Get all tools
     GameObject[] Tools(int layer)
@@ -50,15 +50,15 @@ public class Interact : MonoBehaviour
         }
         return tool.GetComponent<Tool>();
     }
-    public Tool activeTool;
+    public Tool activeTool = null;
 
 
     //Game Variables
     public float range = 5;
-    float toolDist;
+    float toolDist = 0;
 
 
-    public GameObject heldObj;
+    public GameObject heldObj = null;
 
 
     // Start is called before the first frame update

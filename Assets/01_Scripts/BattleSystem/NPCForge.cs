@@ -5,20 +5,20 @@ using UnityEngine;
 public class NPCForge : MonoBehaviour
 {
 
-    Weapon.weaponType myWeapon;
-    Metal.metal myMetal;
-    WeaponVars.team myTeam;
+    Weapon.weaponType myWeapon = new Weapon.weaponType();
+    Metal.metal myMetal = new Metal.metal();
+    WeaponVars.team myTeam = new WeaponVars.team();
 
-    int weaponWant;
-    int matWant;
+    int weaponWant = 0;
+    int matWant = 0;
 
     [SerializeField]
-    GameObject weapon;
+    GameObject weapon = null;
 
 
-    public float timer;
+    public float timer = 0;
     public float startTimer = 10;
-    public float randomTime;
+    public float randomTime = 0;
 
     private void Start()
     {

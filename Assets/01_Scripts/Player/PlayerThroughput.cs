@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class PlayerThroughput : MonoBehaviour
 {
-    [SerializeField] GameObject myPlayer;
+    [SerializeField] GameObject myPlayer = null;
 
     Movement moveScript;
 

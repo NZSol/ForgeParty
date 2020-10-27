@@ -6,21 +6,21 @@ using UnityEngine.UI;
 public class Quenching : Tool
 {
 
-    public Weapon.weaponType inputWeapon;
-    public Metal.metal inputMet;
+    public Weapon.weaponType inputWeapon = new Weapon.weaponType();
+    public Metal.metal inputMet = new Metal.metal();
 
-    public Weapon.weaponType outputWeapon;
-    public Metal.metal outputMet;
+    public Weapon.weaponType outputWeapon = new Weapon.weaponType();
+    public Metal.metal outputMet = new Metal.metal();
 
-    WeaponVars.team myTeam;
+    WeaponVars.team myTeam = new WeaponVars.team();
 
-    [SerializeField] GameObject Sword;
-    [SerializeField] GameObject Axe;
+    [SerializeField] GameObject Sword = null;
+    [SerializeField] GameObject Axe = null;
 
-    [SerializeField] Slider _slide;
+    [SerializeField] Slider _slide = null;
 
 
-    public float timer;
+    public float timer = 0;
     public float completionTime = 5;
     
 

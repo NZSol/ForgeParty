@@ -5,20 +5,20 @@ using UnityEngine.UI;
 
 public class Anvil : Tool
 {
-    public float timer;
+    public float timer = 0;
     public float completionTime = 5;
 
     //OUTPUT ENUM VALUES
-    public Metal.metal outputMet;
-    public Weapon.weaponType outputWeapon;
+    public Metal.metal outputMet = new Metal.metal();
+    public Weapon.weaponType outputWeapon = new Weapon.weaponType();
     //INPUT ENUM VALUES
-    public Metal.metal inputMet;
-    public Weapon.weaponType inputWeapon;
+    public Metal.metal inputMet = new Metal.metal();
+    public Weapon.weaponType inputWeapon = new Weapon.weaponType();
 
-    [SerializeField] GameObject Sword;
-    [SerializeField] GameObject Axe;
+    [SerializeField] GameObject Sword = null;
+    [SerializeField] GameObject Axe = null;
 
-    [SerializeField] Slider _slide;
+    [SerializeField] Slider _slide = null;
     public override void TakeItem(GameObject item)
     {
         inputMet = item.GetComponent<Metal>().myMetal;
