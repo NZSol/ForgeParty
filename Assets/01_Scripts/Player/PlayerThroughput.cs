@@ -18,13 +18,20 @@ public class PlayerThroughput : MonoBehaviour
 
     StartPos position;
 
+    [SerializeField] GameObject eventSystem = null;
+
+    PlayerInput input;
     private void Awake()
     {
         print("running awake");
         curScene = SceneManager.GetActiveScene();
-        titleScene = SceneManager.GetSceneAt(0);
+        titleScene = SceneManager.GetSceneByBuildIndex(0);
         DontDestroyOnLoad(this.gameObject);
 
+        if (curScene.buildIndex == titleScene.buildIndex)
+        {
+            eventSystem = GameObject.FindWithTag("Event");
+        }
     }
 
     void Update()
@@ -70,6 +77,11 @@ public class PlayerThroughput : MonoBehaviour
         {
             interactScript.InteractPress(context);
         }
+
+        if (curScene.buildIndex == titleScene.buildIndex)
+        {
+            eventSystem.GetComponent<PlayerJoinHandler>().LeavePlayer(input);
+        }
     }
 
     public void readHold(CallbackContext context)
@@ -88,5 +100,10 @@ public class PlayerThroughput : MonoBehaviour
         {
             npc.GetComponent<NpcRequest>().timer = npc.GetComponent<NpcRequest>().timerMax;
         }
+    }
+
+    public void SetInput(PlayerInput input)
+    {
+        this.input = input;
     }
 }

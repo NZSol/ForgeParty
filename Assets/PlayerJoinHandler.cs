@@ -16,4 +16,10 @@ public class PlayerJoinHandler : MonoBehaviour
     {
         CurrentPlayerBind = players;
     }
+
+    public void LeavePlayer(PlayerInput input)
+    {
+        CurrentPlayerBind.LeaveGame(input);
+        CurrentPlayerBind.Cancel();
+    }
 }

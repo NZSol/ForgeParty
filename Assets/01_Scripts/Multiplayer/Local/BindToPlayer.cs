@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using static UnityEngine.InputSystem.InputAction;
 
 public class BindToPlayer : MonoBehaviour
 {
@@ -22,6 +24,8 @@ public class BindToPlayer : MonoBehaviour
 
     [SerializeField] GameObject[] InputObjs = new GameObject[0];
 
+    bool primed = true;
+    [SerializeField] GameObject homeScreen = null;
 
 
     private void Start()
@@ -69,6 +73,7 @@ public class BindToPlayer : MonoBehaviour
     public void JoinGame(PlayerInput input)
     {
         players.Add(input.gameObject);
+        input.gameObject.GetComponent<PlayerThroughput>().SetInput(input);
         ++playerCounter;
         DontDestroyOnLoad(input.gameObject);
         if (SceneManager.GetActiveScene() == titleScene)
@@ -102,9 +107,20 @@ public class BindToPlayer : MonoBehaviour
 
     }
 
+
+    public void Cancel()
+    {
+        if (curScene == titleScene && gameObject.tag == "CurScene")
+        {
+            homeScreen.SetActive(true);
+            gameObject.SetActive(false);
+        }
+    }
+
     public void LeaveGame(PlayerInput input)
     {
         Destroy(input.gameObject);
+        Cancel();
     }
 
 

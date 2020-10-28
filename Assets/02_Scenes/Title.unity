@@ -10881,7 +10881,7 @@ GameObject:
   - component: {fileID: 308992411}
   m_Layer: 0
   m_Name: EventSystem
-  m_TagString: Untagged
+  m_TagString: Event
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10993,9 +10993,9 @@ MonoBehaviour:
   m_PlayerLeftEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: BindToPlayer, Assembly-CSharp
-        m_MethodName: LeaveGame
+      - m_Target: {fileID: 308992411}
+        m_TargetAssemblyTypeName: PlayerJoinHandler, Assembly-CSharp
+        m_MethodName: LeavePlayer
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -12212,22 +12212,22 @@ PrefabInstance:
     - target: {fileID: 6386427657218441668, guid: aa7e946c1a5cbda45919f36aa82c4753,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6386427657218441668, guid: aa7e946c1a5cbda45919f36aa82c4753,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6386427657218441668, guid: aa7e946c1a5cbda45919f36aa82c4753,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 459.9308
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6386427657218441668, guid: aa7e946c1a5cbda45919f36aa82c4753,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -540
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6386427657218441669, guid: aa7e946c1a5cbda45919f36aa82c4753,
         type: 3}
@@ -12242,22 +12242,22 @@ PrefabInstance:
     - target: {fileID: 6386427657987625353, guid: aa7e946c1a5cbda45919f36aa82c4753,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6386427657987625353, guid: aa7e946c1a5cbda45919f36aa82c4753,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6386427657987625353, guid: aa7e946c1a5cbda45919f36aa82c4753,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 1459.9308
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6386427657987625353, guid: aa7e946c1a5cbda45919f36aa82c4753,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -540
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6386427657987625366, guid: aa7e946c1a5cbda45919f36aa82c4753,
         type: 3}
@@ -12352,22 +12352,22 @@ PrefabInstance:
     - target: {fileID: 6386427658520181962, guid: aa7e946c1a5cbda45919f36aa82c4753,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6386427658520181962, guid: aa7e946c1a5cbda45919f36aa82c4753,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6386427658520181962, guid: aa7e946c1a5cbda45919f36aa82c4753,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 959.9308
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6386427658520181962, guid: aa7e946c1a5cbda45919f36aa82c4753,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -540
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6386427658520181963, guid: aa7e946c1a5cbda45919f36aa82c4753,
         type: 3}
@@ -20289,7 +20289,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &555011138
 RectTransform:
   m_ObjectHideFlags: 0
@@ -20406,6 +20406,7 @@ MonoBehaviour:
   Events: {fileID: 308992407}
   InputObjs:
   - {fileID: 5115802575137043040}
+  homeScreen: {fileID: 1289686607}
 --- !u!1 &557340623
 GameObject:
   m_ObjectHideFlags: 0
@@ -23948,6 +23949,7 @@ MonoBehaviour:
   InputObjs:
   - {fileID: 1150806142}
   - {fileID: 896614597}
+  homeScreen: {fileID: 1289686607}
 --- !u!114 &733635568
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31114,6 +31116,7 @@ MonoBehaviour:
   - {fileID: 2128500802}
   - {fileID: 2075024555}
   - {fileID: 1478629896}
+  homeScreen: {fileID: 1289686607}
 --- !u!1 &1075207526
 GameObject:
   m_ObjectHideFlags: 0
@@ -42927,7 +42930,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -91.99997}
+  m_AnchoredPosition: {x: 0, y: -92}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1214561034
@@ -43807,7 +43810,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1289686608
 RectTransform:
   m_ObjectHideFlags: 0
@@ -44524,6 +44527,7 @@ MonoBehaviour:
   InputObjs:
   - {fileID: 196579139}
   - {fileID: 1242038559}
+  homeScreen: {fileID: 1289686607}
 --- !u!114 &1330891232
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -58883,7 +58887,7 @@ PrefabInstance:
     - target: {fileID: 7713220821755497390, guid: c223a7b9a2f01f44d9746d99825ebd10,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 959.7215
       objectReference: {fileID: 0}
     - target: {fileID: 7713220821755497390, guid: c223a7b9a2f01f44d9746d99825ebd10,
         type: 3}
@@ -59286,6 +59290,7 @@ MonoBehaviour:
   - {fileID: 1297022404}
   - {fileID: 2050554669}
   - {fileID: 697701749}
+  homeScreen: {fileID: 1289686607}
 --- !u!114 &7186953427608885802
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -59413,7 +59418,7 @@ PrefabInstance:
     - target: {fileID: 3394181217179306189, guid: c8f5897a24e43c44da655ac8a5dac50c,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 959.7215
       objectReference: {fileID: 0}
     - target: {fileID: 3394181217179306189, guid: c8f5897a24e43c44da655ac8a5dac50c,
         type: 3}
