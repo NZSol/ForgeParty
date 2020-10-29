@@ -32,12 +32,16 @@ public class PlayerThroughput : MonoBehaviour
         {
             eventSystem = GameObject.FindWithTag("Event");
         }
+        position = GameObject.FindWithTag("LevelGod").GetComponent<StartPos>();
+        PlayerJoin();
+
     }
 
     void Update()
     {
         if (curScene.name != SceneManager.GetActiveScene().name)
         {
+            print("hit");
             curScene = SceneManager.GetActiveScene();
             position = GameObject.FindWithTag("LevelGod").GetComponent<StartPos>();
             PlayerJoin();

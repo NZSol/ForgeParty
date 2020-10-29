@@ -26,6 +26,7 @@ public class StartPos : MonoBehaviour
         for (int i = 0; i < playerArray.Length; i++)
         {
             playerArray[i].transform.position = spawns[i].transform.position;
+            playerArray[i].transform.position = new Vector3(playerArray[i].transform.position.x, 6, playerArray[i].transform.position.z);
         }
     }
 }

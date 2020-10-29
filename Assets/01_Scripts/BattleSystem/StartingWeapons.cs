@@ -22,7 +22,14 @@ public class StartingWeapons : MonoBehaviour
         for (int i = 0; i < startCount; i++)
         {
             weapon = Random.Range((int)Weapon.weaponType.Sword, (int)Weapon.weaponType.Axe + 1);
-            metal = Random.Range((int)Metal.metal.Tin, (int)Metal.metal.Bronze + 1);
+            if (myTeam == WeaponVars.team.T1)
+            {
+                metal = Random.Range((int)Metal.metal.Tin, (int)Metal.metal.Bronze);
+            }
+            else
+            {
+                metal = Random.Range((int)Metal.metal.Tin, (int)Metal.metal.Bronze);
+            }
 
             myMetal = (Metal.metal)metal;
             myWeapon = (Weapon.weaponType)weapon;

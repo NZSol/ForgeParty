@@ -105,7 +105,7 @@ public class NpcRequest : MonoBehaviour
 
         if (col.gameObject.GetComponent<Weapon>() != null)
         {
-            if (col.gameObject.GetComponent<Weapon>().myWeapon == weapon)
+            if (col.gameObject.GetComponent<Weapon>().myWeapon == weapon && col.gameObject.GetComponent<Weapon>().completed)
             {
                 //col.GetComponentInParent<Interact>().heldObj = null;
                 GotWeapon = true;
@@ -216,7 +216,6 @@ public class NpcRequest : MonoBehaviour
 
         if (agent.pathPending)
         {
-
         }
         else if (agent.remainingDistance < maxRange)
         {

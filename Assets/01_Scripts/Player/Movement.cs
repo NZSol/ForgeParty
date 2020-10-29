@@ -35,6 +35,9 @@ public class Movement : MonoBehaviour
         rb = Player.GetComponent<Rigidbody>();
         startMaxSpeed = maxSpeed;
         startMinSpeed = minSpeed;
+
+        rb.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation;
+        rb.useGravity = false;
     }
 
 
@@ -91,8 +94,6 @@ public class Movement : MonoBehaviour
         {
             dashCool -= Time.deltaTime / 2;
         }
-
-
     }
 
     

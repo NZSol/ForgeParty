@@ -15,10 +15,10 @@ public class NPCForge : MonoBehaviour
     [SerializeField]
     GameObject weapon = null;
 
-
+    
     public float timer = 0;
-    public float startTimer = 10;
-    public float randomTime = 0;
+    public float startTimer = 25;
+    public float speedUpTime = 0;
 
     private void Start()
     {
@@ -28,7 +28,7 @@ public class NPCForge : MonoBehaviour
 
     void SetWeapon()
     {
-        matWant = Random.Range((int)Metal.metal.Tin, (int)Metal.metal.Bronze + 1);
+        matWant = Random.Range((int)Metal.metal.Tin, (int)Metal.metal.Bronze);
         weaponWant = Random.Range((int)Weapon.weaponType.Sword, (int)Weapon.weaponType.Axe + 1);
 
         myMetal = (Metal.metal)matWant;
@@ -43,7 +43,7 @@ public class NPCForge : MonoBehaviour
 
         if (timer <= 0)
         {
-            timer += startTimer + Random.Range(-5, 5);
+            timer += (startTimer + (int)Random.Range(-3, 10));
             SetWeapon();
             
             var instance = Instantiate(weapon, gameObject.transform);
@@ -52,6 +52,15 @@ public class NPCForge : MonoBehaviour
             instance.GetComponent<WeaponVars>().setVar();
             instance.GetComponent<WeaponVars>().myTeam = myTeam;
             //instance.SetActive(false);
+        }
+
+        if (gameObject.GetComponentInParent<WeaponLists>().slideVal >= speedUpTime)
+        {
+            startTimer = 5;
+        }
+        else
+        {
+            startTimer = 25;
         }
     }
 }
