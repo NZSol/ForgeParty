@@ -14,7 +14,7 @@ public class WeaponLists : MonoBehaviour
 
     WeaponVars.team myTeam = new WeaponVars.team();
 
-    [SerializeField] Slider _slide = null;
+    public Slider _slide = null;
     public float slideVal = 0;
     int multiplier = 1;
 
@@ -40,9 +40,10 @@ public class WeaponLists : MonoBehaviour
 
         if (timer <= 0)
         {
+            var combatCount = Mathf.Min(Team1.Count, Team2.Count, combatWidth);
             if (Team1.Count <= Team2.Count && Team1.Count > 0)
             {
-                for (int i = 0; i < combatWidth; i++)
+                for (int i = 0; i < combatCount; i++)
                 {
                     Team2[i].gameObject.GetComponent<WeaponVars>().durability -= Team1[i].gameObject.GetComponent<WeaponVars>().totalDamage;
                     Team1[i].gameObject.GetComponent<WeaponVars>().durability -= Team2[i].gameObject.GetComponent<WeaponVars>().totalDamage;
@@ -61,7 +62,7 @@ public class WeaponLists : MonoBehaviour
             else if (Team2.Count <= Team1.Count && Team2.Count > 0)
             {
 
-                for (int i = 0; i < combatWidth; i++)
+                for (int i = 0; i < combatCount; i++)
                 {
                     Team2[i].gameObject.GetComponent<WeaponVars>().durability -= Team1[i].gameObject.GetComponent<WeaponVars>().totalDamage;
                     Team1[i].gameObject.GetComponent<WeaponVars>().durability -= Team2[i].gameObject.GetComponent<WeaponVars>().totalDamage;
