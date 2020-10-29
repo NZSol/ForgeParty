@@ -23,6 +23,8 @@ public class PlayerThroughput : MonoBehaviour
     PlayerInput input;
     bool active = false;
 
+    GameObject PlayerChar = null;
+
     private void Awake()
     {
         curScene = SceneManager.GetActiveScene();
@@ -37,23 +39,37 @@ public class PlayerThroughput : MonoBehaviour
 
     }
 
-    void Update()
+    private void Update()
     {
-        if (curScene.buildIndex != SceneManager.GetActiveScene().buildIndex)
+        if (PlayerChar == null)
         {
-            print("hit");
-            curScene = SceneManager.GetActiveScene();
-            position = GameObject.FindWithTag("LevelGod").GetComponent<StartPos>();
-            PlayerJoin();
-            
+            print("payerNull");
+            if (SceneManager.GetActiveScene().buildIndex == SceneManager.GetSceneByBuildIndex(2).buildIndex)
+            {
+                print("hit");
+                curScene = SceneManager.GetActiveScene();
+                position = GameObject.FindWithTag("LevelGod").GetComponent<StartPos>();
+                PlayerJoin();
+            }
         }
-
     }
 
+    //void Update()
+    //{
+    //    if (pla)
+    //    if (curScene.buildIndex != SceneManager.GetSceneByBuildIndex(2).buildIndex)
+    //    {
+    //        print("hit");
+    //        curScene = SceneManager.GetActiveScene();
+    //        position = GameObject.FindWithTag("LevelGod").GetComponent<StartPos>();
+    //        PlayerJoin();
 
+    //    }
+
+    //}
     public void PlayerJoin()
     {
-        var PlayerChar = Instantiate(myPlayer);
+        PlayerChar = Instantiate(myPlayer);
         moveScript = PlayerChar.GetComponent<Movement>();
         interactScript = PlayerChar.GetComponent<Interact>();
         interactScript.active = true;

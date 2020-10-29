@@ -123,6 +123,12 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!224 &34579943 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 4560019107934452701, guid: 632b2e77c01bb4046bb7378e7394f884,
+    type: 3}
+  m_PrefabInstance: {fileID: 374929356}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &374929356
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -242,12 +248,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 632b2e77c01bb4046bb7378e7394f884, type: 3}
---- !u!224 &374929357 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 9214595768120974713, guid: 632b2e77c01bb4046bb7378e7394f884,
-    type: 3}
-  m_PrefabInstance: {fileID: 374929356}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &651295876
 GameObject:
   m_ObjectHideFlags: 0
@@ -275,16 +275,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 651295876}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
+  m_Script: {fileID: 11500000, guid: 01614664b831546d2ae94a42149d80ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_HorizontalAxis: Horizontal
-  m_VerticalAxis: Vertical
-  m_SubmitButton: Submit
-  m_CancelButton: Cancel
-  m_InputActionsPerSecond: 10
-  m_RepeatDelay: 0.5
-  m_ForceModuleActive: 0
+  m_MoveRepeatDelay: 0.5
+  m_MoveRepeatRate: 0.1
+  m_ActionsAsset: {fileID: -944628639613478452, guid: 20a4b7c63c1472d499a7674003629386,
+    type: 3}
+  m_PointAction: {fileID: 0}
+  m_MoveAction: {fileID: -1119741042853351822, guid: 20a4b7c63c1472d499a7674003629386,
+    type: 3}
+  m_SubmitAction: {fileID: 3609299783585974607, guid: 20a4b7c63c1472d499a7674003629386,
+    type: 3}
+  m_CancelAction: {fileID: 4377591897463372128, guid: 20a4b7c63c1472d499a7674003629386,
+    type: 3}
+  m_LeftClickAction: {fileID: 0}
+  m_MiddleClickAction: {fileID: 0}
+  m_RightClickAction: {fileID: 0}
+  m_ScrollWheelAction: {fileID: 0}
+  m_TrackedDevicePositionAction: {fileID: 0}
+  m_TrackedDeviceOrientationAction: {fileID: 0}
+  m_DeselectOnBackgroundClick: 1
+  m_PointerBehavior: 0
 --- !u!114 &651295878
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -487,7 +499,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
-  - {fileID: 374929357}
+  - {fileID: 34579943}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
