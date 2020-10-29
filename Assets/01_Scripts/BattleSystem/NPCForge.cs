@@ -17,7 +17,7 @@ public class NPCForge : MonoBehaviour
 
     
     public float timer = 0;
-    public float startTimer = 25;
+    public float startTimer = 50;
     public float speedUpTime = 0;
 
     private void Start()

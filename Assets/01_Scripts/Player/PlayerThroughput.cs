@@ -21,6 +21,8 @@ public class PlayerThroughput : MonoBehaviour
     [SerializeField] GameObject eventSystem = null;
 
     PlayerInput input;
+    bool active = false;
+
     private void Awake()
     {
         curScene = SceneManager.GetActiveScene();
@@ -30,19 +32,22 @@ public class PlayerThroughput : MonoBehaviour
         if (curScene.buildIndex == titleScene.buildIndex)
         {
             eventSystem = GameObject.FindWithTag("Event");
+
         }
 
     }
 
     void Update()
     {
-        if (curScene.name != SceneManager.GetActiveScene().name)
+        if (curScene.buildIndex != SceneManager.GetActiveScene().buildIndex)
         {
             print("hit");
             curScene = SceneManager.GetActiveScene();
             position = GameObject.FindWithTag("LevelGod").GetComponent<StartPos>();
             PlayerJoin();
+            
         }
+
     }
 
 
@@ -53,6 +58,7 @@ public class PlayerThroughput : MonoBehaviour
         interactScript = PlayerChar.GetComponent<Interact>();
         interactScript.active = true;
         position.Positioning(PlayerChar);
+        SceneManager.MoveGameObjectToScene(this.gameObject, SceneManager.GetActiveScene());
     }
 
     public void readMove (CallbackContext context)
@@ -82,6 +88,7 @@ public class PlayerThroughput : MonoBehaviour
         if (curScene.buildIndex == titleScene.buildIndex)
         {
             eventSystem.GetComponent<PlayerJoinHandler>().LeavePlayer(input);
+            eventSystem.GetComponent<PlayerJoinHandler>().CancelFunc();
         }
     }
 

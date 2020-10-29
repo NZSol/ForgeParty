@@ -107,7 +107,7 @@ public class NpcRequest : MonoBehaviour
         {
             if (col.gameObject.GetComponent<Weapon>().myWeapon == weapon && col.gameObject.GetComponent<Weapon>().completed)
             {
-                //col.GetComponentInParent<Interact>().heldObj = null;
+                col.GetComponentInParent<Interact>().heldObj = null;
                 GotWeapon = true;
                 col.gameObject.transform.parent = parentPos;
                 col.gameObject.transform.localPosition = new Vector3(0, 3.5f, 0);

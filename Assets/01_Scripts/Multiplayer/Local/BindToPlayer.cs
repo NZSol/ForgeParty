@@ -15,7 +15,6 @@ public class BindToPlayer : MonoBehaviour
     [SerializeField]
     private PlayerJoinHandler join = null;
 
-    public int playerCounter = 0;
 
     [SerializeField] GameObject Events = null;
 
@@ -47,6 +46,8 @@ public class BindToPlayer : MonoBehaviour
             {
                 Destroy(obj);
             }
+
+            players.Clear();
         }
     }
 
@@ -74,16 +75,7 @@ public class BindToPlayer : MonoBehaviour
     {
         players.Add(input.gameObject);
         input.gameObject.GetComponent<PlayerThroughput>().SetInput(input);
-        ++playerCounter;
         DontDestroyOnLoad(input.gameObject);
-        if (SceneManager.GetActiveScene() == titleScene)
-        {
-            for (int i = 0; i < playerCounter; i++)
-            {
-
-            } 
-        }
-
     }
     private void Update()
     {
@@ -114,13 +106,13 @@ public class BindToPlayer : MonoBehaviour
         {
             homeScreen.SetActive(true);
             gameObject.SetActive(false);
+            print("running");
         }
     }
 
     public void LeaveGame(PlayerInput input)
     {
         Destroy(input.gameObject);
-        Cancel();
     }
 
 
