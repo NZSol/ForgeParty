@@ -7,7 +7,7 @@ public class Loading : MonoBehaviour
     // Start is called before the first frame update
     IEnumerator Start()
     {
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(4f);
 
         StartCoroutine(LoadGame());
     }
