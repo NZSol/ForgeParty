@@ -23,7 +23,6 @@ public class PlayerThroughput : MonoBehaviour
     PlayerInput input;
     private void Awake()
     {
-        print("running awake");
         curScene = SceneManager.GetActiveScene();
         titleScene = SceneManager.GetSceneByBuildIndex(0);
         DontDestroyOnLoad(this.gameObject);
@@ -32,8 +31,6 @@ public class PlayerThroughput : MonoBehaviour
         {
             eventSystem = GameObject.FindWithTag("Event");
         }
-        position = GameObject.FindWithTag("LevelGod").GetComponent<StartPos>();
-        PlayerJoin();
 
     }
 

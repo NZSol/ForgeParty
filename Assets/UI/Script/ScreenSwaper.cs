@@ -6,11 +6,18 @@ using UnityEngine.SceneManagement;
 public class ScreenSwaper : MonoBehaviour
 {
 
-    public void LoadSingleplayer()
+
+
+
+    // attach this to loading scene.
+    public void Load()
     {
         SceneManager.LoadScene(1);
 
     }
+
+   
+
     public void LoadMainMenu()
     {
         SceneManager.LoadScene(0);
