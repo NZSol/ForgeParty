@@ -24,7 +24,7 @@ public class StartingWeapons : MonoBehaviour
             weapon = Random.Range((int)Weapon.weaponType.Sword, (int)Weapon.weaponType.Axe + 1);
             if (myTeam == WeaponVars.team.T1)
             {
-                metal = Random.Range((int)Metal.metal.Tin, (int)Metal.metal.Bronze);
+                metal = Random.Range((int)Metal.metal.Tin, (int)Metal.metal.Bronze + 1);
             }
             else
             {
@@ -44,7 +44,13 @@ public class StartingWeapons : MonoBehaviour
                 instance.GetComponent<WeaponVars>().inFight = true;
             }
 
+            if (i > 8 && myTeam == WeaponVars.team.T2)
+            {
+                Destroy(instance);
+            }
         }
+
+        
     }
 
 }

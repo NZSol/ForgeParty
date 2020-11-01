@@ -18,7 +18,8 @@ public class NPCForge : MonoBehaviour
     
     public float timer = 0;
     public float startTimer = 50;
-    public float speedUpTime = 0;
+
+    public int maxSpawn;
 
     private void Start()
     {
@@ -44,23 +45,24 @@ public class NPCForge : MonoBehaviour
         if (timer <= 0)
         {
             timer += (startTimer + (int)Random.Range(-3, 10));
-            SetWeapon();
-            
-            var instance = Instantiate(weapon, gameObject.transform);
-            instance.GetComponent<Metal>().myMetal = myMetal;
-            instance.GetComponent<Weapon>().myWeapon = myWeapon;
-            instance.GetComponent<WeaponVars>().setVar();
-            instance.GetComponent<WeaponVars>().myTeam = myTeam;
-            //instance.SetActive(false);
-        }
+            setMaxSpawn();
 
-        if (gameObject.GetComponentInParent<WeaponLists>().slideVal >= speedUpTime)
-        {
-            startTimer = 5;
+            for (int i = 0; i < maxSpawn; i++)
+            {
+                SetWeapon();
+
+                var instance = Instantiate(weapon, gameObject.transform);
+                instance.GetComponent<Metal>().myMetal = myMetal;
+                instance.GetComponent<Weapon>().myWeapon = myWeapon;
+                instance.GetComponent<WeaponVars>().setVar();
+                instance.GetComponent<WeaponVars>().myTeam = myTeam;
+                //instance.SetActive(false);
+            }
         }
-        else
-        {
-            startTimer = 25;
-        }
+    }
+
+    void setMaxSpawn()
+    {
+        maxSpawn = Random.Range(1, 3);
     }
 }
