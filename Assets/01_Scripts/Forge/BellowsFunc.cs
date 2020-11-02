@@ -11,6 +11,11 @@ public class BellowsFunc : Tool
     public float localTemp = 0;
     public float coolingMult = 0;
 
+    [SerializeField] ParticleSystem fire;
+
+    Vector3 startSize = new Vector3(0,0,0);
+    Vector3 endSize = new Vector3(1.5f, 1.5f, 1.5f);
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,6 +31,8 @@ public class BellowsFunc : Tool
             {
                 localTemp += Time.deltaTime;
             }
+
+
         }
         else
         {
@@ -37,6 +44,9 @@ public class BellowsFunc : Tool
 
         GetComponentInParent<Furnace>().temperature = localTemp;
         _slide.value = localTemp;
+
+
+        fire.transform.localScale = Vector3.Lerp(startSize, endSize, (localTemp / 10));
     }
 
     public override void TakeItem(GameObject item)

@@ -19,10 +19,13 @@ public class Furnace : Tool
 
     public List<Metal.metal> displayQueue = new List<Metal.metal>();
 
+    [SerializeField] ParticleSystem smoke;
+
     // Start is called before the first frame update
     void Start()
     {
         activeMetal = Metal.metal.Blank;
+        smoke.Stop();
     }
 
 
@@ -40,10 +43,6 @@ public class Furnace : Tool
         //if charging bool in attached component is true, start increasing temperature
         if (activeMetal != Metal.metal.Blank)
         {
-            if (temperature >= meltingPoint)
-            {
-                timer += Time.deltaTime;
-            }
 
             if (outputMet == Metal.metal.Blank && inputs.Count > 0)
             {
@@ -53,9 +52,16 @@ public class Furnace : Tool
                 {
                     displayQueue.Add(metal);
                 }
-                print("check");
-
             }
+
+            if (temperature >= meltingPoint)
+            {
+                timer += Time.deltaTime;
+                smoke.Play();
+            }
+        }
+        else
+        {
         }
 
 
@@ -67,6 +73,7 @@ public class Furnace : Tool
 
             timer -= maxTimer;
             Debug.Log("baked");
+            smoke.Stop();
         }
 
     }
