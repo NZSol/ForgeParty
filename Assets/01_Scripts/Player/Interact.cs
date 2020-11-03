@@ -209,12 +209,10 @@ public class Interact : MonoBehaviour
                 {
                     activeTool.GetComponent<Tool>().charging = true;
                 }
-                print("starting");
             }
             if (context.canceled)
             {
                 activeTool.GetComponent<Tool>().charging = false;
-                print("cancelling");
             }
         }
     }

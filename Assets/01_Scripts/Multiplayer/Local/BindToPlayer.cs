@@ -88,11 +88,10 @@ public class BindToPlayer : MonoBehaviour
 
         if (SceneManager.GetActiveScene() == titleScene)
         {
-            print("hit");
             if (players.Count == InputObjs.Length)
             {
                 gameObject.GetComponent<FirstSelect>().SetBtn();
-                print(players.Count + "    " + InputObjs.Length);
+                Debug.Log(players.Count + "    " + InputObjs.Length);
             }
         }
 
@@ -106,7 +105,6 @@ public class BindToPlayer : MonoBehaviour
         {
             homeScreen.SetActive(true);
             gameObject.SetActive(false);
-            print("running");
         }
     }
 

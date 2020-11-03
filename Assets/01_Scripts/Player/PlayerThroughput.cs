@@ -53,20 +53,6 @@ public class PlayerThroughput : MonoBehaviour
             }
         }
     }
-
-    //void Update()
-    //{
-    //    if (pla)
-    //    if (curScene.buildIndex != SceneManager.GetSceneByBuildIndex(2).buildIndex)
-    //    {
-    //        print("hit");
-    //        curScene = SceneManager.GetActiveScene();
-    //        position = GameObject.FindWithTag("LevelGod").GetComponent<StartPos>();
-    //        PlayerJoin();
-
-    //    }
-
-    //}
     public void PlayerJoin()
     {
         PlayerChar = Instantiate(myPlayer);
