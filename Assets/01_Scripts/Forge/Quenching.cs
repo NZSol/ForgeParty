@@ -53,6 +53,7 @@ public class Quenching : Tool
     {
         _slide.maxValue = completionTime;
         myTeam = WeaponVars.team.T1;
+        steam.Stop();
     }
 
     // Update is called once per frame
