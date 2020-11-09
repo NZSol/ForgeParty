@@ -10,10 +10,6 @@ public class SetVolume : MonoBehaviour
 
     public Slider VolumeSlider;
 
-    public float mute = -80;
-
-    public float baseVol=0;
-
     public AudioMixer mixer;
 
     public Dropdown Details;
@@ -71,9 +67,10 @@ public class SetVolume : MonoBehaviour
 
 
         Details.value = Settings.detail;
+       
         VolumeSlider.value = Settings.Volume;
 
-        VolumeSlider.value = (baseVol / mute) * VolumeSlider.maxValue;
+       
         bgMusic.Play();
     }
 
