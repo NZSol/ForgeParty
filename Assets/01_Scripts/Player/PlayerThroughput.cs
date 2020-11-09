@@ -43,10 +43,8 @@ public class PlayerThroughput : MonoBehaviour
     {
         if (PlayerChar == null)
         {
-            print("payerNull");
             if (SceneManager.GetActiveScene().buildIndex == SceneManager.GetSceneByBuildIndex(2).buildIndex)
             {
-                print("hit");
                 curScene = SceneManager.GetActiveScene();
                 position = GameObject.FindWithTag("LevelGod").GetComponent<StartPos>();
                 PlayerJoin();
