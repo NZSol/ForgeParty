@@ -11,6 +11,7 @@ public class partical_test : MonoBehaviour
     public Transform sparks;
     public Transform cannon;
     public Transform dash;
+    public Transform shmeat;
 
 
     // Update is called once per frame
@@ -49,6 +50,11 @@ public class partical_test : MonoBehaviour
         if (Input.GetKeyDown("x"))
         {
             dash.GetComponent<ParticleSystem>().Play();
+        }
+
+        if (Input.GetKeyDown("a"))
+        {
+            shmeat.GetComponent<ParticleSystem>().Play();
         }
     } 
 
