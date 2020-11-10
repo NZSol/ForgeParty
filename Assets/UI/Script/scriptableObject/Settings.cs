@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class Settings : ScriptableObject
 {
     public float Volume;
-    
+    public int detail;
+    public int resolution;
 
  }

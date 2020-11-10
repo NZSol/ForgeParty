@@ -12,8 +12,15 @@ public class SetVolume : MonoBehaviour
 
     public AudioMixer mixer;
 
+    public Dropdown Details;
+
+    public Dropdown ResolutionDropdown;
+
     private static SetVolume instance;
     public static SetVolume Instance { get { return Instance; } }
+    public Settings Settings;
+    Resolution[] Resolution;
+
     void Awake()
     {
         instance = this;
@@ -22,7 +29,7 @@ public class SetVolume : MonoBehaviour
 
    
 
-    public Settings Settings;
+  
 
 
 
@@ -30,24 +37,83 @@ public class SetVolume : MonoBehaviour
 
     private void Start()
     {
+        Resolution = Screen.resolutions;
+        ResolutionDropdown.ClearOptions();
+        List<string> options = new List<string>();
+        int currentResolutionIndex = 0;
+        for (int i = 0; i < Resolution.Length; i++)
+        {
+            string option = Resolution[i].width + "x" + Resolution[i].height;
+            options.Add(option);
+
+            if (Resolution[i].width==Screen.currentResolution.width &&
+                Resolution[i].height==Screen.currentResolution.height)
+            {
+
+                currentResolutionIndex = i;
+            }
+
+
+        }
+
+        ResolutionDropdown.AddOptions(options);
+        currentResolutionIndex = Settings.resolution;
+        ResolutionDropdown.value = Settings.resolution;
+       
+        ResolutionDropdown.RefreshShownValue();
+
+
+
+
+
+        Details.value = Settings.detail;
+       
         VolumeSlider.value = Settings.Volume;
+
+       
         bgMusic.Play();
     }
 
 
 
 
-   public  void ChangeVolume()
-    {
-      
-    }
+
 
 
     private void Update()
     {
-        Settings.Volume = VolumeSlider.value;
+        SetVolumeM();
 
-        bgMusic.volume = VolumeSlider.value;
+
+        SetDetail();
+
+        SetResolution();
+
+
+    }
+
+   void SetDetail()
+    {
+        Settings.detail = Details.value;
+
+        QualitySettings.SetQualityLevel(Details.value);
+    }
+
+    void SetResolution()
+    {
+        Settings.resolution = ResolutionDropdown.value;
+
+        Resolution resolution = Resolution[ResolutionDropdown.value];
+        Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
+    }
+
+    void SetVolumeM()
+    {
+        Settings.Volume = VolumeSlider.value ;
+
+        mixer.SetFloat("VolumeMaster",VolumeSlider.value) ;
+
+   
     }
 
 
