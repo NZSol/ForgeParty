@@ -4132,7 +4132,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: ee8ed1eeb530ad34794bdfb66e70900a, type: 3}
+    m_Font: {fileID: 12800000, guid: 7a23d27882cb3b142b6cce6ec469dbfa, type: 3}
     m_FontSize: 250
     m_FontStyle: 0
     m_BestFit: 0
@@ -4564,8 +4564,14 @@ PrefabInstance:
     - target: {fileID: 5115802574496443850, guid: c925786deff497440bb0c3e07af16c66,
         type: 3}
       propertyPath: m_Text
-      value: PvP
+      value: Competitive
       objectReference: {fileID: 0}
+    - target: {fileID: 5115802574496443850, guid: c925786deff497440bb0c3e07af16c66,
+        type: 3}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 7a23d27882cb3b142b6cce6ec469dbfa,
+        type: 3}
     - target: {fileID: 5115802574496443861, guid: c925786deff497440bb0c3e07af16c66,
         type: 3}
       propertyPath: m_Name
@@ -37795,8 +37801,14 @@ PrefabInstance:
     - target: {fileID: 5115802574496443850, guid: c925786deff497440bb0c3e07af16c66,
         type: 3}
       propertyPath: m_Text
-      value: PvE
+      value: Co-operative
       objectReference: {fileID: 0}
+    - target: {fileID: 5115802574496443850, guid: c925786deff497440bb0c3e07af16c66,
+        type: 3}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 7a23d27882cb3b142b6cce6ec469dbfa,
+        type: 3}
     - target: {fileID: 5115802574821551846, guid: c925786deff497440bb0c3e07af16c66,
         type: 3}
       propertyPath: m_LocalPosition.x

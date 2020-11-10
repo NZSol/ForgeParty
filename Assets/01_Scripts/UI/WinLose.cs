@@ -50,5 +50,4 @@ public class WinLose : MonoBehaviour
         spawner.gameObject.SetActive(false);
         system.enabled = true;
     }
-
 }

@@ -22,12 +22,14 @@ public class Quenching : Tool
 
     public float timer = 0;
     public float completionTime = 5;
-    
+
+    [SerializeField] ParticleSystem steam = null;
 
     public override void TakeItem(GameObject item)
     {
         inputWeapon = item.GetComponent<Weapon>().myWeapon;
         inputMet = item.GetComponent<Metal>().myMetal;
+
 
         //ASSIGN OUTPUT PREFAB
         switch (inputWeapon)
@@ -42,6 +44,8 @@ public class Quenching : Tool
                 outputPrefab = Axe;
                 break;
         }
+
+        steam.Play();
     }
 
     // Start is called before the first frame update
@@ -49,6 +53,7 @@ public class Quenching : Tool
     {
         _slide.maxValue = completionTime;
         myTeam = WeaponVars.team.T1;
+        steam.Stop();
     }
 
     // Update is called once per frame

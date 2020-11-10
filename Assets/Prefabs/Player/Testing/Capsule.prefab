@@ -207,13 +207,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5da712437b2b9d64da4c8995a68b7254, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 20
-  maxSpeed: 30
-  minSpeed: -10
-  dashForce: 50
+  speed: 35
+  maxSpeed: 100
+  dashForce: 180
   dashCool: 0
   stick: {x: 0, y: 0}
-  damping: 10
+  moveTimer: 0.2
+  push: 50
 --- !u!54 &3059762728143522857
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -222,9 +222,9 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3059762728143522858}
   serializedVersion: 2
-  m_Mass: 10000
-  m_Drag: 0.5
-  m_AngularDrag: 0.2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 1
