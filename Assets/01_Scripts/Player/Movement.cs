@@ -34,6 +34,9 @@ public class Movement : MonoBehaviour
     Vector3 moveValues = new Vector3();
     Vector3 midPoint = new Vector3();
 
+    Animator anim = null;
+    float blendVal = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -43,6 +46,7 @@ public class Movement : MonoBehaviour
 
         rb.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation;
         rb.useGravity = false;
+        anim = gameObject.GetComponent<Animator>();
     }
 
 
@@ -60,6 +64,7 @@ public class Movement : MonoBehaviour
             inputArmed = false;
             dashing = 1;
             dashCool = 3;
+            blendVal = 3;
         }
         if (context.canceled)
         {
@@ -85,6 +90,8 @@ public class Movement : MonoBehaviour
         {
             dashCool -= Time.deltaTime / 2;
         }
+
+        anim.SetFloat("Blend", blendVal);
     }
     
     void MoveNow()
@@ -107,11 +114,22 @@ public class Movement : MonoBehaviour
             rb.velocity = moveValues * Mathf.Lerp(speed, dashForce, dashing) + storedVel;
             damping = Mathf.Clamp(damping, 1, 3);
             damping += Time.deltaTime;
+            if (blendVal > 2)
+            {
+                blendVal -= Time.deltaTime;
+            }
+            else
+            {
+                blendVal = 2;
+            }
         }
         else
         {
             haltTime += Time.deltaTime / ((int)damping/2);
             rb.velocity = Vector3.Lerp(rb.velocity, Vector3.zero, haltTime);
+
+            blendVal -= Time.deltaTime * ((int)damping * 4);
+            blendVal = Mathf.Clamp(blendVal, 0, 3);
         }
         storedVel = rb.velocity * 0.1f;
 
