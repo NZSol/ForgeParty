@@ -7,6 +7,7 @@ using static UnityEngine.InputSystem.InputAction;
 public class Movement : MonoBehaviour
 {
     public float speed = 0;
+    float updateSpeed = 0;
 
     Rigidbody rb = null;
     GameObject Player = null;
@@ -14,8 +15,6 @@ public class Movement : MonoBehaviour
     public float maxSpeed = 0;
     public float dashForce = 0;
     public float dashCool = 0;
-
-    float startMaxSpeed = 0;
 
     public Vector2 stick = Vector2.zero;
 
@@ -42,7 +41,7 @@ public class Movement : MonoBehaviour
     {
         Player = this.gameObject;
         rb = Player.GetComponent<Rigidbody>();
-        startMaxSpeed = maxSpeed;
+        updateSpeed = speed;
 
         rb.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation;
         rb.useGravity = false;
@@ -154,7 +153,7 @@ public class Movement : MonoBehaviour
     }
     private void OnCollisionExit(Collision collision)
     {
-        speed = 35;
+        speed = updateSpeed;
     }
 
     IEnumerator ResumeMove()
