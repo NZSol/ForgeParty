@@ -165,6 +165,6 @@ public class Movement : MonoBehaviour
     IEnumerator AddRBForce()
     {
         yield return new WaitForFixedUpdate();
-        rb.AddForce((transform.position - midPoint) * (rb.velocity.magnitude / 2), ForceMode.Impulse);
+        rb.AddForce((transform.position - midPoint) * (rb.velocity.magnitude * 2), ForceMode.Impulse);
     }
 }
