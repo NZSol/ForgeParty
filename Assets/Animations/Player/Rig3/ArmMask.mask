@@ -7,13 +7,17 @@ AvatarMask:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: ArmMask
-  m_Mask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+  m_Mask: 00000000000000000100000000000000000000000100000001000000010000000100000000000000000000000000000000000000
   m_Elements:
   - m_Path: 
     m_Weight: 1
-  - m_Path: Basic_Character_Smoothed1:pasted__groupgrouppasted__pasted__pSphere1
+  - m_Path: L_Hand_Ctrl
     m_Weight: 0
-  - m_Path: Basic_Character_Smoothed1:pasted__pasted__polySurface2pasted__groupgroup
+  - m_Path: L_Hand_Ctrl/nurbsCircle5
+    m_Weight: 0
+  - m_Path: R_Hand_Ctrl
+    m_Weight: 0
+  - m_Path: R_Hand_Ctrl/nurbsCircle5 1
     m_Weight: 0
   - m_Path: root_jnt
     m_Weight: 0
@@ -50,6 +54,8 @@ AvatarMask:
   - m_Path: root_jnt/hip_jnt/Spine_A_Jnt/Spine_B_Jnt/R_Clav_Jnt/R_Shoulder_Jnt/R_Elbow_Jnt
     m_Weight: 1
   - m_Path: root_jnt/hip_jnt/Spine_A_Jnt/Spine_B_Jnt/R_Clav_Jnt/R_Shoulder_Jnt/R_Elbow_Jnt/R_Wrist_Jnt
+    m_Weight: 1
+  - m_Path: root_jnt/hip_jnt/Spine_A_Jnt/Spine_B_Jnt/R_Clav_Jnt/R_Shoulder_Jnt/R_Elbow_Jnt/R_Wrist_Jnt/HandOBJ
     m_Weight: 1
   - m_Path: root_jnt/hip_jnt/Spine_A_Jnt/Spine_B_Jnt/R_Clav_Jnt/R_Shoulder_Jnt/R_Elbow_Jnt/R_Wrist_Jnt/R_Finger_Jnt
     m_Weight: 1
