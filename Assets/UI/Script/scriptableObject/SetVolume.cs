@@ -16,24 +16,8 @@ public class SetVolume : MonoBehaviour
 
     public Dropdown ResolutionDropdown;
 
-    private static SetVolume instance;
-    public static SetVolume Instance { get { return Instance; } }
     public Settings Settings;
     Resolution[] Resolution;
-
-    void Awake()
-    {
-        instance = this;
-    }
-
-
-   
-
-  
-
-
-
-
 
     private void Start()
     {
@@ -71,14 +55,8 @@ public class SetVolume : MonoBehaviour
         VolumeSlider.value = Settings.Volume;
 
        
-        bgMusic.Play();
+       
     }
-
-
-
-
-
-
 
     private void Update()
     {
@@ -113,7 +91,6 @@ public class SetVolume : MonoBehaviour
 
         mixer.SetFloat("VolumeMaster",VolumeSlider.value) ;
 
-   
     }
 
 
