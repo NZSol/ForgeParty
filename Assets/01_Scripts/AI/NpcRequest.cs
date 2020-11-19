@@ -60,8 +60,11 @@ public class NpcRequest : MonoBehaviour
 
     bool alive = true;
     NPCSpawner parentScript;
+    Animator anim;
+
     public void Start()
     {
+        anim = gameObject.GetComponent<Animator>();
         teamVariables = GameObject.FindWithTag("LevelGod");
         parentScript = GetComponentInParent<NPCSpawner>();
         agent = gameObject.GetComponent<NavMeshAgent>();
@@ -134,6 +137,7 @@ public class NpcRequest : MonoBehaviour
             state = AIState.Flee;
             timer -= timerMax;
             agent.SetDestination(fleePos.transform.position);
+            anim.SetBool("Moving", true);
             Bubble.gameObject.SetActive(false);
         }
 
@@ -141,6 +145,7 @@ public class NpcRequest : MonoBehaviour
         {
             state = AIState.Fight;
             agent.SetDestination(battlePos.transform.position);
+            anim.SetBool("Moving", true);
             Bubble.gameObject.SetActive(false);
         }
 
@@ -167,9 +172,11 @@ public class NpcRequest : MonoBehaviour
         if (agent.remainingDistance > maxRange)
         {
             agent.SetDestination(CurrentQueuePos.transform.position);
+            anim.SetBool("Moving", true);
         }
         else
         {
+            anim.SetBool("Moving", false);
             waitTimer -= Time.deltaTime;
 
             lerpTime += (Time.deltaTime / 5);
