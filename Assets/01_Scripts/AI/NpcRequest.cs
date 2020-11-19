@@ -131,6 +131,10 @@ public class NpcRequest : MonoBehaviour
         if (runTimer)
         {
             timer += Time.deltaTime;
+
+            //Moves blend from point a to c smoothly based on bubble progression
+            var timerPercent = (timer / timerMax) * 1;
+            anim.SetFloat("Blend", timerPercent);
         }
         if (timer >= timerMax)
         {
