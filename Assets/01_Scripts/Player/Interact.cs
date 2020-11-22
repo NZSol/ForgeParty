@@ -9,6 +9,7 @@ public class Interact : MonoBehaviour
     //Setup
     public bool active = false;
     bool inputArmed = true;
+    Animator anim = null;
 
     //LayerMasks
     LayerMask toolsLayer = 0;
@@ -69,7 +70,7 @@ public class Interact : MonoBehaviour
         {
             toolsLayer = LayerMask.NameToLayer("Tools");
             Interactables = Tools(toolsLayer).ToList();
-            //heldPos = new Vector3(0, 0f, 1.8f);
+            anim = gameObject.GetComponent<Animator>();
         }
     }
 
@@ -140,6 +141,7 @@ public class Interact : MonoBehaviour
             heldObj.transform.parent = null;
             heldObj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
             heldObj = null;
+            anim.SetLayerWeight(1, 0);
         }
         else
         {
@@ -150,6 +152,7 @@ public class Interact : MonoBehaviour
     void collectItem()
     {
         heldObj = activeTool.GiveItem();
+        anim.SetLayerWeight(1, 1);
         if (heldObj != null)
         {
             positionHeldObj();
@@ -158,6 +161,7 @@ public class Interact : MonoBehaviour
 
     void deliverItem()
     {
+        anim.SetLayerWeight(1, 0);
         switch (heldObj.GetComponent<Item>().tool)
         {
             case Item.Tool.Furnace:
