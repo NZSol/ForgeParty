@@ -55,7 +55,7 @@ public class SetVolume : MonoBehaviour
         VolumeSlider.value = Settings.Volume;
 
        
-        bgMusic.Play();
+       
     }
 
     private void Update()
