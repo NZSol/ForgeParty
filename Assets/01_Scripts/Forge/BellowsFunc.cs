@@ -42,7 +42,6 @@ public class BellowsFunc : Tool
             }
         }
 
-        GetComponentInParent<Furnace>().temperature = localTemp;
         _slide.value = localTemp;
 
 

@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.UI;
 
 public class Furnace : Tool
 {
-    public float timer = 0;
-    public float maxTimer = 5;
-    public float temperature = 0;
+    [SerializeField] float timer = 0;
+    [SerializeField] float maxTimer = 5;
+    [SerializeField] float temperature = 0;
 
     public Queue<Metal.metal> inputs = new Queue<Metal.metal>();
     public Metal.metal activeMetal = new Metal.metal();
@@ -22,14 +23,22 @@ public class Furnace : Tool
     [SerializeField] ParticleSystem smoke = null;
     bool playSmoke = false, canActivate = true;
 
+    //Fire Particle
+    [SerializeField] ParticleSystem fire = null;
+    Vector3 startSize = new Vector3(0, 0, 0);
+    Vector3 endSize = new Vector3(1.5f, 1.5f, 1.5f);
+
+    //Temperature Management
+    [SerializeField] Slider _slide = null;
+    [SerializeField] float coolingMultiplier = 1;
 
     // Start is called before the first frame update
     void Start()
     {
         activeMetal = Metal.metal.Blank;
         smoke.Stop();
+        _slide.maxValue = 10;
     }
-
 
     public override void TakeItem(GameObject item)
     {
@@ -42,6 +51,23 @@ public class Furnace : Tool
     void Update()
     {
         //if charging bool in attached component is true, start increasing temperature
+        if (charging)
+        {
+            if (temperature < _slide.maxValue)
+            {
+                temperature += Time.deltaTime;
+            }
+            else
+            {
+                if (temperature > 0)
+                {
+                    temperature -= Time.deltaTime / coolingMultiplier;
+                }
+            }
+        }
+        _slide.value = temperature;
+        fire.transform.localScale = Vector3.Lerp(startSize, endSize, (temperature / _slide.maxValue));
+
         if (activeMetal != Metal.metal.Blank)
         {
 
