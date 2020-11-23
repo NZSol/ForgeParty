@@ -146,7 +146,6 @@ public class Interact : MonoBehaviour
             heldObj.transform.parent = null;
             heldObj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
             heldObj = null;
-            anim.SetLayerWeight(1, 0);
         }
         else
         {
@@ -157,7 +156,6 @@ public class Interact : MonoBehaviour
     void collectItem()
     {
         heldObj = activeTool.GiveItem();
-        anim.SetLayerWeight(1, 1);
         if (heldObj != null)
         {
             positionHeldObj();
@@ -166,7 +164,6 @@ public class Interact : MonoBehaviour
 
     void deliverItem()
     {
-        anim.SetLayerWeight(1, 0);
         switch (heldObj.GetComponent<Item>().tool)
         {
             case Item.Tool.Furnace:
