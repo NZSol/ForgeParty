@@ -60,7 +60,7 @@ public class Interact : MonoBehaviour
 
 
     public GameObject heldObj = null;
-
+    [SerializeField] Transform LHand;
 
     // Start is called before the first frame update
     void Start()
@@ -92,6 +92,11 @@ public class Interact : MonoBehaviour
         if (toolDist >= range)
         {
             activeTool.GetComponent<Tool>().charging = false;
+        }
+
+        if (heldObj == null)
+        {
+            anim.SetLayerWeight(1, 0);
         }
     }
 
@@ -225,8 +230,8 @@ public class Interact : MonoBehaviour
 
     void positionHeldObj()
     {
-        heldObj.transform.parent = gameObject.transform;
-        heldObj.transform.localPosition = new Vector3(0, 0, 1f);
+        heldObj.transform.parent = LHand;
+        heldObj.transform.localPosition = new Vector3(-0.47f, 0.93f, 0.17f);
         heldObj.transform.localRotation = Quaternion.Euler(Vector3.zero);
 
         heldObj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
