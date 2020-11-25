@@ -95,7 +95,15 @@ public class Movement : MonoBehaviour
     
     void MoveNow()
     {
-        anim.SetBool("Move", true);
+        if (stick == Vector2.zero)
+        {
+            anim.SetBool("Move", false);
+        }
+        else
+        {
+            anim.SetBool("Move", true);
+        }
+
         if (moveValues.magnitude != 0)
         {
             transform.eulerAngles = new Vector3(0, Mathf.Atan2(lookDir.x, lookDir.y) * 180 / Mathf.PI, 0);

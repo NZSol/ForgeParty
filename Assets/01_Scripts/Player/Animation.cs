@@ -12,8 +12,9 @@ public class Animation : MonoBehaviour
     //Tong Vars
     [SerializeField] GameObject tongs = null;
     [SerializeField] GameObject tongJnt = null;
-    Vector3 startPos = new Vector3(0,0,0);
-    Vector3 startRot = new Vector3(0, 0, 0);
+
+    //Ore Vars
+    [SerializeField] GameObject Ore = null;
 
 
     //Gameobject Animators
@@ -22,15 +23,14 @@ public class Animation : MonoBehaviour
     GameObject animObj;
     [SerializeField] GameObject player;
     [SerializeField] Transform HandParent;
-    int currentFrame = 0;
-    float animPercent = 0;
+    [SerializeField] Transform rootJNT;
+
+    GameObject heldObj = null;
 
     // Start is called before the first frame update
     void Start()
     {
         anim = gameObject.GetComponent<Animator>();
-        startPos = tongJnt.transform.position;
-        startRot = tongJnt.transform.rotation.eulerAngles;
     }
 
     // Update is called once per frame
@@ -44,9 +44,6 @@ public class Animation : MonoBehaviour
         else
         {
             anim.SetLayerWeight(1, 1);
-            AnimatorClipInfo[] animClip = anim.GetCurrentAnimatorClipInfo(1);
-            currentFrame = (int) (animClip[0].weight * (animClip[0].clip.length * animClip[0].clip.frameRate));
-            animPercent = (currentFrame / animClip[0].clip.length) * 1;
         }
 
         //Decide animation mask
@@ -59,6 +56,7 @@ public class Animation : MonoBehaviour
                 {
                     animObj = tongs;
                     animObj.SetActive(true);
+
                 }
             }
             else
@@ -75,24 +73,15 @@ public class Animation : MonoBehaviour
 
         if (animObj == tongs)
         {
-        //    if (anim.GetBool("Move") == true)
-        //    {
-                tongJnt.transform.parent = HandParent;
-                tongJnt.transform.localPosition = new Vector3(0, 0.25f, 0);
-                //tongJnt.transform.localRotation = Quaternion.Euler(4.9f, -140.4f, 75.4f);
-                tongJnt.transform.localRotation = Quaternion.Lerp(Quaternion.Euler(3.26f, 218.47f, 87.036f), Quaternion.Euler(4.97f, 220.87f, 71.7f), animPercent);
-            if (animPercent > 1)
+            if (anim.GetBool("Crucible") && anim.GetBool("Move"))
             {
-                animPercent = 0;
+                animObj.transform.parent = rootJNT;
             }
-            print(currentFrame);
-            //}
-            //else
-            //{
-            //    tongJnt.transform.parent = player.transform;
-            //    tongJnt.transform.localPosition = startPos;
-            //    tongJnt.transform.localRotation = Quaternion.Euler(startRot);
-            //}
+            else if (!anim.GetBool("Move"))
+            {
+                animObj.transform.parent = player.transform;
+            }
+
         }
 
     }
