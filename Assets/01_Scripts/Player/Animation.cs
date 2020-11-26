@@ -10,22 +10,15 @@ public class Animation : MonoBehaviour
     [SerializeField] Avatar armTongs = null;
 
     //Tong Vars
-    [SerializeField] GameObject tongs = null;
+    public GameObject tongs = null;
     [SerializeField] GameObject tongJnt = null;
-
-    //Ore Vars
-    [SerializeField] GameObject Ore = null;
-
+    
 
     //Gameobject Animators
-    Animator tongsAnim;
 
     GameObject animObj;
     [SerializeField] GameObject player;
-    [SerializeField] Transform HandParent;
     [SerializeField] Transform rootJNT;
-
-    GameObject heldObj = null;
 
     // Start is called before the first frame update
     void Start()

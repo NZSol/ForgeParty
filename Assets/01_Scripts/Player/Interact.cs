@@ -14,6 +14,7 @@ public class Interact : MonoBehaviour
     //LayerMasks
     LayerMask toolsLayer = 0;
 
+
     //Get all tools
     GameObject[] Tools(int layer)
     {
@@ -180,6 +181,7 @@ public class Interact : MonoBehaviour
                 if (activeTool.GetComponent<Tool>().tool == Tool.curTool.Cast)
                 {
                     activeTool.GetComponent<Tool>().TakeItem(heldObj);
+                    gameObject.GetComponent<Animation>().tongs.SetActive(false);
                     Destroy(heldObj);
                 }
                     break;
