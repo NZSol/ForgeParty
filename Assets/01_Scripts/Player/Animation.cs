@@ -20,6 +20,8 @@ public class Animation : MonoBehaviour
     [SerializeField] GameObject player;
     [SerializeField] Transform rootJNT;
 
+    bool itemSet = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -52,6 +54,10 @@ public class Animation : MonoBehaviour
 
                 }
             }
+            else if (gameObject.GetComponent<Interact>().heldObj.GetComponent<Item>().tool == Item.Tool.Anvil)
+            {
+                anim.SetBool("WeaponHead", true);
+            }
             else
             {
                 anim.SetBool("Crucible", false);
@@ -61,6 +67,16 @@ public class Animation : MonoBehaviour
                     animObj = null;
                 }
             }
+        }
+        else
+        {
+            anim.SetBool("Crucible", false);
+            if (tongs.activeSelf)
+            {
+                tongs.SetActive(false);
+            }
+            anim.SetBool("WeaponHead", false);
+            anim.SetBool("Weapon", false);
         }
 
 
