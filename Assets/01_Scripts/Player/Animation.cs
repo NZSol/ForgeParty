@@ -49,44 +49,77 @@ public class Animation : MonoBehaviour
                 anim.SetBool("Ore", false);
             }
 
-            if (gameObject.GetComponent<Interact>().heldObj.GetComponent<Item>().tool == Item.Tool.Cast)
+            switch (gameObject.GetComponent<Interact>().heldObj.GetComponent<Item>().tool)
             {
-                anim.SetBool("Crucible", true);
-                if (animObj != tongs)
-                {
-                    animObj = tongs;
-                    animObj.SetActive(true);
+                case Item.Tool.Cast:
 
-                }
+                    anim.SetBool("Crucible", true);
+                    if (animObj != tongs)
+                    {
+                        animObj = tongs;
+                        animObj.SetActive(true);
+
+                    }
+                    break;
+
+                case Item.Tool.Anvil:
+                    anim.SetBool("WeaponHead", true);
+                    break;
+
+                case Item.Tool.Bucket:
+                    anim.SetBool("Weapon", true);
+                    break;
+
+                default:
+                    anim.SetBool("Ore", true);
+                    anim.SetBool("Crucible", false);
+                    if (tongs.activeSelf)
+                    {
+                        tongs.SetActive(false);
+                    }
+                    anim.SetBool("WeaponHead", false);
+                    anim.SetBool("Weapon", false);
+                    break;
             }
-            else if (gameObject.GetComponent<Interact>().heldObj.GetComponent<Item>().tool == Item.Tool.Anvil)
-            {
-                anim.SetBool("WeaponHead", true);
-            }
-            else
-            {
-                anim.SetBool("Crucible", false);
-                if (animObj != null)
-                {
-                    animObj.SetActive(false);
-                    animObj = null;
-                }
-            }
+            //    if (gameObject.GetComponent<Interact>().heldObj.GetComponent<Item>().tool == Item.Tool.Cast)
+            //    {
+            //        anim.SetBool("Crucible", true);
+            //        if (animObj != tongs)
+            //        {
+            //            animObj = tongs;
+            //            animObj.SetActive(true);
+
+            //        }
+            //    }
+            //    else if (gameObject.GetComponent<Interact>().heldObj.GetComponent<Item>().tool == Item.Tool.Anvil)
+            //    {
+            //        anim.SetBool("WeaponHead", true);
+            //    }
+            //    else if (game)
+            //    else
+            //    {
+            //        anim.SetBool("Crucible", false);
+            //        if (animObj != null)
+            //        {
+            //            animObj.SetActive(false);
+            //            animObj = null;
+            //        }
+            //    }
+            //}
+            //else
+            //{
+            //    anim.SetBool("Ore", true);
+            //    anim.SetBool("Crucible", false);
+            //    if (tongs.activeSelf)
+            //    {
+            //        tongs.SetActive(false);
+            //    }
+            //    anim.SetBool("WeaponHead", false);
+            //    anim.SetBool("Weapon", false);
+            //}
+
         }
-        else
-        {
-            anim.SetBool("Ore", true);
-            anim.SetBool("Crucible", false);
-            if (tongs.activeSelf)
-            {
-                tongs.SetActive(false);
-            }
-            anim.SetBool("WeaponHead", false);
-            anim.SetBool("Weapon", false);
-        }
-
-
-        if (animObj == tongs)
+            if (animObj == tongs)
         {
             if (anim.GetBool("Crucible") && anim.GetBool("Move"))
             {
