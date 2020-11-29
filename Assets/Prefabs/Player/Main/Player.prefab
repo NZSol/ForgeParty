@@ -74,6 +74,7 @@ GameObject:
   - component: {fileID: 6181884290713938289}
   - component: {fileID: 6918538012721972277}
   - component: {fileID: 695037339753195240}
+  - component: {fileID: -6485874759343925685}
   - component: {fileID: 5858418079800302340}
   m_Layer: 0
   m_Name: Player
@@ -108,7 +109,7 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 603917183182956977}
   m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 175b4169fa52b76428c64b7928e82fd7, type: 3}
+  m_Avatar: {fileID: 9000000, guid: ea4dc88e3aa60f640ab94a5c9311b90c, type: 3}
   m_Controller: {fileID: 9100000, guid: f730667d521fad34d807255770f2ecf6, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
@@ -153,6 +154,27 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 116
   m_CollisionDetection: 1
+--- !u!114 &-6485874759343925685
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 603917183182956977}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9da2aeee18ce9014da685cbaea30401b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  anim: {fileID: 0}
+  armEmpty: {fileID: 9000000, guid: 25f14d7f85b664e41b45dcfce692e94a, type: 3}
+  armTongs: {fileID: 9000000, guid: 27b44bc2255fc31448fcaa52a55778e8, type: 3}
+  tongs: {fileID: 1131633092859897007, guid: f1b901e5a8bb5f14e926699e47b5acf3, type: 3}
+  tongJnt: {fileID: 0}
+  Ore: {fileID: 0}
+  player: {fileID: 603917183182956977}
+  HandParent: {fileID: 2741722508129721270}
+  rootJNT: {fileID: 0}
 --- !u!114 &5858418079800302340
 MonoBehaviour:
   m_ObjectHideFlags: 0

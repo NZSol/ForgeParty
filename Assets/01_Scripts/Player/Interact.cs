@@ -14,6 +14,7 @@ public class Interact : MonoBehaviour
     //LayerMasks
     LayerMask toolsLayer = 0;
 
+
     //Get all tools
     GameObject[] Tools(int layer)
     {
@@ -146,7 +147,6 @@ public class Interact : MonoBehaviour
             heldObj.transform.parent = null;
             heldObj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
             heldObj = null;
-            anim.SetLayerWeight(1, 0);
         }
         else
         {
@@ -157,7 +157,6 @@ public class Interact : MonoBehaviour
     void collectItem()
     {
         heldObj = activeTool.GiveItem();
-        anim.SetLayerWeight(1, 1);
         if (heldObj != null)
         {
             positionHeldObj();
@@ -166,7 +165,6 @@ public class Interact : MonoBehaviour
 
     void deliverItem()
     {
-        anim.SetLayerWeight(1, 0);
         switch (heldObj.GetComponent<Item>().tool)
         {
             case Item.Tool.Furnace:
@@ -183,6 +181,7 @@ public class Interact : MonoBehaviour
                 if (activeTool.GetComponent<Tool>().tool == Tool.curTool.Cast)
                 {
                     activeTool.GetComponent<Tool>().TakeItem(heldObj);
+                    gameObject.GetComponent<Animation>().tongs.SetActive(false);
                     Destroy(heldObj);
                 }
                     break;

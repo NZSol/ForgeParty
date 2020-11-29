@@ -53,6 +53,10 @@ public class Movement : MonoBehaviour
     {
         moveValues = new Vector3(stick.x, 0, stick.y) * 6;
         lookDir = stick;
+        if (anim.GetBool("Pour"))
+        {
+            stick = Vector2.zero;
+        }
     }
 
 
@@ -95,6 +99,14 @@ public class Movement : MonoBehaviour
     
     void MoveNow()
     {
+        if (stick == Vector2.zero)
+        {
+            anim.SetBool("Move", false);
+        }
+        else
+        {
+            anim.SetBool("Move", true);
+        }
 
         if (moveValues.magnitude != 0)
         {
