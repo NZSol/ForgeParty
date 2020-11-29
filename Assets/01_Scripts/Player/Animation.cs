@@ -44,6 +44,11 @@ public class Animation : MonoBehaviour
         //Decide animation mask
         if (gameObject.GetComponent<Interact>().heldObj != null)
         {
+            if (gameObject.GetComponent<Interact>().heldObj.GetComponent<Item>().tool != Item.Tool.Furnace)
+            {
+                anim.SetBool("Ore", false);
+            }
+
             if (gameObject.GetComponent<Interact>().heldObj.GetComponent<Item>().tool == Item.Tool.Cast)
             {
                 anim.SetBool("Crucible", true);
@@ -70,6 +75,7 @@ public class Animation : MonoBehaviour
         }
         else
         {
+            anim.SetBool("Ore", true);
             anim.SetBool("Crucible", false);
             if (tongs.activeSelf)
             {
