@@ -107,6 +107,10 @@ public class Movement : MonoBehaviour
         {
             anim.SetBool("Move", true);
         }
+        if (anim.GetBool("Anvil") || anim.GetBool("Bellows"))
+        {
+            stick = Vector2.zero;
+        }
 
         if (moveValues.magnitude != 0)
         {

@@ -12,6 +12,7 @@ public class PlayerThroughput : MonoBehaviour
     Movement moveScript;
 
     Interact interactScript;
+    CharSelect CharSelectScript;
 
     [SerializeField] Scene curScene;
     [SerializeField] Scene titleScene;
@@ -57,6 +58,7 @@ public class PlayerThroughput : MonoBehaviour
         moveScript = PlayerChar.GetComponent<Movement>();
         interactScript = PlayerChar.GetComponent<Interact>();
         interactScript.active = true;
+        CharSelectScript = PlayerChar.GetComponent<CharSelect>();
         position.Positioning(PlayerChar);
         SceneManager.MoveGameObjectToScene(this.gameObject, SceneManager.GetActiveScene());
     }
@@ -103,10 +105,18 @@ public class PlayerThroughput : MonoBehaviour
 
     public void Rush(CallbackContext context)
     {
-        var npcArray = GameObject.FindGameObjectsWithTag("NPC");
-        foreach (GameObject npc in npcArray)
+        
+        if (context.started && active)
         {
-            npc.GetComponent<NpcRequest>().timer = npc.GetComponent<NpcRequest>().timerMax;
+            active = false;
+            if (CharSelectScript != null)
+            {
+                CharSelectScript.ChangeChar();
+            }
+        }
+        if (context.canceled)
+        {
+            active = true;
         }
     }
 
