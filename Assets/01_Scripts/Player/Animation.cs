@@ -9,10 +9,12 @@ public class Animation : MonoBehaviour
     [SerializeField] Avatar armEmpty = null;
     [SerializeField] Avatar armTongs = null;
 
-    //Tong Vars
-    public GameObject tongs = null;
-    [SerializeField] GameObject tongJnt = null;
     
+    public GameObject tongs = null;
+    [SerializeField] GameObject hammer = null;
+    [SerializeField] GameObject bellows = null;
+
+
 
     //Gameobject Animators
 
@@ -20,18 +22,20 @@ public class Animation : MonoBehaviour
     [SerializeField] GameObject player;
     [SerializeField] Transform rootJNT;
 
-    bool itemSet = false;
 
-    // Start is called before the first frame update
+
     void Start()
     {
         anim = gameObject.GetComponent<Animator>();
+        tongs.SetActive(false);
+        hammer.SetActive(false);
+        bellows.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
-        //enable/disable animation mask
+        //enable/disable animation mask if item held
         if (gameObject.GetComponent<Interact>().heldObj == null)
         {
             anim.SetLayerWeight(1, 0);
@@ -41,7 +45,7 @@ public class Animation : MonoBehaviour
             anim.SetLayerWeight(1, 1);
         }
 
-        //Decide animation mask
+        //Set Holding layer based on item type
         if (gameObject.GetComponent<Interact>().heldObj != null)
         {
             if (gameObject.GetComponent<Interact>().heldObj.GetComponent<Item>().tool != Item.Tool.Furnace)
@@ -49,28 +53,29 @@ public class Animation : MonoBehaviour
                 anim.SetBool("Ore", false);
             }
 
-            if (gameObject.GetComponent<Interact>().heldObj.GetComponent<Item>().tool == Item.Tool.Cast)
+            switch (gameObject.GetComponent<Interact>().heldObj.GetComponent<Item>().tool)
             {
-                anim.SetBool("Crucible", true);
-                if (animObj != tongs)
-                {
-                    animObj = tongs;
-                    animObj.SetActive(true);
+                case Item.Tool.Furnace:
+                    anim.SetBool("Ore", true);
+                    break;
 
-                }
-            }
-            else if (gameObject.GetComponent<Interact>().heldObj.GetComponent<Item>().tool == Item.Tool.Anvil)
-            {
-                anim.SetBool("WeaponHead", true);
-            }
-            else
-            {
-                anim.SetBool("Crucible", false);
-                if (animObj != null)
-                {
-                    animObj.SetActive(false);
-                    animObj = null;
-                }
+                case Item.Tool.Cast:
+                    anim.SetBool("Crucible", true);
+                    if (animObj != tongs)
+                    {
+                        animObj = tongs;
+                        animObj.SetActive(true);
+
+                    }
+                    break;
+
+                case Item.Tool.Anvil:
+                    anim.SetBool("WeaponHead", true);
+                    break;
+
+                case Item.Tool.Bucket:
+                    anim.SetBool("Weapon", true);
+                    break;
             }
         }
         else
@@ -85,18 +90,40 @@ public class Animation : MonoBehaviour
             anim.SetBool("Weapon", false);
         }
 
-
-        if (animObj == tongs)
+        //Set Action layer animation based on tool type
+        if (gameObject.GetComponent<Interact>().activeTool != null)
         {
-            if (anim.GetBool("Crucible") && anim.GetBool("Move"))
+            switch (gameObject.GetComponent<Interact>().activeTool.currentTool())
             {
-                animObj.transform.parent = rootJNT;
+                case Tool.curTool.Anvil:
+                    if (gameObject.GetComponent<Interact>().activeTool.GetComponent<Anvil>().charging)
+                    {
+                        anim.SetLayerWeight(2, 1);
+                        anim.SetBool("Anvil", true);
+                        hammer.SetActive(true);
+                    }
+                    else
+                    {
+                        anim.SetLayerWeight(2, 0);
+                        anim.SetBool("Anvil", false);
+                        hammer.SetActive(false);
+                    }
+                    break;
+                case Tool.curTool.Furnace:
+                    if (gameObject.GetComponent<Interact>().activeTool.GetComponent<Furnace>().charging)
+                    {
+                        anim.SetLayerWeight(2, 1);
+                        anim.SetBool("Bellows", true);
+                        bellows.SetActive(true);
+                    }
+                    else
+                    {
+                        anim.SetLayerWeight(2, 0);
+                        anim.SetBool("Bellows", false);
+                        bellows.SetActive(false);
+                    }
+                    break;
             }
-            else if (!anim.GetBool("Move"))
-            {
-                animObj.transform.parent = player.transform;
-            }
-
         }
 
     }
