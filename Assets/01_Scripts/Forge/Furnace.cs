@@ -37,6 +37,8 @@ public class Furnace : Tool
     {
         activeMetal = Metal.metal.Blank;
         smoke.Stop();
+        endSize = fire.gameObject.transform.localScale;
+        fire.transform.localScale = startSize;
         _slide.maxValue = 10;
     }
 

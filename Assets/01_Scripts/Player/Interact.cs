@@ -94,6 +94,10 @@ public class Interact : MonoBehaviour
         {
             activeTool.GetComponent<Tool>().charging = false;
         }
+        else
+        {
+
+        }
 
         if (heldObj == null)
         {
