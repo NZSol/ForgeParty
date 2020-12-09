@@ -84,6 +84,10 @@ public class Outline : MonoBehaviour {
     [SerializeField] Shader frontMask;
     [SerializeField] Shader frontOutline;
 
+    [SerializeField] bool isBack;
+    [SerializeField] Shader backOutline;
+    [SerializeField] Shader backMask;
+
   void Awake() {
 
     // Cache renderers
@@ -96,6 +100,11 @@ public class Outline : MonoBehaviour {
         {
             outlineMaskMaterial.shader = frontMask;
             outlineFillMaterial.shader = frontOutline;
+        }
+    if (isBack)
+        {
+            outlineMaskMaterial.shader = backMask;
+            outlineFillMaterial.shader = backOutline;
         }
 
 

@@ -110,12 +110,15 @@ public class NpcRequest : MonoBehaviour
         {
             if (col.gameObject.GetComponent<Weapon>().myWeapon == weapon && col.gameObject.GetComponent<Weapon>().completed)
             {
-                col.GetComponentInParent<Interact>().heldObj = null;
+
                 GotWeapon = true;
-                col.gameObject.transform.parent = parentPos;
-                col.gameObject.transform.localPosition = new Vector3(0, 3.5f, 0);
-                col.gameObject.transform.rotation = Quaternion.Euler(x: -90, y: +0, z: +90);
+                col.gameObject.GetComponentInParent<Interact>().heldObj = null;
+                Destroy(col.gameObject.GetComponent<MeshCollider>());
+                Destroy(col.gameObject.GetComponent<Rigidbody>());
                 heldWeapon = col.gameObject;
+                heldWeapon.transform.parent = parentPos;
+                heldWeapon.transform.localPosition = new Vector3(0, 3.5f, 0);
+                heldWeapon.transform.rotation = Quaternion.Euler(x: -90, y: +0, z: +90);
                 heldWeapon.GetComponent<WeaponVars>().setVar();
             }
         }
