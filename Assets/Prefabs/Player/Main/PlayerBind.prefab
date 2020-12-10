@@ -2212,6 +2212,7 @@ GameObject:
   - component: {fileID: 8526862624955198651}
   - component: {fileID: 3717517563743339654}
   - component: {fileID: 8340208330053751345}
+  - component: {fileID: 9215801940167141070}
   - component: {fileID: 4049116474648489167}
   - component: {fileID: 351209450481692562}
   - component: {fileID: 3014756141118526061}
@@ -2297,6 +2298,27 @@ MonoBehaviour:
   bellows: {fileID: 2219914037447259146}
   player: {fileID: 8723602427150979079}
   rootJNT: {fileID: 0}
+--- !u!114 &9215801940167141070
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8723602427150979079}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 2
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
+  isPlayer: 1
+  frontMask: {fileID: 4800000, guid: de60908bf9c2ae041a5db530bd2a5537, type: 3}
+  frontOutline: {fileID: 4800000, guid: 69ed1ebb5fab97f46ac358a55de43344, type: 3}
 --- !u!114 &4049116474648489167
 MonoBehaviour:
   m_ObjectHideFlags: 0

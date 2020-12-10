@@ -58,6 +58,7 @@ public class Interact : MonoBehaviour
     //Game Variables
     public float range = 5;
     float toolDist = 0;
+    Tool curTool;
 
 
     public GameObject heldObj = null;
@@ -72,14 +73,25 @@ public class Interact : MonoBehaviour
             toolsLayer = LayerMask.NameToLayer("Tools");
             Interactables = Tools(toolsLayer).ToList();
             anim = gameObject.GetComponent<Animator>();
+            StartCoroutine(ActivateTool());
         }
+    }
+
+    IEnumerator ActivateTool()
+    {
+        yield return new WaitForSeconds(0.1f);
+        curTool = activeTool;
     }
 
     // Update is called once per frame
     void Update()
     {
         activeTool = closestTool(Interactables.ToArray());
-
+        if (curTool != activeTool && curTool != null)
+        {
+            curTool.GetComponent<Outline>().OutlineColor = Color.white;
+            curTool = activeTool;
+        }
 
         if (activeTool != null)
         {
@@ -90,9 +102,15 @@ public class Interact : MonoBehaviour
             Debug.Log("No Active Tool");
         }
 
+
         if (toolDist >= range)
         {
             activeTool.GetComponent<Tool>().charging = false;
+            activeTool.GetComponent<Outline>().OutlineColor = Color.white;
+        }
+        else
+        {
+            activeTool.GetComponent<Outline>().OutlineColor = Color.yellow;
         }
 
         if (heldObj == null)

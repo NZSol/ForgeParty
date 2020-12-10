@@ -37,6 +37,8 @@ public class Furnace : Tool
     {
         activeMetal = Metal.metal.Blank;
         smoke.Stop();
+        endSize = fire.gameObject.transform.localScale;
+        fire.transform.localScale = startSize;
         _slide.maxValue = 10;
     }
 
@@ -57,14 +59,16 @@ public class Furnace : Tool
             {
                 temperature += Time.deltaTime;
             }
-            else
+        }
+        else
+        {
+            if (temperature > 0)
             {
-                if (temperature > 0)
-                {
-                    temperature -= Time.deltaTime / coolingMultiplier;
-                }
+                temperature -= Time.deltaTime / coolingMultiplier;
             }
         }
+
+
         _slide.value = temperature;
         fire.transform.localScale = Vector3.Lerp(startSize, endSize, (temperature / _slide.maxValue));
 
