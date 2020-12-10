@@ -6,6 +6,7 @@ public class StartPos : MonoBehaviour
 {
     public GameObject[] playerArray = new GameObject[0];
     public GameObject[] spawns = new GameObject[0];
+    public Color[] colors = new Color[0];
 
     // Start is called before the first frame update
     void Start()
@@ -13,11 +14,7 @@ public class StartPos : MonoBehaviour
         spawns = GameObject.FindGameObjectsWithTag("Spawns");
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+
 
     public void Positioning(GameObject obj)
     {
@@ -27,6 +24,8 @@ public class StartPos : MonoBehaviour
         {
             playerArray[i].transform.position = spawns[i].transform.position;
             playerArray[i].transform.position = new Vector3(playerArray[i].transform.position.x, 0, playerArray[i].transform.position.z);
+
+            playerArray[0].gameObject.GetComponent<Outline>().OutlineColor = colors[0];
         }
     }
 }
