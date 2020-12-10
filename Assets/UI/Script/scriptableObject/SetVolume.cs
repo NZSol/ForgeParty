@@ -47,7 +47,7 @@ public class SetVolume : MonoBehaviour
         ResolutionDropdown.RefreshShownValue();
 
 
-
+        
 
 
         Details.value = Settings.detail;
