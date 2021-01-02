@@ -25,6 +25,7 @@ public class NPCForge : MonoBehaviour
     {
         myTeam = WeaponVars.team.T2;
         timer = startTimer;
+        startTimer = 10;
     }
 
     void SetWeapon()
