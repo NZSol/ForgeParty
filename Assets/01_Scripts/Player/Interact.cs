@@ -169,7 +169,7 @@ public class Interact : MonoBehaviour
                 case Item.Tool.Bucket:
                     foreach (GameObject tool in Interactables)
                     {
-                        if (tool.GetComponent<Tool>().tool == Tool.curTool.Bucket)
+                        if (tool.GetComponent<Tool>().tool == Tool.curTool.Bucket && heldObj.GetComponent<Weapon>().completed == false)
                         {
                             tool.GetComponent<Outline>().OutlineColor = gameObject.GetComponent<Outline>().OutlineColor;
                         }
