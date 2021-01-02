@@ -31,6 +31,7 @@ public class CharSelect : MonoBehaviour
     {
         character = (skin)curSkin;
         DisableAccessories();
+        charSwitch();
     }
 
     void DisableAccessories()
@@ -61,8 +62,20 @@ public class CharSelect : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
+
+    public void ChangeChar()
+    {
+        curSkin++;
+        if (curSkin == (int)CharSelect.skin.End)
+        {
+            curSkin = 0;
+        }
+        character = (CharSelect.skin)curSkin;
+
+        charSwitch();
+    }
+
+    void charSwitch()
     {
         switch (character)
         {
@@ -85,7 +98,7 @@ public class CharSelect : MonoBehaviour
                 break;
 
             case CharSelect.skin.Woody:
-                foreach(GameObject mesh in baseMesh)
+                foreach (GameObject mesh in baseMesh)
                 {
                     mesh.GetComponent<SkinnedMeshRenderer>().material = woody;
                 }
@@ -177,16 +190,6 @@ public class CharSelect : MonoBehaviour
                 break;
 
         }
-    }
-
-    public void ChangeChar()
-    {
-        curSkin++;
-        if (curSkin == (int)CharSelect.skin.End)
-        {
-            curSkin = 0;
-        }
-        character = (CharSelect.skin)curSkin;
     }
 
 
