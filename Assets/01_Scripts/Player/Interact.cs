@@ -119,10 +119,68 @@ public class Interact : MonoBehaviour
         }
     }
 
+    void SetColors()
+    {
+        foreach(GameObject tool in Interactables)
+        {
+            if (tool.GetComponent<Outline>().OutlineColor != Color.yellow)
+            {
+                tool.GetComponent<Outline>().OutlineColor = Color.white;
+            }
+        }
+    }
+
+    void checkItem()
+    {
+        if (heldObj != null)
+        {
+            switch (heldObj.GetComponent<Item>().tool)
+            {
+                case Item.Tool.Furnace:
+                    foreach (GameObject tool in Interactables)
+                    {
+                        if (tool.GetComponent<Tool>().tool == Tool.curTool.Furnace)
+                        {
+                            tool.GetComponent<Outline>().OutlineColor = gameObject.GetComponent<Outline>().OutlineColor;
+                        }
+                    }
+                    break;
+
+                case Item.Tool.Cast:
+                    foreach (GameObject tool in Interactables)
+                    {
+                        if (tool.GetComponent<Tool>().tool == Tool.curTool.Cast)
+                        {
+                            tool.GetComponent<Outline>().OutlineColor = gameObject.GetComponent<Outline>().OutlineColor;
+                        }
+                    }
+                    break;
+
+                case Item.Tool.Anvil:
+                    foreach (GameObject tool in Interactables)
+                    {
+                        if (tool.GetComponent<Tool>().tool == Tool.curTool.Anvil)
+                        {
+                            tool.GetComponent<Outline>().OutlineColor = gameObject.GetComponent<Outline>().OutlineColor;
+                        }
+                    }
+                    break;
+
+                case Item.Tool.Bucket:
+                    foreach (GameObject tool in Interactables)
+                    {
+                        if (tool.GetComponent<Tool>().tool == Tool.curTool.Bucket)
+                        {
+                            tool.GetComponent<Outline>().OutlineColor = gameObject.GetComponent<Outline>().OutlineColor;
+                        }
+                    }
+                    break;
+            }
+        }
+    }
 
 
-
-    //FUNCTION ON RIGHT BUTTON PRESS
+        //FUNCTION ON RIGHT BUTTON PRESS
     public void InteractPress(CallbackContext context)
     {
         if (active)
@@ -139,15 +197,14 @@ public class Interact : MonoBehaviour
                     if (heldObj != null)
                     {
                         deliverItem();
+                        SetColors();
                     }
                     else
                     {
                         collectItem();
+                        checkItem();
                     }
                 }
-
-
-
                 inputArmed = false;
             }
             if (context.canceled)
@@ -158,71 +215,73 @@ public class Interact : MonoBehaviour
     }
 
 
-    void dropItem()
-    {
-        if (heldObj != null)
+        void dropItem()
         {
-            heldObj.transform.parent = null;
-            heldObj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
-            heldObj = null;
+            if (heldObj != null)
+            {
+                heldObj.transform.parent = null;
+                heldObj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+                heldObj = null;
+            }
+            else
+            {
+                Debug.Log("Trying to drop empty heldObj");
+            }
         }
-        else
+
+        void collectItem()
         {
-            Debug.Log("Trying to drop empty heldObj");
+            heldObj = activeTool.GiveItem();
+            if (heldObj != null)
+            {
+                positionHeldObj();
+            }
         }
-    }
 
-    void collectItem()
-    {
-        heldObj = activeTool.GiveItem();
-        if (heldObj != null)
+
+
+        void deliverItem()
         {
-            positionHeldObj();
-        }
-    }
+            switch (heldObj.GetComponent<Item>().tool)
+            {
+                case Item.Tool.Furnace:
 
-    void deliverItem()
-    {
-        switch (heldObj.GetComponent<Item>().tool)
-        {
-            case Item.Tool.Furnace:
-
-                if (activeTool.GetComponent<Tool>().tool == Tool.curTool.Furnace)
-                {
-                    activeTool.GetComponent<Tool>().TakeItem(heldObj);
-                    Destroy(heldObj);
-                }
+                    if (activeTool.GetComponent<Tool>().tool == Tool.curTool.Furnace)
+                    {
+                        activeTool.GetComponent<Tool>().TakeItem(heldObj);
+                        Destroy(heldObj);
+                    }
                     break;
 
-            case Item.Tool.Cast:
+                case Item.Tool.Cast:
 
-                if (activeTool.GetComponent<Tool>().tool == Tool.curTool.Cast)
-                {
-                    activeTool.GetComponent<Tool>().TakeItem(heldObj);
-                    gameObject.GetComponent<Animation>().tongs.SetActive(false);
-                    Destroy(heldObj);
-                }
+                    if (activeTool.GetComponent<Tool>().tool == Tool.curTool.Cast)
+                    {
+                        activeTool.GetComponent<Tool>().TakeItem(heldObj);
+                        gameObject.GetComponent<Animation>().tongs.SetActive(false);
+                        Destroy(heldObj);
+                    }
                     break;
 
-            case Item.Tool.Anvil:
+                case Item.Tool.Anvil:
 
-                if (activeTool.GetComponent<Tool>().tool == Tool.curTool.Anvil)
-                {
-                    activeTool.GetComponent<Tool>().TakeItem(heldObj);
-                    Destroy(heldObj);
-                }
+                    if (activeTool.GetComponent<Tool>().tool == Tool.curTool.Anvil)
+                    {
+                        activeTool.GetComponent<Tool>().TakeItem(heldObj);
+                        Destroy(heldObj);
+                    }
                     break;
 
-            case Item.Tool.Bucket:
+                case Item.Tool.Bucket:
 
-                if (activeTool.GetComponent<Tool>().tool == Tool.curTool.Bucket)
-                {
-                    activeTool.GetComponent<Tool>().TakeItem(heldObj);
-                    Destroy(heldObj);
-                }
+                    if (activeTool.GetComponent<Tool>().tool == Tool.curTool.Bucket)
+                    {
+                        activeTool.GetComponent<Tool>().TakeItem(heldObj);
+                        Destroy(heldObj);
+                    }
                     break;
+            }
         }
-    }
 
     //FUNCTION ON LEFT BUTTON HOLD
     public void InteractHold(CallbackContext context)
