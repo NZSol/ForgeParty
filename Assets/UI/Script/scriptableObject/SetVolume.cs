@@ -19,6 +19,8 @@ public class SetVolume : MonoBehaviour
     public Settings Settings;
     Resolution[] Resolution;
 
+    bool settingsOpen = false;
+
     private void Start()
     {
         Resolution = Screen.resolutions;
@@ -58,16 +60,21 @@ public class SetVolume : MonoBehaviour
        
     }
 
+    public void changeBool()
+    {
+        settingsOpen = !settingsOpen;
+    }
+
     private void Update()
     {
-        SetVolumeM();
+        if (settingsOpen == true)
+        {
+            SetVolumeM();
 
+            SetDetail();
 
-        SetDetail();
-
-        SetResolution();
-
-
+            SetResolution();
+        }
     }
 
    void SetDetail()
@@ -83,6 +90,10 @@ public class SetVolume : MonoBehaviour
 
         Resolution resolution = Resolution[ResolutionDropdown.value];
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
+
+        print(Resolution[ResolutionDropdown.value] + "Res");
+        print(ResolutionDropdown.value + "Res Val");
+
     }
 
     void SetVolumeM()
