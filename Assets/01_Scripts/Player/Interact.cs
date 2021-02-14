@@ -249,7 +249,8 @@ public class Interact : MonoBehaviour
                     if (activeTool.GetComponent<Tool>().tool == Tool.curTool.Furnace)
                     {
                         activeTool.GetComponent<Tool>().TakeItem(heldObj);
-                        Destroy(heldObj);
+                    gameObject.GetComponent<Animation>().tongs.SetActive(true);
+                    Destroy(heldObj);
                     }
                     break;
 
