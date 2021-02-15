@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Animation : MonoBehaviour
 {
+    
+
     //Animator + Avatars
     [SerializeField] Animator anim = null;
     [SerializeField] Avatar armEmpty = null;

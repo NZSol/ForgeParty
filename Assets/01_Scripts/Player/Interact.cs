@@ -14,7 +14,7 @@ public class Interact : MonoBehaviour
     //LayerMasks
     LayerMask toolsLayer = 0;
 
-
+    #region tools init
     //Get all tools
     GameObject[] Tools(int layer)
     {
@@ -53,7 +53,7 @@ public class Interact : MonoBehaviour
         return tool.GetComponent<Tool>();
     }
     public Tool activeTool = null;
-
+    #endregion
 
     //Game Variables
     public float range = 5;
@@ -63,6 +63,9 @@ public class Interact : MonoBehaviour
 
     public GameObject heldObj = null;
     [SerializeField] Transform LHand;
+    [SerializeField] Transform WeaponHoldPos;
+    [SerializeField] Transform cruciblePos;
+    [SerializeField] Transform headPos;
 
     // Start is called before the first frame update
     void Start()
@@ -152,6 +155,7 @@ public class Interact : MonoBehaviour
                         if (tool.GetComponent<Tool>().tool == Tool.curTool.Cast)
                         {
                             tool.GetComponent<Outline>().OutlineColor = gameObject.GetComponent<Outline>().OutlineColor;
+                            gameObject.GetComponent<Animation>().tongs.SetActive(true);
                         }
                     }
                     break;
@@ -249,8 +253,7 @@ public class Interact : MonoBehaviour
                     if (activeTool.GetComponent<Tool>().tool == Tool.curTool.Furnace)
                     {
                         activeTool.GetComponent<Tool>().TakeItem(heldObj);
-                    gameObject.GetComponent<Animation>().tongs.SetActive(true);
-                    Destroy(heldObj);
+                        Destroy(heldObj);
                     }
                     break;
 
@@ -263,6 +266,7 @@ public class Interact : MonoBehaviour
                         Destroy(heldObj);
                     }
                     break;
+
 
                 case Item.Tool.Anvil:
 
@@ -307,9 +311,35 @@ public class Interact : MonoBehaviour
 
     void positionHeldObj()
     {
-        heldObj.transform.parent = LHand;
-        heldObj.transform.localPosition = new Vector3(-0.47f, 0.93f, 0.17f);
-        heldObj.transform.localRotation = Quaternion.Euler(Vector3.zero);
+        switch (heldObj.GetComponent<Item>().tool)
+        {
+            
+            case Item.Tool.Furnace:
+                heldObj.transform.parent = LHand;
+                heldObj.transform.localPosition = new Vector3(-0.47f, 0.93f, 0.17f);
+                heldObj.transform.localRotation = Quaternion.Euler(Vector3.zero);
+                break;
+
+            case Item.Tool.Cast:
+                heldObj.transform.parent = cruciblePos.transform;
+                heldObj.transform.localPosition = Vector3.zero;
+                heldObj.transform.localRotation = Quaternion.Euler(Vector3.zero);
+                cruciblePos.transform.localScale = new Vector3(0.85f, 0.85f, 0.85f);
+                break;
+
+            case Item.Tool.Anvil:
+                heldObj.transform.parent = headPos;
+                heldObj.transform.localPosition = Vector3.zero;
+                heldObj.transform.localRotation = Quaternion.Euler(new Vector3(10, -180, 0));
+                break;
+
+            case Item.Tool.Bucket:
+                heldObj.transform.parent = WeaponHoldPos;
+                heldObj.transform.localPosition = Vector3.zero;
+                heldObj.transform.localRotation = Quaternion.Euler(Vector3.zero);
+                break;
+
+        }
 
         heldObj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
 

@@ -43,13 +43,16 @@ public class Anvil : Tool
     // Start is called before the first frame update
     void Start()
     {
+        //assign all enums blank in editor runtime
 
-        //assign all enums blank
-        inputWeapon = Weapon.weaponType.Blank;
-        inputMet = Metal.metal.Blank;
+        if (!UnityEditor.EditorApplication.isPlaying)
+        {
+            inputWeapon = Weapon.weaponType.Blank;
+            inputMet = Metal.metal.Blank;
+
+        }
         outputMet = inputMet;
         outputWeapon = inputWeapon;
-
         _slide.maxValue = completionTime;
     }
 
