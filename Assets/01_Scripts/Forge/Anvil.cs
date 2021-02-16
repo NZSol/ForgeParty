@@ -19,6 +19,8 @@ public class Anvil : Tool
     [SerializeField] GameObject Axe = null;
 
     [SerializeField] Slider _slide = null;
+
+    public ParticleSystem spark;
     public override void TakeItem(GameObject item)
     {
         inputMet = item.GetComponent<Metal>().myMetal;
@@ -51,6 +53,7 @@ public class Anvil : Tool
             inputMet = Metal.metal.Blank;
 
         }
+        spark.Stop();
         outputMet = inputMet;
         outputWeapon = inputWeapon;
         _slide.maxValue = completionTime;
@@ -108,4 +111,9 @@ public class Anvil : Tool
             return null;
         }
     }
+    public void SparkPlay()
+    {
+        spark.gameObject.SetActive(true);
+    }
+
 }

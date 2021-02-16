@@ -75,8 +75,6 @@ public class Furnace : Tool
     // Update is called once per frame
     void Update()
     {
-        print(inputs.Count);
-
         //if charging bool in attached component is true, start increasing temperature
         if (charging)
         {

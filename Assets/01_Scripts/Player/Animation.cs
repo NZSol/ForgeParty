@@ -108,6 +108,7 @@ public class Animation : MonoBehaviour
                     {
                         anim.SetLayerWeight(2, 0);
                         anim.SetBool("Anvil", false);
+
                         hammer.SetActive(false);
                     }
                     break;
@@ -128,5 +129,10 @@ public class Animation : MonoBehaviour
             }
         }
 
+    }
+
+    public void SparkPlay()
+    {
+        gameObject.GetComponent<Interact>().activeTool.GetComponent<Anvil>().SparkPlay();
     }
 }
