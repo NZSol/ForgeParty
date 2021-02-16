@@ -1777,6 +1777,7 @@ MonoBehaviour:
   Sword: {fileID: 8956933262917555703, guid: 6b310eaedda75834ca2d9c7a67f91b27, type: 3}
   Axe: {fileID: 2011267080074099986, guid: be4d782604e9c174abb27ae39fc91dc4, type: 3}
   _slide: {fileID: 507744117}
+  spark: {fileID: 922666263}
 --- !u!65 &256346799
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10193,6 +10194,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 725166147}
   m_PrefabAsset: {fileID: 0}
+--- !u!198 &730653534 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 2720288402058785548, guid: b8600c94b95cb1043b7f07a6b394aa65,
+    type: 3}
+  m_PrefabInstance: {fileID: 710895710394805698}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &740245860
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12101,6 +12108,12 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 8dc9e2b2b2e923d4e8611f76b1acb3df,
     type: 3}
   m_PrefabInstance: {fileID: 912956762}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &922666263 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 3178973999433748093, guid: a5e85a86975000940b98fb57e221e59f,
+    type: 3}
+  m_PrefabInstance: {fileID: 1203688207}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &925827028 stripped
 GameObject:
@@ -18700,6 +18713,11 @@ PrefabInstance:
       propertyPath: inputWeapon
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 710895709454317602, guid: b8600c94b95cb1043b7f07a6b394aa65,
+        type: 3}
+      propertyPath: spark
+      value: 
+      objectReference: {fileID: 730653534}
     - target: {fileID: 710895709543993332, guid: b8600c94b95cb1043b7f07a6b394aa65,
         type: 3}
       propertyPath: m_Layer
