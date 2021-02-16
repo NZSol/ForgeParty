@@ -12,6 +12,7 @@ public class Furnace : Tool
 
     public Queue<Metal.metal> inputs = new Queue<Metal.metal>();
     public Metal.metal activeMetal = new Metal.metal();
+    public Metal.metal secondMetal = new Metal.metal();
     public Metal.metal outputMet = new Metal.metal();
 
     public float meltingPoint = 0;
@@ -45,13 +46,37 @@ public class Furnace : Tool
     public override void TakeItem(GameObject item)
     {
         inputs.Enqueue(item.GetComponent<Metal>().myMetal);
-        activeMetal = item.GetComponent<Metal>().myMetal;
+        if (activeMetal == Metal.metal.Blank)
+        {
+            if (secondMetal != Metal.metal.Blank)
+            {
+                activeMetal = secondMetal;
+                secondMetal = inputs.Dequeue();
+            }
+            else
+            {
+                activeMetal = inputs.Dequeue();
+            }
+            checkContents();
+        }
+        else
+        {
+            secondMetal = item.GetComponent<Metal>().myMetal;
+        }
+
+        if (secondMetal != Metal.metal.Blank)
+        {
+            checkAlloy();
+        }
     }
+    
 
 
     // Update is called once per frame
     void Update()
     {
+        print(inputs.Count);
+
         //if charging bool in attached component is true, start increasing temperature
         if (charging)
         {
@@ -74,18 +99,7 @@ public class Furnace : Tool
 
         if (activeMetal != Metal.metal.Blank)
         {
-
-            if (outputMet == Metal.metal.Blank && inputs.Count > 0)
-            {
-                activeMetal = inputs.Dequeue();
-                checkContents();
-                foreach (Metal.metal metal in inputs)
-                {
-                    displayQueue.Add(metal);
-                }
-            }
-
-            if (temperature >= meltingPoint)
+            if (temperature >= meltingPoint && outputMet == Metal.metal.Blank)
             {
                 timer += Time.deltaTime;
             }
@@ -127,6 +141,36 @@ public class Furnace : Tool
         }
     }
 
+    void checkAlloy()
+    {
+        if(secondMetal != activeMetal)
+        {
+            switch (activeMetal)
+            {
+                case Metal.metal.Copper:
+                    switch (secondMetal)
+                    {
+                        case Metal.metal.Tin:
+                            activeMetal = Metal.metal.Bronze;
+                            break;
+                    }
+
+                    break;
+
+                case Metal.metal.Tin:
+                    switch (secondMetal)
+                    {
+                        case Metal.metal.Copper:
+                            activeMetal = Metal.metal.Bronze;
+                        break;
+                    }
+                    break;
+            }
+            secondMetal = Metal.metal.Blank;
+            checkContents();
+        }
+    }
+
 
     public override GameObject GiveItem()
     {
@@ -136,6 +180,15 @@ public class Furnace : Tool
         }
         else
         {
+            activeMetal = secondMetal;
+            if(inputs.Count > 0)
+            {
+                secondMetal = inputs.Dequeue();
+            }
+            else
+            {
+                secondMetal = Metal.metal.Blank;
+            }
             var outputCrucible = Instantiate(outputPrefab);
             outputCrucible.GetComponent<Metal>().myMetal = outputMet;
             outputMet = Metal.metal.Blank;
