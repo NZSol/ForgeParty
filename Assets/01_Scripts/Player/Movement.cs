@@ -15,6 +15,9 @@ public class Movement : MonoBehaviour
     public float maxSpeed = 0;
     public float dashForce = 0;
     public float dashCool = 0;
+    public float bompForce = 0;
+    public float bompFalloff = 0;
+    public float bompLimit = 0;
 
     public Vector2 stick = Vector2.zero;
 
@@ -22,6 +25,7 @@ public class Movement : MonoBehaviour
 
     bool inputArmed = true;
     bool canMove = true;
+    bool addForce = false;
     [SerializeField] float moveTimer = 0;
     [SerializeField] float push = 0;
     
@@ -31,10 +35,12 @@ public class Movement : MonoBehaviour
 
     Vector3 storedVel = new Vector3();
     Vector3 moveValues = new Vector3();
-    Vector3 midPoint = new Vector3();
+    Vector3 force = new Vector3();
 
     Animator anim = null;
     float blendVal = 0;
+
+    [SerializeField] AnimationCurve animCurve;
 
     // Start is called before the first frame update
     void Start()
@@ -70,12 +76,11 @@ public class Movement : MonoBehaviour
             inputArmed = true;
         }
     }
-    
-    
+
+    float t = 0;
+
     void Update()
     {
-        MoveNow();
-
         if (dashing > 0)
         {
             dashing -= Time.deltaTime * 2;
@@ -92,7 +97,15 @@ public class Movement : MonoBehaviour
 
         anim.SetFloat("Blend", blendVal);
     }
-    
+
+    private void FixedUpdate()
+    {
+        MoveNow();
+        AddRBForce();
+        force *= bompFalloff;
+        canMove = force.magnitude < bompLimit;
+    }
+
     void MoveNow()
     {
         if (stick == Vector2.zero)
@@ -158,9 +171,9 @@ public class Movement : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             canMove = false;
-            midPoint = (transform.position + collision.gameObject.transform.position) / 2;
-            StartCoroutine(ResumeMove());
-            StartCoroutine(AddRBForce());
+            var midPoint = (transform.position + collision.gameObject.transform.position) / 2;
+            force = (transform.position - midPoint).normalized * bompForce;
+            addForce = true;
         }
     }
     private void OnCollisionExit(Collision collision)
@@ -168,15 +181,8 @@ public class Movement : MonoBehaviour
         speed = updateSpeed;
     }
 
-    IEnumerator ResumeMove()
+    void AddRBForce()
     {
-        yield return new WaitForSeconds(moveTimer);
-        canMove = true;
-    }
-
-    IEnumerator AddRBForce()
-    {
-        yield return new WaitForFixedUpdate();
-        rb.AddForce((transform.position - midPoint) * (rb.velocity.magnitude * 2), ForceMode.Impulse);
+        rb.velocity += force;
     }
 }

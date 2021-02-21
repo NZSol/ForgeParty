@@ -116,6 +116,7 @@ public class Animation : MonoBehaviour
         anim.SetBool("Bellows", false);
 
         hammer.SetActive(false);
+        bellows.SetActive(false);
     }
 
 
