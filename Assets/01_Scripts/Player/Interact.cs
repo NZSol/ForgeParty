@@ -10,7 +10,7 @@ public class Interact : MonoBehaviour
     public bool active = false;
     bool inputArmed = true;
     Animator anim = null;
-
+    Animation playerAnims = null;
     //LayerMasks
     LayerMask toolsLayer = 0;
 
@@ -78,6 +78,7 @@ public class Interact : MonoBehaviour
             anim = gameObject.GetComponent<Animator>();
             StartCoroutine(ActivateTool());
         }
+        playerAnims = gameObject.GetComponent<Animation>();
     }
 
     IEnumerator ActivateTool()
@@ -298,11 +299,25 @@ public class Interact : MonoBehaviour
                 if (toolDist <= range)
                 {
                     activeTool.GetComponent<Tool>().charging = true;
+                    switch (gameObject.GetComponent<Interact>().activeTool.currentTool())
+                    {
+
+                        case Tool.curTool.Anvil:
+                            playerAnims.AnvilAnim();
+
+                            break;
+
+                        case Tool.curTool.Furnace:
+                            playerAnims.furnaceAnim();
+
+                            break;
+                    }
                 }
             }
             if (context.canceled)
             {
                 activeTool.GetComponent<Tool>().charging = false;
+                playerAnims.DefaultActionState();
             }
         }
     }
