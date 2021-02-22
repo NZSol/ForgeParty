@@ -12,12 +12,14 @@ public class CharSelect : MonoBehaviour
     [SerializeField] Material mark = null;
 
     [SerializeField] GameObject[] baseMesh = null;
+    [SerializeField] GameObject[] billMesh = null;
     [SerializeField] GameObject[] woodyMesh = null;
     [SerializeField] GameObject[] jacobMesh = null;
-    [SerializeField] GameObject[] billMesh = null;
     [SerializeField] GameObject[] cherryMesh = null;
     [SerializeField] GameObject[] heatherMesh = null;
     [SerializeField] GameObject[] markMesh = null;
+
+    List<GameObject[]> allMesh = new List<GameObject[]>();
 
     public enum skin { Bill, Woody, Jacob, Cherry, Heather, Mark, End}
     public skin character;
@@ -28,59 +30,38 @@ public class CharSelect : MonoBehaviour
     void Start()
     {
         character = (skin)curSkin;
+        DisableAccessories();
+        charSwitch();
     }
 
-
-    // Update is called once per frame
-    void Update()
+    void DisableAccessories()
     {
-        switch (character)
+        foreach(GameObject obj in billMesh)
         {
-            case CharSelect.skin.Bill:
-                foreach (GameObject mesh in baseMesh)
-                {
-                    mesh.GetComponent<SkinnedMeshRenderer>().material = bill;
-                }
-                break;
-
-            case CharSelect.skin.Woody:
-                foreach(GameObject mesh in baseMesh)
-                {
-                    mesh.GetComponent<SkinnedMeshRenderer>().material = woody;
-                }
-                break;
-
-            case CharSelect.skin.Jacob:
-                foreach (GameObject mesh in baseMesh)
-                {
-                    mesh.GetComponent<SkinnedMeshRenderer>().material = jacob;
-                }
-                break;
-
-
-            case CharSelect.skin.Cherry:
-                foreach (GameObject mesh in baseMesh)
-                {
-                    mesh.GetComponent<SkinnedMeshRenderer>().material = cherry;
-                }
-                break;
-
-            case CharSelect.skin.Heather:
-                foreach (GameObject mesh in baseMesh)
-                {
-                    mesh.GetComponent<SkinnedMeshRenderer>().material = heather;
-                }
-                break;
-
-            case CharSelect.skin.Mark:
-                foreach (GameObject mesh in baseMesh)
-                {
-                    mesh.GetComponent<SkinnedMeshRenderer>().material = mark;
-                }
-                break;
-
+            obj.SetActive(false);
+        }
+        foreach(GameObject obj in woodyMesh)
+        {
+            obj.SetActive(false);
+        }
+        foreach(GameObject obj in jacobMesh)
+        {
+            obj.SetActive(false);
+        }
+        foreach(GameObject obj in cherryMesh)
+        {
+            obj.SetActive(false);
+        }
+        foreach(GameObject obj in heatherMesh)
+        {
+            obj.SetActive(false);
+        }
+        foreach(GameObject obj in markMesh)
+        {
+            obj.SetActive(false);
         }
     }
+
 
     public void ChangeChar()
     {
@@ -90,6 +71,126 @@ public class CharSelect : MonoBehaviour
             curSkin = 0;
         }
         character = (CharSelect.skin)curSkin;
+
+        charSwitch();
     }
+
+    void charSwitch()
+    {
+        switch (character)
+        {
+            case CharSelect.skin.Bill:
+                foreach (GameObject mesh in baseMesh)
+                {
+                    mesh.GetComponent<SkinnedMeshRenderer>().material = bill;
+                }
+
+                //Accessories
+                foreach (GameObject mesh in billMesh)
+                {
+                    mesh.SetActive(true);
+                }
+
+                foreach (GameObject mesh in markMesh)
+                {
+                    mesh.SetActive(false);
+                }
+                break;
+
+            case CharSelect.skin.Woody:
+                foreach (GameObject mesh in baseMesh)
+                {
+                    mesh.GetComponent<SkinnedMeshRenderer>().material = woody;
+                }
+
+                //Accessories
+                foreach (GameObject mesh in woodyMesh)
+                {
+                    mesh.SetActive(true);
+                }
+
+                foreach (GameObject mesh in billMesh)
+                {
+                    mesh.SetActive(false);
+                }
+                break;
+
+
+            case CharSelect.skin.Jacob:
+                foreach (GameObject mesh in baseMesh)
+                {
+                    mesh.GetComponent<SkinnedMeshRenderer>().material = jacob;
+                }
+
+                //Accessories
+                foreach (GameObject mesh in jacobMesh)
+                {
+                    mesh.SetActive(true);
+                }
+
+                foreach (GameObject mesh in woodyMesh)
+                {
+                    mesh.SetActive(false);
+                }
+                break;
+
+
+            case CharSelect.skin.Cherry:
+                foreach (GameObject mesh in baseMesh)
+                {
+                    mesh.GetComponent<SkinnedMeshRenderer>().material = cherry;
+                }
+
+                //Accessories
+                foreach (GameObject mesh in cherryMesh)
+                {
+                    mesh.SetActive(true);
+                }
+
+                foreach (GameObject mesh in jacobMesh)
+                {
+                    mesh.SetActive(false);
+                }
+                break;
+
+            case CharSelect.skin.Heather:
+                foreach (GameObject mesh in baseMesh)
+                {
+                    mesh.GetComponent<SkinnedMeshRenderer>().material = heather;
+                }
+
+                //Accessories
+                foreach (GameObject mesh in heatherMesh)
+                {
+                    mesh.SetActive(true);
+                }
+
+                foreach (GameObject mesh in cherryMesh)
+                {
+                    mesh.SetActive(false);
+                }
+                break;
+
+            case CharSelect.skin.Mark:
+                foreach (GameObject mesh in baseMesh)
+                {
+                    mesh.GetComponent<SkinnedMeshRenderer>().material = mark;
+                }
+
+                //Accessories
+                foreach (GameObject mesh in markMesh)
+                {
+                    mesh.SetActive(true);
+                }
+
+                foreach (GameObject mesh in heatherMesh)
+                {
+                    mesh.SetActive(false);
+                }
+                break;
+
+        }
+    }
+
 
 }

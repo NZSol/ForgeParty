@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using static UnityEngine.InputSystem.InputAction;
@@ -16,7 +17,7 @@ public class BindToPlayer : MonoBehaviour
     private PlayerJoinHandler join = null;
 
 
-    [SerializeField] GameObject Events = null;
+    public GameObject Events = null;
 
     Scene curScene;
     Scene titleScene;
@@ -27,15 +28,18 @@ public class BindToPlayer : MonoBehaviour
     [SerializeField] GameObject homeScreen = null;
 
 
-    private void Start()
-    {
-    }
-
     private void OnEnable()
     {
 
         titleScene = SceneManager.GetSceneByBuildIndex(0);
         curScene = SceneManager.GetActiveScene();
+
+
+        if (curScene != SceneManager.GetActiveScene())
+        {
+            curScene = SceneManager.GetActiveScene();
+        }
+
 
         if (curScene == titleScene)
         {
@@ -80,18 +84,16 @@ public class BindToPlayer : MonoBehaviour
     private void Update()
     {
 
-        if (curScene != SceneManager.GetActiveScene())
-        {
-            curScene = SceneManager.GetActiveScene();
-        }
-
 
         if (SceneManager.GetActiveScene() == titleScene)
         {
+            if (players.Count >= 1)
+            {
+                Debug.Log(players.Count + "    " + InputObjs.Length);
+            }
             if (players.Count == InputObjs.Length)
             {
                 gameObject.GetComponent<FirstSelect>().SetBtn();
-                Debug.Log(players.Count + "    " + InputObjs.Length);
             }
         }
 
@@ -104,12 +106,16 @@ public class BindToPlayer : MonoBehaviour
         if (curScene == titleScene && gameObject.tag == "CurScene")
         {
             homeScreen.SetActive(true);
+            Events.GetComponent<PlayerInputManager>().DisableJoining();
+            Events.GetComponent<InputSystemUIInputModule>().enabled = false;
+            Events.GetComponent<InputSystemUIInputModule>().enabled = true;
             gameObject.SetActive(false);
         }
     }
 
     public void LeaveGame(PlayerInput input)
     {
+        players.Remove(input.gameObject);
         Destroy(input.gameObject);
     }
 
