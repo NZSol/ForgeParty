@@ -10,11 +10,11 @@ public class Interact : MonoBehaviour
     public bool active = false;
     bool inputArmed = true;
     Animator anim = null;
-
+    Animation playerAnims = null;
     //LayerMasks
     LayerMask toolsLayer = 0;
 
-
+    #region tools init
     //Get all tools
     GameObject[] Tools(int layer)
     {
@@ -53,7 +53,7 @@ public class Interact : MonoBehaviour
         return tool.GetComponent<Tool>();
     }
     public Tool activeTool = null;
-
+    #endregion
 
     //Game Variables
     public float range = 5;
@@ -63,6 +63,9 @@ public class Interact : MonoBehaviour
 
     public GameObject heldObj = null;
     [SerializeField] Transform LHand;
+    [SerializeField] Transform WeaponHoldPos;
+    [SerializeField] Transform cruciblePos;
+    [SerializeField] Transform headPos;
 
     // Start is called before the first frame update
     void Start()
@@ -75,6 +78,7 @@ public class Interact : MonoBehaviour
             anim = gameObject.GetComponent<Animator>();
             StartCoroutine(ActivateTool());
         }
+        playerAnims = gameObject.GetComponent<Animation>();
     }
 
     IEnumerator ActivateTool()
@@ -152,6 +156,7 @@ public class Interact : MonoBehaviour
                         if (tool.GetComponent<Tool>().tool == Tool.curTool.Cast)
                         {
                             tool.GetComponent<Outline>().OutlineColor = gameObject.GetComponent<Outline>().OutlineColor;
+                            gameObject.GetComponent<Animation>().tongs.SetActive(true);
                         }
                     }
                     break;
@@ -169,7 +174,7 @@ public class Interact : MonoBehaviour
                 case Item.Tool.Bucket:
                     foreach (GameObject tool in Interactables)
                     {
-                        if (tool.GetComponent<Tool>().tool == Tool.curTool.Bucket)
+                        if (tool.GetComponent<Tool>().tool == Tool.curTool.Bucket && heldObj.GetComponent<Weapon>().completed == false)
                         {
                             tool.GetComponent<Outline>().OutlineColor = gameObject.GetComponent<Outline>().OutlineColor;
                         }
@@ -263,6 +268,7 @@ public class Interact : MonoBehaviour
                     }
                     break;
 
+
                 case Item.Tool.Anvil:
 
                     if (activeTool.GetComponent<Tool>().tool == Tool.curTool.Anvil)
@@ -293,11 +299,25 @@ public class Interact : MonoBehaviour
                 if (toolDist <= range)
                 {
                     activeTool.GetComponent<Tool>().charging = true;
+                    switch (gameObject.GetComponent<Interact>().activeTool.currentTool())
+                    {
+
+                        case Tool.curTool.Anvil:
+                            playerAnims.AnvilAnim();
+
+                            break;
+
+                        case Tool.curTool.Furnace:
+                            playerAnims.furnaceAnim();
+
+                            break;
+                    }
                 }
             }
             if (context.canceled)
             {
                 activeTool.GetComponent<Tool>().charging = false;
+                playerAnims.DefaultActionState();
             }
         }
     }
@@ -306,9 +326,35 @@ public class Interact : MonoBehaviour
 
     void positionHeldObj()
     {
-        heldObj.transform.parent = LHand;
-        heldObj.transform.localPosition = new Vector3(-0.47f, 0.93f, 0.17f);
-        heldObj.transform.localRotation = Quaternion.Euler(Vector3.zero);
+        switch (heldObj.GetComponent<Item>().tool)
+        {
+            
+            case Item.Tool.Furnace:
+                heldObj.transform.parent = LHand;
+                heldObj.transform.localPosition = new Vector3(-0.47f, 0.93f, 0.17f);
+                heldObj.transform.localRotation = Quaternion.Euler(Vector3.zero);
+                break;
+
+            case Item.Tool.Cast:
+                heldObj.transform.parent = cruciblePos.transform;
+                heldObj.transform.localPosition = Vector3.zero;
+                heldObj.transform.localRotation = Quaternion.Euler(Vector3.zero);
+                cruciblePos.transform.localScale = new Vector3(0.85f, 0.85f, 0.85f);
+                break;
+
+            case Item.Tool.Anvil:
+                heldObj.transform.parent = headPos;
+                heldObj.transform.localPosition = Vector3.zero;
+                heldObj.transform.localRotation = Quaternion.Euler(new Vector3(10, -180, 0));
+                break;
+
+            case Item.Tool.Bucket:
+                heldObj.transform.parent = WeaponHoldPos;
+                heldObj.transform.localPosition = Vector3.zero;
+                heldObj.transform.localRotation = Quaternion.Euler(Vector3.zero);
+                break;
+
+        }
 
         heldObj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
 
