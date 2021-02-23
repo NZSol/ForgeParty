@@ -37,11 +37,6 @@ public class CountdownTimer : MonoBehaviour
             endgameTimer();
         }
 
-        if( Input.GetKeyDown(KeyCode.Space))
-        {
-            GiveSeconds(time: timeToAdd);
-        }
-
         if (endgameTime <= threshHold)
         {
             threshHold = endgameTime;
