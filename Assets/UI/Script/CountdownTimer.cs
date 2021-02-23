@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class CountdownTimer : MonoBehaviour
 {
+    [SerializeField] WinLose gameState;
 
     public int secondsLeft = 10;
     public bool takingAway = false;
@@ -25,6 +26,7 @@ public class CountdownTimer : MonoBehaviour
     {
         maxTimer = endgameTime;
         startColor = timerRadialAdjust.color;
+        gameState = GetComponent<WinLose>();
     }
 
     private void Update()
@@ -64,7 +66,7 @@ public class CountdownTimer : MonoBehaviour
         else
         {
             endgameTime = 0;
-            //DO ENDGAME HERE
+            gameState.Lose();
         }
 
         displayTime(endgameTime);
