@@ -25,9 +25,17 @@ public class PlayerThroughput : MonoBehaviour
     bool active = false;
 
     GameObject PlayerChar = null;
+    bool spawned = false;
 
-    private void Awake()
+    private void Start()
     {
+        StartCoroutine(DelayedStart());
+
+    }
+
+    IEnumerator DelayedStart()
+    {
+        yield return new WaitForSeconds(0.5f);
         curScene = SceneManager.GetActiveScene();
         titleScene = SceneManager.GetSceneByBuildIndex(0);
         DontDestroyOnLoad(this.gameObject);
@@ -37,21 +45,28 @@ public class PlayerThroughput : MonoBehaviour
             eventSystem = GameObject.FindWithTag("Event");
 
         }
-
     }
 
     private void Update()
     {
         if (PlayerChar == null)
         {
-            if (SceneManager.GetActiveScene().buildIndex == SceneManager.GetSceneByBuildIndex(2).buildIndex)
+            if (SceneManager.GetActiveScene().buildIndex == SceneManager.GetSceneByBuildIndex(2).buildIndex && !spawned)
             {
-                curScene = SceneManager.GetActiveScene();
-                position = GameObject.FindWithTag("LevelGod").GetComponent<StartPos>();
-                PlayerJoin();
+                spawned = true;
+                StartCoroutine(DelayedUpdate());
             }
         }
     }
+    IEnumerator DelayedUpdate()
+    {
+        yield return new WaitForSeconds(0.5f);
+        curScene = SceneManager.GetActiveScene();
+        position = GameObject.FindWithTag("LevelGod").GetComponent<StartPos>();
+
+        PlayerJoin();
+    }
+
     public void PlayerJoin()
     {
         PlayerChar = Instantiate(myPlayer);
