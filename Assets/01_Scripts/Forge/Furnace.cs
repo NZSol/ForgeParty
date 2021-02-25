@@ -46,28 +46,36 @@ public class Furnace : Tool
     public override void TakeItem(GameObject item)
     {
         inputs.Enqueue(item.GetComponent<Metal>().myMetal);
+
         if (activeMetal == Metal.metal.Blank)
         {
-            if (secondMetal != Metal.metal.Blank)
+            if (secondMetal == Metal.metal.Blank)
             {
-                activeMetal = secondMetal;
-                secondMetal = inputs.Dequeue();
+                activeMetal = inputs.Dequeue();
             }
             else
             {
-                activeMetal = inputs.Dequeue();
+                activeMetal = secondMetal;
+                if (inputs.Count > 0)
+                {
+                    secondMetal = inputs.Dequeue();
+                }
             }
             checkContents();
         }
         else
         {
-            secondMetal = item.GetComponent<Metal>().myMetal;
+            if (secondMetal == Metal.metal.Blank)
+            {
+                secondMetal = inputs.Dequeue();
+            }
         }
 
         if (secondMetal != Metal.metal.Blank)
         {
             checkAlloy();
         }
+        displayQueue = inputs.ToList();
     }
     
 
@@ -129,13 +137,17 @@ public class Furnace : Tool
     void checkContents()
     {
         //check metal type
-        if (activeMetal == Metal.metal.Copper)
+        switch (activeMetal)
         {
-            meltingPoint = 6;
-        }
-        else if (activeMetal == Metal.metal.Tin)
-        {
-            meltingPoint = 4;
+            case Metal.metal.Copper:
+                meltingPoint = 6;
+                break;
+            case Metal.metal.Tin:
+                meltingPoint = 4;
+                break;
+            case Metal.metal.Bronze:
+                meltingPoint = 8;
+                break;
         }
     }
 
@@ -150,6 +162,7 @@ public class Furnace : Tool
                     {
                         case Metal.metal.Tin:
                             activeMetal = Metal.metal.Bronze;
+                            secondMetal = Metal.metal.Blank;
                             break;
                     }
 
@@ -160,11 +173,11 @@ public class Furnace : Tool
                     {
                         case Metal.metal.Copper:
                             activeMetal = Metal.metal.Bronze;
-                        break;
+                            secondMetal = Metal.metal.Blank;
+                            break;
                     }
                     break;
             }
-            secondMetal = Metal.metal.Blank;
             checkContents();
         }
     }

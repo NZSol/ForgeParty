@@ -22,20 +22,7 @@ public class WinLose : MonoBehaviour
         weapon = gameObject.GetComponent<WeaponLists>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (weapon.slideVal <= weapon._slide.minValue)
-        {
-            Lose();
-        }
-        else if (weapon.slideVal >= weapon._slide.maxValue)
-        {
-            Win();
-        }
-    }
-
-    void Lose()
+    public void Lose()
     {
         Screen.SetActive(true);
         loss.gameObject.SetActive(true);

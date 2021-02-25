@@ -13,6 +13,8 @@ public class WeaponVars : MonoBehaviour
     public float damageMult = 0;
     public float totalDamage = 0;
 
+    public int timeVal;
+
     Weapon.weaponType myWeapon = new Weapon.weaponType();
     Metal.metal myMetal = new Metal.metal();
 
@@ -37,66 +39,69 @@ public class WeaponVars : MonoBehaviour
         switch (myMetal)
         {
             case Metal.metal.Bronze:
-                durability = 60;
-                damage = 10;
+                ///durability = 60;
+                ///damage = 10;
+                timeVal = 10;
                 break;
 
             case Metal.metal.Copper:
-                durability = 30;
-                damage = 3;
+                ///durability = 30;
+                ///damage = 3;
+                timeVal = 7;
                 break;
 
             case Metal.metal.Tin:
-                durability = 20;
-                damage = 6;
+                ///durability = 20;
+                ///damage = 6;
+                timeVal = 4;
                 break;
         }
 
         //Assign Multiplier based on weapon type
-        switch (myWeapon)
-        {
-            case Weapon.weaponType.Sword:
-                damageMult = 1.25f;
-                break;
+        ///switch (myWeapon)
+        ///{
+        ///    case Weapon.weaponType.Sword:
+        ///        damageMult = 1.25f;
+        ///        break;
 
-            case Weapon.weaponType.Axe:
-                damageMult = 1.5f;
-                break;
-        }
-        totalDamage = damage * damageMult;
+        ///    case Weapon.weaponType.Axe:
+        ///        damageMult = 1.5f;
+        ///        break;
+        ///}
+        ///totalDamage = damage * damageMult;
         valsAssigned = true;
     }
 
 
-    private void Update()
-    {
-        if (transform.parent != null && (transform.parent.name == "TeamForgeList" || transform.parent.name == "NPCForgeList"))
-        {
-            switch (myTeam)
-            {
-                case team.T1:
-                    if (inFight && active)
-                    {
-                        GetComponentInParent<WeaponLists>().AddToList(gameObject);
-                        active = false;
-                    }
-                    break;
+    ///private void Update()
+    ///{
+    ///    if (transform.parent != null && (transform.parent.name == "TeamForgeList" || transform.parent.name == "NPCForgeList"))
+    ///    {
+    ///        switch (myTeam)
+    ///        {
+    ///            case team.T1:
+    ///                if (inFight && active)
+    ///                {
+    ///                    GetComponentInParent<WeaponLists>().AddToList(gameObject);
+    ///                    active = false;
+    ///                }
+    ///                break;
 
-                case team.T2:
-                    if (valsAssigned && active)
-                    {
-                        GetComponentInParent<WeaponLists>().AddToList(gameObject);
-                        active = false;
-                    }
-                    break;
-            }
+    ///            case team.T2:
+    ///                if (valsAssigned && active)
+    ///                {
+    ///                    GetComponentInParent<WeaponLists>().AddToList(gameObject);
+    ///                    active = false;
+    ///                }
+    ///                break;
+    ///        }
 
-            if (durability <= 0 && valsAssigned)
-            {
-                GetComponentInParent<WeaponLists>().RemoveFromList(gameObject);
-            }
-        }
+    ///        if (durability <= 0 && valsAssigned)
+    ///        {
+    ///            GetComponentInParent<WeaponLists>().RemoveFromList(gameObject);
+    ///        }
+    ///    }
 
-    }
+    ///}
 
 }

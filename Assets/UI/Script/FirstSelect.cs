@@ -25,6 +25,7 @@ public class FirstSelect : MonoBehaviour
         if (gameObject.tag == "navMenu")
         {
             SetBtn();
+            print("hitting title");
         }
     }
 
