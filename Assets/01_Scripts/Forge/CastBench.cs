@@ -25,13 +25,10 @@ public class CastBench : Tool
     {
         _slide.maxValue = timer;
 
-        if (!UnityEditor.EditorApplication.isPlaying)
-        {
-            input = Metal.metal.Blank;
-            outputMet = Metal.metal.Blank;
-            weapon = gameObject.GetComponent<Weapon>().myWeapon;
-            _slide.maxValue = maxTimer;
-        }
+        input = Metal.metal.Blank;
+        outputMet = Metal.metal.Blank;
+        weapon = gameObject.GetComponent<Weapon>().myWeapon;
+        _slide.maxValue = maxTimer;
     }
 
     // Update is called once per frame

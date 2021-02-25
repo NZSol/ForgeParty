@@ -47,12 +47,9 @@ public class Anvil : Tool
     {
         //assign all enums blank in editor runtime
 
-        if (!UnityEditor.EditorApplication.isPlaying)
-        {
-            inputWeapon = Weapon.weaponType.Blank;
-            inputMet = Metal.metal.Blank;
+        inputWeapon = Weapon.weaponType.Blank;
+        inputMet = Metal.metal.Blank;
 
-        }
         spark.Stop();
         outputMet = inputMet;
         outputWeapon = inputWeapon;
