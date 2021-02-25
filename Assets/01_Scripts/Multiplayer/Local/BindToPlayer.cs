@@ -27,6 +27,8 @@ public class BindToPlayer : MonoBehaviour
     bool primed = true;
     [SerializeField] GameObject homeScreen = null;
 
+    InputSystemUIInputModule uiInput = null;
+
 
     private void OnEnable()
     {
@@ -65,6 +67,7 @@ public class BindToPlayer : MonoBehaviour
 
     private void Awake()
     {
+        uiInput = Events.GetComponent<InputSystemUIInputModule>();
         if (GameObject.FindGameObjectsWithTag("Spawns") != null)
         {
             spawns = GameObject.FindGameObjectsWithTag("Spawns");
@@ -81,9 +84,9 @@ public class BindToPlayer : MonoBehaviour
         input.gameObject.GetComponent<PlayerThroughput>().SetInput(input);
         DontDestroyOnLoad(input.gameObject);
     }
+
     private void Update()
     {
-
 
         if (SceneManager.GetActiveScene() == titleScene)
         {
@@ -96,8 +99,6 @@ public class BindToPlayer : MonoBehaviour
                 gameObject.GetComponent<FirstSelect>().SetBtn();
             }
         }
-
-
     }
 
 
