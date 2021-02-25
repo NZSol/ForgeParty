@@ -235,7 +235,8 @@ public class NpcRequest : MonoBehaviour
         {
             heldWeapon.GetComponentInChildren<MeshRenderer>().enabled = false;
             heldWeapon.GetComponent<WeaponVars>().inFight = true;
-            heldWeapon.transform.SetParent(myTeamList.transform);
+            //heldWeapon.transform.SetParent(myTeamList.transform);
+            teamVariables.GetComponent<CountdownTimer>().GiveSeconds(time: heldWeapon.GetComponent<WeaponVars>().timeVal);
             Destroy(gameObject);
         }
         Debug.Log("Fighting");
