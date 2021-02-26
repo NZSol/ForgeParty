@@ -13,7 +13,6 @@ public class LevelSelect : MonoBehaviour
 
     private void Awake()
     {
-        var curScene = SceneManager.GetActiveScene();
         if (SceneManager.GetActiveScene().buildIndex == SceneManager.GetSceneByBuildIndex(0).buildIndex)
         {
             DontDestroyOnLoad(this.gameObject);

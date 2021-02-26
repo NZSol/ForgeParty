@@ -27,7 +27,6 @@ public class BindToPlayer : MonoBehaviour
     bool primed = true;
     [SerializeField] GameObject homeScreen = null;
 
-    InputSystemUIInputModule uiInput = null;
 
 
     private void OnEnable()
@@ -67,7 +66,6 @@ public class BindToPlayer : MonoBehaviour
 
     private void Awake()
     {
-        uiInput = Events.GetComponent<InputSystemUIInputModule>();
         if (GameObject.FindGameObjectsWithTag("Spawns") != null)
         {
             spawns = GameObject.FindGameObjectsWithTag("Spawns");
@@ -111,6 +109,11 @@ public class BindToPlayer : MonoBehaviour
             Events.GetComponent<InputSystemUIInputModule>().enabled = false;
             Events.GetComponent<InputSystemUIInputModule>().enabled = true;
             gameObject.SetActive(false);
+            GameObject[] players = GameObject.FindGameObjectsWithTag("Container");
+            foreach (GameObject player in players)
+            {
+                Destroy(player);
+            }
         }
     }
 
