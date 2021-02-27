@@ -11,10 +11,14 @@ public class StartPos : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        spawns = GameObject.FindGameObjectsWithTag("Spawns");
+        StartCoroutine(DelayedStart());
     }
 
-
+    IEnumerator DelayedStart()
+    {
+        yield return new WaitForSeconds(0.5f);
+        spawns = GameObject.FindGameObjectsWithTag("Spawns");
+    }
 
     public void Positioning(GameObject obj)
     {

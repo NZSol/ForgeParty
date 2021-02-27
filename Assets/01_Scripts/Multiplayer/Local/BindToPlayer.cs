@@ -28,6 +28,7 @@ public class BindToPlayer : MonoBehaviour
     [SerializeField] GameObject homeScreen = null;
 
 
+
     private void OnEnable()
     {
 
@@ -81,9 +82,9 @@ public class BindToPlayer : MonoBehaviour
         input.gameObject.GetComponent<PlayerThroughput>().SetInput(input);
         DontDestroyOnLoad(input.gameObject);
     }
+
     private void Update()
     {
-
 
         if (SceneManager.GetActiveScene() == titleScene)
         {
@@ -96,8 +97,6 @@ public class BindToPlayer : MonoBehaviour
                 gameObject.GetComponent<FirstSelect>().SetBtn();
             }
         }
-
-
     }
 
 
@@ -110,6 +109,11 @@ public class BindToPlayer : MonoBehaviour
             Events.GetComponent<InputSystemUIInputModule>().enabled = false;
             Events.GetComponent<InputSystemUIInputModule>().enabled = true;
             gameObject.SetActive(false);
+            GameObject[] players = GameObject.FindGameObjectsWithTag("Container");
+            foreach (GameObject player in players)
+            {
+                Destroy(player);
+            }
         }
     }
 
