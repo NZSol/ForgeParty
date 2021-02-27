@@ -25,16 +25,17 @@ public class PlayerThroughput : MonoBehaviour
     bool active = false;
 
     GameObject PlayerChar = null;
-    bool spawned = false;
+    public bool spawned = false;
 
     private void Start()
     {
         StartCoroutine(DelayedStart());
-
+        spawned = false;
     }
 
     IEnumerator DelayedStart()
     {
+        print("running");
         yield return new WaitForSeconds(0.5f);
         curScene = SceneManager.GetActiveScene();
         titleScene = SceneManager.GetSceneByBuildIndex(0);
@@ -69,13 +70,14 @@ public class PlayerThroughput : MonoBehaviour
 
     public void PlayerJoin()
     {
+        SceneManager.MoveGameObjectToScene(this.gameObject, SceneManager.GetActiveScene());
+        eventSystem = GameObject.FindWithTag("Event");
         PlayerChar = Instantiate(myPlayer);
         moveScript = PlayerChar.GetComponent<Movement>();
         interactScript = PlayerChar.GetComponent<Interact>();
         interactScript.active = true;
         CharSelectScript = PlayerChar.GetComponent<CharSelect>();
         position.Positioning(PlayerChar);
-        SceneManager.MoveGameObjectToScene(this.gameObject, SceneManager.GetActiveScene());
     }
 
     public void readMove (CallbackContext context)

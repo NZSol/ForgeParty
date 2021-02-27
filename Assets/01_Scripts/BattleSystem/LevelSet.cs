@@ -24,8 +24,12 @@ public class LevelSet : MonoBehaviour
     Camera cam;
     Vector3 camPos;
 
+    [SerializeField]
+    GameObject intSet = null;
+
     private void Start()
     {
+        LevelSelect.instance.setLevel();
     }
 
     public void Update()
@@ -74,7 +78,13 @@ public class LevelSet : MonoBehaviour
                 break;
 
             case levels.level4:
+                position = new Vector3(18.4f, 1.8f, 14.7f);
+                camPos = new Vector3(91.2f, 91.7f, -114.9f);
+
                 CurLvl = Instantiate(Level04, parent: god.transform);
+
+                CurLvl.transform.localPosition = position;
+                cam.transform.position = camPos;
                 break;
         }
     }

@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class ScreenSwaper : MonoBehaviour
 {
-
+    GameObject[] playerMasters = null;
 
 
 
@@ -13,7 +13,6 @@ public class ScreenSwaper : MonoBehaviour
     public void Load()
     {
         SceneManager.LoadScene(1);
-
     }
 
    

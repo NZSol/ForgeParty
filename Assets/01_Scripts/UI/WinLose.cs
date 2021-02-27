@@ -15,13 +15,13 @@ public class WinLose : MonoBehaviour
 
     [SerializeField] GameObject[] npc;
     [SerializeField] InputSystemUIInputModule system;
-    GameObject zone = null;
+    GameObject[] zone = null;
 
     // Start is called before the first frame update
     void Start()
     {
         weapon = gameObject.GetComponent<WeaponLists>();
-        zone = GameObject.FindWithTag("requestZone");
+        zone = GameObject.FindGameObjectsWithTag("requestZone");
     }
 
     public void Lose()
@@ -30,10 +30,13 @@ public class WinLose : MonoBehaviour
         Screen.SetActive(true);
         loss.gameObject.SetActive(true);
         foreach(GameObject chara in npc)
-            {
-                chara.GetComponent<NpcRequest>().Bubble.enabled = false;
-            }
-        zone.SetActive(false);
+        {
+            chara.GetComponent<NpcRequest>().Bubble.enabled = false;
+        }
+        foreach (GameObject site in zone)
+        {
+            site.SetActive(false);
+        }
         system.enabled = true;
     }
 
@@ -46,7 +49,10 @@ public class WinLose : MonoBehaviour
         {
             chara.GetComponent<NpcRequest>().Bubble.enabled = false;
         }
-        zone.SetActive(false);
+        foreach (GameObject site in zone)
+        {
+            site.SetActive(false);
+        }
         system.enabled = true;
     }
 }

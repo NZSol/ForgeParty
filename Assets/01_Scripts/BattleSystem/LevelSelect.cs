@@ -5,32 +5,47 @@ using UnityEngine.SceneManagement;
 
 public class LevelSelect : MonoBehaviour
 {
-    public int levelVal = 0;
-    bool spawned = false;
-    public void moveToNoDestroy()
-    {
-    }
+
+    public static LevelSelect instance = null;
+    public int levelVal;
+
 
     private void Awake()
     {
-        if (SceneManager.GetActiveScene().buildIndex == SceneManager.GetSceneByBuildIndex(0).buildIndex)
+        if (instance == null)
         {
-            DontDestroyOnLoad(this.gameObject);
+            instance = this;
+            DontDestroyOnLoad(this);
         }
+        else
+        {
+            if(instance != this)
+            {
+                Destroy(gameObject);
+                //instance = this;
+            }
+
+        }
+
+        //if (SceneManager.GetActiveScene().buildIndex == SceneManager.GetSceneByBuildIndex(0).buildIndex)
+        //{
+        //    DontDestroyOnLoad(this.gameObject);
+        //}
     }
 
-    private void Update()
+    public void setLevel()
     {
-        var curScene = SceneManager.GetActiveScene();
-        if (SceneManager.GetActiveScene().buildIndex == SceneManager.GetSceneByBuildIndex(2).buildIndex && !spawned)
+        if (SceneManager.GetActiveScene().buildIndex == SceneManager.GetSceneByBuildIndex(2).buildIndex)
         {
-            spawned = true;
             var god = GameObject.FindWithTag("LevelGod");
             god.GetComponent<LevelSet>().SetTargetLevel(levelVal);
-            SceneManager.MoveGameObjectToScene(god, curScene);
         }
     }
 
+    public void AssignLevelValue(int var)
+    {
+        levelVal = var;
+    }
     public void assign01()
     {
         levelVal = 0;
