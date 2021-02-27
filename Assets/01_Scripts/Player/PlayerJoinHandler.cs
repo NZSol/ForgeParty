@@ -7,6 +7,8 @@ public class PlayerJoinHandler : MonoBehaviour
 {
     [SerializeField]
     private BindToPlayer CurrentPlayerBind;
+    [SerializeField]
+    GameObject lvlSelect = null;
     public void JoinPlayer(PlayerInput input)
     {
         CurrentPlayerBind.JoinGame(input);
@@ -24,5 +26,6 @@ public class PlayerJoinHandler : MonoBehaviour
     public void CancelFunc()
     {
         CurrentPlayerBind.Cancel();
+        lvlSelect.SetActive(false);
     }
 }

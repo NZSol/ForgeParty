@@ -18,6 +18,7 @@ public class FirstSelect : MonoBehaviour
     [SerializeField] Sprite borderActive = null;
     [SerializeField] Sprite borderInactive = null;
 
+
     int playerCount = 0;
 
     private void OnEnable()
@@ -25,7 +26,6 @@ public class FirstSelect : MonoBehaviour
         if (gameObject.tag == "navMenu")
         {
             SetBtn();
-            print("hitting title");
         }
     }
 
