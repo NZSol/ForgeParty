@@ -10,7 +10,7 @@ public abstract class Tool : MonoBehaviour
     public enum curTool { Ore, Furnace, Cast, Anvil, Bucket}
     public curTool tool;
 
-
+    public bool hasContents = false;
 
     public abstract void TakeItem(GameObject item);
     //public abstract void Use();

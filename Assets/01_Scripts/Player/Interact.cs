@@ -260,7 +260,7 @@ public class Interact : MonoBehaviour
 
                 case Item.Tool.Cast:
 
-                    if (activeTool.GetComponent<Tool>().tool == Tool.curTool.Cast)
+                    if (activeTool.GetComponent<Tool>().tool == Tool.curTool.Cast && !activeTool.GetComponent<Tool>().hasContents)
                     {
                         activeTool.GetComponent<Tool>().TakeItem(heldObj);
                         gameObject.GetComponent<Animation>().tongs.SetActive(false);
@@ -271,7 +271,7 @@ public class Interact : MonoBehaviour
 
                 case Item.Tool.Anvil:
 
-                    if (activeTool.GetComponent<Tool>().tool == Tool.curTool.Anvil)
+                    if (activeTool.GetComponent<Tool>().tool == Tool.curTool.Anvil && !activeTool.GetComponent<Tool>().hasContents)
                     {
                         activeTool.GetComponent<Tool>().TakeItem(heldObj);
                         Destroy(heldObj);
@@ -280,7 +280,7 @@ public class Interact : MonoBehaviour
 
                 case Item.Tool.Bucket:
 
-                    if (activeTool.GetComponent<Tool>().tool == Tool.curTool.Bucket)
+                    if (activeTool.GetComponent<Tool>().tool == Tool.curTool.Bucket && !activeTool.GetComponent<Tool>().hasContents)
                     {
                         activeTool.GetComponent<Tool>().TakeItem(heldObj);
                         Destroy(heldObj);

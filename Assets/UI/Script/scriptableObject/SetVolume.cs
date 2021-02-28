@@ -63,6 +63,7 @@ public class SetVolume : MonoBehaviour
     public void changeBool()
     {
         settingsOpen = !settingsOpen;
+        print("change bool ==   " + settingsOpen);
     }
 
     private void Update()

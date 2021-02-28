@@ -16,7 +16,11 @@ public class CastBench : Tool
 
     public override void TakeItem(GameObject item)
     {
-        input = item.GetComponent<Metal>().myMetal;
+        if (!hasContents)
+        {
+            input = item.GetComponent<Metal>().myMetal;
+            hasContents = true;
+        }
     }
 
 
@@ -62,6 +66,7 @@ public class CastBench : Tool
 
             outputMet = Metal.metal.Blank;
 
+            hasContents = false;
             return outputWeapon;
         }
     }

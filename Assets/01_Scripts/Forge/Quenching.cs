@@ -27,25 +27,34 @@ public class Quenching : Tool
 
     public override void TakeItem(GameObject item)
     {
-        inputWeapon = item.GetComponent<Weapon>().myWeapon;
-        inputMet = item.GetComponent<Metal>().myMetal;
 
-
-        //ASSIGN OUTPUT PREFAB
-        switch (inputWeapon)
+        if (!hasContents)
         {
-            case Weapon.weaponType.Blank:
-                outputPrefab = null;
-                break;
-            case Weapon.weaponType.Sword:
-                outputPrefab = Sword;
-                break;
-            case Weapon.weaponType.Axe:
-                outputPrefab = Axe;
-                break;
-        }
+            hasContents = true;
+            inputWeapon = item.GetComponent<Weapon>().myWeapon;
+            inputMet = item.GetComponent<Metal>().myMetal;
 
-        steam.Play();
+
+            //ASSIGN OUTPUT PREFAB
+            switch (inputWeapon)
+            {
+                case Weapon.weaponType.Blank:
+                    outputPrefab = null;
+                    break;
+                case Weapon.weaponType.Sword:
+                    outputPrefab = Sword;
+                    break;
+                case Weapon.weaponType.Axe:
+                    outputPrefab = Axe;
+                    break;
+            }
+
+            steam.Play();
+        }
+        else
+        {
+            return;
+        }
     }
 
     // Start is called before the first frame update
@@ -99,6 +108,7 @@ public class Quenching : Tool
             outputWeapon = Weapon.weaponType.Blank;
             weaponOut.GetComponent<Weapon>().completed = true;
 
+            hasContents = false;
             return weaponOut;
         }
     }

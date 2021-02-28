@@ -23,23 +23,26 @@ public class Anvil : Tool
     public ParticleSystem spark;
     public override void TakeItem(GameObject item)
     {
-        inputMet = item.GetComponent<Metal>().myMetal;
-        inputWeapon = item.GetComponent<Weapon>().myWeapon;
-
-
-        switch (inputWeapon)
+        if (!hasContents)
         {
-            case Weapon.weaponType.Blank:
-                outputPrefab = null;
-                break;
-            case Weapon.weaponType.Sword:
-                outputPrefab = Sword;
-                break;
-            case Weapon.weaponType.Axe:
-                outputPrefab = Axe;
-                break;
-        }
+            hasContents = true;
+            inputMet = item.GetComponent<Metal>().myMetal;
+            inputWeapon = item.GetComponent<Weapon>().myWeapon;
 
+
+            switch (inputWeapon)
+            {
+                case Weapon.weaponType.Blank:
+                    outputPrefab = null;
+                    break;
+                case Weapon.weaponType.Sword:
+                    outputPrefab = Sword;
+                    break;
+                case Weapon.weaponType.Axe:
+                    outputPrefab = Axe;
+                    break;
+            }
+        }
     }
 
     // Start is called before the first frame update
@@ -100,6 +103,7 @@ public class Anvil : Tool
                 outputMet = Metal.metal.Blank;
                 outputWeapon = Weapon.weaponType.Blank;
 
+                hasContents = false;
                 return weaponOut;
             }
         }
