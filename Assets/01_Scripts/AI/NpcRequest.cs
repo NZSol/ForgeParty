@@ -120,6 +120,23 @@ public class NpcRequest : MonoBehaviour
                 heldWeapon.transform.localPosition = new Vector3(0, 3.5f, 0);
                 heldWeapon.transform.rotation = Quaternion.Euler(x: -90, y: +0, z: +90);
                 heldWeapon.GetComponent<WeaponVars>().setVar();
+
+
+                teamVariables.GetComponent<CountdownTimer>().GiveSeconds(time: heldWeapon.GetComponent<WeaponVars>().timeVal);
+                StatTracking.instance.addWeapon(i: 1);
+
+                if (heldWeapon.GetComponent<Metal.metal>() == Metal.metal.Tin)
+                {
+                    StatTracking.instance.addToPoint(i: 1);
+                }
+                if (heldWeapon.GetComponent<Metal.metal>() == Metal.metal.Copper)
+                {
+                    StatTracking.instance.addToPoint(i: 2);
+                }
+                if (heldWeapon.GetComponent<Metal.metal>() == Metal.metal.Bronze)
+                {
+                    StatTracking.instance.addToPoint(i: 3);
+                }
             }
         }
 
@@ -236,7 +253,6 @@ public class NpcRequest : MonoBehaviour
             heldWeapon.GetComponentInChildren<MeshRenderer>().enabled = false;
             heldWeapon.GetComponent<WeaponVars>().inFight = true;
             //heldWeapon.transform.SetParent(myTeamList.transform);
-            teamVariables.GetComponent<CountdownTimer>().GiveSeconds(time: heldWeapon.GetComponent<WeaponVars>().timeVal);
             Destroy(gameObject);
         }
         Debug.Log("Fighting");

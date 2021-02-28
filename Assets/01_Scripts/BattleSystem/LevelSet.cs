@@ -29,7 +29,10 @@ public class LevelSet : MonoBehaviour
 
     private void Start()
     {
-        LevelSelect.instance.setLevel();
+        if (LevelSelect.instance != null)
+        {
+            LevelSelect.instance.setLevel();
+        }
     }
 
     public void Update()
@@ -69,7 +72,7 @@ public class LevelSet : MonoBehaviour
 
             case levels.level3:
                 position = new Vector3(-66.5f, 0.2f, 6.9f);
-                camPos = new Vector3(8.4f, 87.8f, -140.9f);
+                camPos = new Vector3(7.8f, 95.2f, -124.1f);
 
                 CurLvl = Instantiate(Level03, parent: god.transform);
 
