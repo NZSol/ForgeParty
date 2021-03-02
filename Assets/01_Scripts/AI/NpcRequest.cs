@@ -125,17 +125,17 @@ public class NpcRequest : MonoBehaviour
                 teamVariables.GetComponent<CountdownTimer>().GiveSeconds(time: heldWeapon.GetComponent<WeaponVars>().timeVal);
                 StatTracking.instance.addWeapon(i: 1);
 
-                if (heldWeapon.GetComponent<Metal.metal>() == Metal.metal.Tin)
+                switch (heldWeapon.GetComponent<Metal>().myMetal)
                 {
-                    StatTracking.instance.addToPoint(i: 1);
-                }
-                if (heldWeapon.GetComponent<Metal.metal>() == Metal.metal.Copper)
-                {
-                    StatTracking.instance.addToPoint(i: 2);
-                }
-                if (heldWeapon.GetComponent<Metal.metal>() == Metal.metal.Bronze)
-                {
-                    StatTracking.instance.addToPoint(i: 3);
+                    case Metal.metal.Tin:
+                        StatTracking.instance.addToPoint(i: 1);
+                        break;
+                    case Metal.metal.Copper:
+                        StatTracking.instance.addToPoint(i: 2);
+                        break;
+                    case Metal.metal.Bronze:
+                        StatTracking.instance.addToPoint(i: 3);
+                        break;
                 }
             }
         }

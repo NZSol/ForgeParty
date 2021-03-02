@@ -59,7 +59,7 @@ public class Interact : MonoBehaviour
     public float range = 5;
     float toolDist = 0;
     Tool curTool;
-
+    bool doChecks = false;
 
     public GameObject heldObj = null;
     [SerializeField] Transform LHand;
@@ -106,6 +106,31 @@ public class Interact : MonoBehaviour
             Debug.Log("No Active Tool");
         }
 
+        if (doChecks)
+        {
+            if (activeTool.GetComponent<Anvil>())
+            {
+                if (toolDist > range || activeTool.currentTool() != Tool.curTool.Anvil)
+                {
+                    doChecks = false;
+                }
+                else
+                {
+                    var thisAnvil = activeTool.GetComponent<Anvil>();
+                    if (thisAnvil.timer < thisAnvil.completionTime)
+                    {
+                        thisAnvil.canAnimate = true;
+                    }
+                    else
+                    {
+                        doChecks = false;
+                        thisAnvil.canAnimate = false;
+
+                        playerAnims.DefaultActionState();
+                    }
+                }
+            }
+        }
 
         if (toolDist >= range)
         {
@@ -303,8 +328,20 @@ public class Interact : MonoBehaviour
                     {
 
                         case Tool.curTool.Anvil:
-                            playerAnims.AnvilAnim();
-
+                            print("hitting");
+                            doChecks = true;
+                            var toolComponent = curTool.GetComponent<Anvil>();
+                            print(toolComponent.canAnimate + " Can I animate?");
+                            print(toolComponent.hasContents + " Do I have contents?");
+                            if (toolComponent.hasContents && toolComponent.canAnimate)
+                            {
+                                playerAnims.AnvilAnim();
+                            }
+                            else
+                            {
+                                //doChecks = false;
+                                playerAnims.DefaultActionState();
+                            }
                             break;
 
                         case Tool.curTool.Furnace:
@@ -316,6 +353,7 @@ public class Interact : MonoBehaviour
             }
             if (context.canceled)
             {
+                doChecks = false;
                 activeTool.GetComponent<Tool>().charging = false;
                 playerAnims.DefaultActionState();
             }

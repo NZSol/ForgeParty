@@ -7,6 +7,7 @@ public class Anvil : Tool
 {
     public float timer = 0;
     public float completionTime = 5;
+    public bool canAnimate = false;
 
     //OUTPUT ENUM VALUES
     public Metal.metal outputMet = new Metal.metal();
@@ -26,6 +27,7 @@ public class Anvil : Tool
         if (!hasContents)
         {
             hasContents = true;
+            canAnimate = true;
             inputMet = item.GetComponent<Metal>().myMetal;
             inputWeapon = item.GetComponent<Weapon>().myWeapon;
 
@@ -66,6 +68,7 @@ public class Anvil : Tool
         {
             if (inputWeapon != Weapon.weaponType.Blank)
             {
+                canAnimate = true;
                 timer += Time.deltaTime;
             }
 
@@ -76,8 +79,8 @@ public class Anvil : Tool
 
                 inputMet = Metal.metal.Blank;
                 inputWeapon = Weapon.weaponType.Blank;
-                timer -= completionTime;
                 charging = false;
+                canAnimate = false;
             }
         }
 
@@ -104,6 +107,7 @@ public class Anvil : Tool
                 outputWeapon = Weapon.weaponType.Blank;
 
                 hasContents = false;
+                timer -= completionTime;
                 return weaponOut;
             }
         }
