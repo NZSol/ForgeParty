@@ -83,23 +83,6 @@ public class Furnace : Tool
     // Update is called once per frame
     void Update()
     {
-        //if charging bool in attached component is true, start increasing temperature
-        if (charging)
-        {
-            if (temperature < _slide.maxValue)
-            {
-                temperature += Time.deltaTime;
-            }
-        }
-        else
-        {
-            if (temperature > 0)
-            {
-                temperature -= Time.deltaTime / coolingMultiplier;
-            }
-        }
-
-
         _slide.value = temperature;
         fire.transform.localScale = Vector3.Lerp(startSize, endSize, (temperature / _slide.maxValue));
 
@@ -131,6 +114,25 @@ public class Furnace : Tool
         {
             smoke.Play();
             playSmoke = false;
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        //if charging bool in attached component is true, start increasing temperature
+        if (charging)
+        {
+            if (temperature < _slide.maxValue)
+            {
+                temperature += Time.deltaTime;
+            }
+        }
+        else
+        {
+            if (temperature > 0)
+            {
+                temperature -= Time.deltaTime / coolingMultiplier;
+            }
         }
     }
 

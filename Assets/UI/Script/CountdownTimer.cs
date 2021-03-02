@@ -29,7 +29,7 @@ public class CountdownTimer : MonoBehaviour
         gameState = GetComponent<WinLose>();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (takingAway == false && secondsLeft > 0)
         {

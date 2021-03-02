@@ -106,6 +106,10 @@ public class PlayerThroughput : MonoBehaviour
 
         if (curScene.buildIndex == titleScene.buildIndex)
         {
+            if (eventSystem == null)
+            {
+                eventSystem = GameObject.FindWithTag("Event");
+            }
             eventSystem.GetComponent<PlayerJoinHandler>().LeavePlayer(input);
             eventSystem.GetComponent<PlayerJoinHandler>().CancelFunc();
         }
