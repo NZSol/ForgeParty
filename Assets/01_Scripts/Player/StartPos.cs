@@ -29,7 +29,7 @@ public class StartPos : MonoBehaviour
             playerArray[i].transform.position = spawns[i].transform.position;
             playerArray[i].transform.position = new Vector3(playerArray[i].transform.position.x, 0, playerArray[i].transform.position.z);
 
-            playerArray[0].gameObject.GetComponent<Outline>().OutlineColor = colors[0];
+            playerArray[i].gameObject.GetComponent<Outline>().OutlineColor = colors[i];
         }
     }
 }

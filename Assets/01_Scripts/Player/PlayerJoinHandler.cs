@@ -9,6 +9,7 @@ public class PlayerJoinHandler : MonoBehaviour
     private BindToPlayer CurrentPlayerBind;
     [SerializeField]
     GameObject lvlSelect = null;
+
     public void JoinPlayer(PlayerInput input)
     {
         CurrentPlayerBind.JoinGame(input);

@@ -35,7 +35,6 @@ public class PlayerThroughput : MonoBehaviour
 
     IEnumerator DelayedStart()
     {
-        print("running");
         yield return new WaitForSeconds(0.5f);
         curScene = SceneManager.GetActiveScene();
         titleScene = SceneManager.GetSceneByBuildIndex(0);
