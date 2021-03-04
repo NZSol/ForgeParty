@@ -13,6 +13,9 @@ public class FirstSelect : MonoBehaviour
     [SerializeField] GameObject lastBtn = null;
     [SerializeField] EventSystem system = null;
 
+
+    public bool btnMenu = false;
+
     private void OnEnable()
     {
         if (gameObject.tag == "navMenu")
@@ -23,7 +26,7 @@ public class FirstSelect : MonoBehaviour
         {
             system = GameObject.FindWithTag("Event").GetComponent<EventSystem>();
         }
-        if (gameObject.tag == "navMenu")
+        if (gameObject.tag == "navMenu" && !btnMenu)
         {
             SetBtn();
         }
@@ -32,12 +35,16 @@ public class FirstSelect : MonoBehaviour
 
     public void setLastBtn(GameObject obj)
     {
-        //    lastBtn = obj;
-        //    FirstObject = lastBtn;
-        //    system.firstSelectedGameObject = lastBtn;
+        lastBtn = obj;
+        FirstObject = lastBtn;
+        system.firstSelectedGameObject = lastBtn;
     }
 
     public void SetBtn()
+    {
+        StartCoroutine(highlight());
+    }
+    public void SetBtnTuto()
     {
         StartCoroutine(highlight());
     }

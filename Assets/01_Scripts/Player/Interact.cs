@@ -7,6 +7,7 @@ using static UnityEngine.InputSystem.InputAction;
 public class Interact : MonoBehaviour
 {
     //Setup
+    GameObject god = null;
     public bool active = false;
     bool inputArmed = true;
     Animator anim = null;
@@ -73,6 +74,7 @@ public class Interact : MonoBehaviour
         active = true;
         if (active)
         {
+            god = GameObject.FindWithTag("LevelGod");
             toolsLayer = LayerMask.NameToLayer("Tools");
             Interactables = Tools(toolsLayer).ToList();
             anim = gameObject.GetComponent<Animator>();
@@ -161,7 +163,7 @@ public class Interact : MonoBehaviour
 
     void checkItem()
     {
-        if (heldObj != null)
+        if (heldObj != null && god.GetComponent<StartPos>().playerArray.Length == 1)
         {
             switch (heldObj.GetComponent<Item>().tool)
             {

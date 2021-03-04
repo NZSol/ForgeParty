@@ -20,12 +20,14 @@ public class Anvil : Tool
     [SerializeField] GameObject Axe = null;
 
     [SerializeField] Slider _slide = null;
+    [SerializeField] Image _slideFill = null;
 
     public ParticleSystem spark;
     public override void TakeItem(GameObject item)
     {
         if (!hasContents)
         {
+            _slideFill.color = Color.white;
             hasContents = true;
             canAnimate = true;
             inputMet = item.GetComponent<Metal>().myMetal;
@@ -72,7 +74,7 @@ public class Anvil : Tool
                 timer += Time.deltaTime;
             }
 
-            if (timer >= completionTime)
+            if (timer >= completionTime && canAnimate)
             {
                 outputMet = inputMet;
                 outputWeapon = inputWeapon;
@@ -85,6 +87,10 @@ public class Anvil : Tool
         }
 
         _slide.value = timer;
+        if (_slide.value >= completionTime)
+        {
+            _slideFill.color = Color.green;
+        }
     }
 
 
@@ -108,6 +114,7 @@ public class Anvil : Tool
 
                 hasContents = false;
                 timer -= completionTime;
+                _slideFill.color = Color.white;
                 return weaponOut;
             }
         }
