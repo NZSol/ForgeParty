@@ -33,6 +33,21 @@ public class Furnace : Tool
     [SerializeField] Slider _slide = null;
     [SerializeField] float coolingMultiplier = 1;
 
+    //Input Metals
+    [SerializeField] Image met1 = null;
+    [SerializeField] Image met2 = null;
+
+    //Timer Assets
+    [SerializeField] Image check = null;
+    [SerializeField] Image clock = null;
+    [SerializeField] Image borderVal = null;
+
+    //Colours for Metals
+    [SerializeField] Color copperCol;
+    [SerializeField] Color tinCol;
+    [SerializeField] Color bronzeCol;
+    [SerializeField] Color defaultCol;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -56,10 +71,6 @@ public class Furnace : Tool
             else
             {
                 activeMetal = secondMetal;
-                if (inputs.Count > 0)
-                {
-                    secondMetal = inputs.Dequeue();
-                }
             }
             checkContents();
         }
@@ -70,6 +81,7 @@ public class Furnace : Tool
                 secondMetal = inputs.Dequeue();
             }
         }
+        SetColours();
 
         if (secondMetal != Metal.metal.Blank)
         {
@@ -91,6 +103,9 @@ public class Furnace : Tool
             if (temperature >= meltingPoint && outputMet == Metal.metal.Blank)
             {
                 timer += Time.deltaTime;
+                borderVal.fillAmount = timer / maxTimer;
+                check.enabled = false;
+                clock.enabled = true;
             }
         }
         if (timer < maxTimer && timer > 0 && canActivate)
@@ -99,11 +114,23 @@ public class Furnace : Tool
             canActivate = false;
         }
 
-        if (timer >= maxTimer)
+        if (timer >= maxTimer && outputMet == Metal.metal.Blank)
         {
+            clock.enabled = false;
+            check.enabled = true;
+
             outputMet = activeMetal;
             outputPrefab = crucible;
-            activeMetal = Metal.metal.Blank;
+            if (secondMetal != Metal.metal.Blank && inputs.Count > 0)
+            {
+                activeMetal = secondMetal;
+                secondMetal = inputs.Dequeue();
+            }
+            else
+            {
+                activeMetal = Metal.metal.Blank;
+            }
+            SetColours();
 
             timer = 0;
             smoke.Stop();
@@ -117,6 +144,40 @@ public class Furnace : Tool
         }
     }
 
+    void SetColours()
+    {
+        switch (activeMetal)
+        {
+            case Metal.metal.Copper:
+                met1.color = copperCol;
+                break;
+            case Metal.metal.Tin:
+                met1.color = tinCol;
+                break;
+            case Metal.metal.Bronze:
+                met1.color = bronzeCol;
+                break;
+            case Metal.metal.Blank:
+                met1.color = defaultCol;
+                break;
+        }
+        switch (secondMetal)
+        {
+            case Metal.metal.Copper:
+                met2.color = copperCol;
+                break;
+            case Metal.metal.Tin:
+                met2.color = tinCol;
+                break;
+            case Metal.metal.Bronze:
+                met2.color = bronzeCol;
+                break;
+            case Metal.metal.Blank:
+                met2.color = defaultCol;
+                break;
+
+        }
+    }
     private void FixedUpdate()
     {
         //if charging bool in attached component is true, start increasing temperature
@@ -124,7 +185,7 @@ public class Furnace : Tool
         {
             if (temperature < _slide.maxValue)
             {
-                temperature += Time.deltaTime;
+                temperature += Time.deltaTime * 4;
             }
         }
         else
@@ -181,6 +242,7 @@ public class Furnace : Tool
                     break;
             }
             checkContents();
+            SetColours();
         }
     }
 
@@ -193,8 +255,13 @@ public class Furnace : Tool
         }
         else
         {
+            timer = 0;
+            borderVal.fillAmount = 0;
+            check.enabled = false;
+            clock.enabled = true;
+
             activeMetal = secondMetal;
-            if(inputs.Count > 0)
+            if (inputs.Count > 0)
             {
                 secondMetal = inputs.Dequeue();
             }
@@ -202,10 +269,16 @@ public class Furnace : Tool
             {
                 secondMetal = Metal.metal.Blank;
             }
+            SetColours();
+
+
             var outputCrucible = Instantiate(outputPrefab);
             outputCrucible.GetComponent<Metal>().myMetal = outputMet;
             outputMet = Metal.metal.Blank;
+            displayQueue = inputs.ToList();
             return outputCrucible;
+
+
         }
     }
 }
