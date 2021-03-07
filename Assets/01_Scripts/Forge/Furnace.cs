@@ -121,16 +121,6 @@ public class Furnace : Tool
 
             outputMet = activeMetal;
             outputPrefab = crucible;
-            if (secondMetal != Metal.metal.Blank && inputs.Count > 0)
-            {
-                activeMetal = secondMetal;
-                secondMetal = inputs.Dequeue();
-            }
-            else
-            {
-                activeMetal = Metal.metal.Blank;
-            }
-            SetColours();
 
             timer = 0;
             smoke.Stop();
@@ -269,6 +259,7 @@ public class Furnace : Tool
             {
                 secondMetal = Metal.metal.Blank;
             }
+            checkAlloy();
             SetColours();
 
 
