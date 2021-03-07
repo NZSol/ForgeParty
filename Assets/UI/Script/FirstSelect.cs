@@ -18,10 +18,6 @@ public class FirstSelect : MonoBehaviour
 
     private void OnEnable()
     {
-        if (gameObject.tag == "navMenu")
-        {
-            print("nav");
-        }
         if (system == null)
         {
             system = GameObject.FindWithTag("Event").GetComponent<EventSystem>();
