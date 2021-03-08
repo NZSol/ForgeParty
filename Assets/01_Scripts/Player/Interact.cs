@@ -110,7 +110,7 @@ public class Interact : MonoBehaviour
 
         if (doChecks)
         {
-            if (activeTool.GetComponent<Anvil>())
+            if (activeTool.GetComponent<Anvil>()) 
             {
                 if (toolDist > range || activeTool.currentTool() != Tool.curTool.Anvil)
                 {
@@ -131,6 +131,19 @@ public class Interact : MonoBehaviour
                         playerAnims.DefaultActionState();
                     }
                 }
+            }
+        }
+
+        if (activeTool.GetComponent<Furnace>())
+        {
+            var thisFurnace = activeTool.GetComponent<Furnace>();
+            if (toolDist < range)
+            {
+                thisFurnace.rangeCheck = true;
+            }
+            else
+            {
+                thisFurnace.rangeCheck = false;
             }
         }
 
@@ -326,7 +339,7 @@ public class Interact : MonoBehaviour
                 if (toolDist <= range)
                 {
                     activeTool.GetComponent<Tool>().charging = true;
-                    switch (gameObject.GetComponent<Interact>().activeTool.currentTool())
+                    switch (activeTool.currentTool())
                     {
 
                         case Tool.curTool.Anvil:

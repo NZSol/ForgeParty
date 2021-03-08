@@ -38,9 +38,12 @@ public class Furnace : Tool
     [SerializeField] Image met2 = null;
 
     //Timer Assets
+    [SerializeField] Image timeToReadyGuage = null;
     [SerializeField] Image check = null;
     [SerializeField] Image clock = null;
     [SerializeField] Image borderVal = null;
+    public bool rangeCheck = false;
+    bool displayCheck = false;
 
     //Colours for Metals
     [SerializeField] Color copperCol;
@@ -95,6 +98,25 @@ public class Furnace : Tool
     // Update is called once per frame
     void Update()
     {
+        
+        if (activeMetal != Metal.metal.Blank)
+        {
+            displayCheck = true;
+        }
+        else
+        {
+            displayCheck = false;
+        }
+
+        if (displayCheck || rangeCheck)
+        {
+            timeToReadyGuage.gameObject.SetActive(true);
+        }
+        else
+        {
+            timeToReadyGuage.gameObject.SetActive(false);
+        }
+
         _slide.value = temperature;
         fire.transform.localScale = Vector3.Lerp(startSize, endSize, (temperature / _slide.maxValue));
 

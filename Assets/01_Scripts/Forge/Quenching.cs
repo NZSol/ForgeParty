@@ -25,6 +25,18 @@ public class Quenching : Tool
 
     [SerializeField] ParticleSystem steam = null;
 
+    //Feedback Asset
+    //weapons
+    [SerializeField] GameObject axeModel = null;
+    [SerializeField] GameObject swordModel = null;
+    //Renderers
+    [SerializeField] Renderer render = null;
+    [SerializeField] Material mat = null;
+    //Colours
+    [SerializeField] Color bronzeCol;
+    [SerializeField] Color copperCol;
+    [SerializeField] Color tinCol;
+
     public override void TakeItem(GameObject item)
     {
 
@@ -43,12 +55,32 @@ public class Quenching : Tool
                     break;
                 case Weapon.weaponType.Sword:
                     outputPrefab = Sword;
+                    render = swordModel.GetComponent<Renderer>();
+                    swordModel.SetActive(true);
                     break;
                 case Weapon.weaponType.Axe:
                     outputPrefab = Axe;
+                    render = axeModel.GetComponent<Renderer>();
+                    axeModel.SetActive(true);
                     break;
             }
 
+            mat = render.material;
+
+            var desiredColor = new Color();
+            switch (inputMet)
+            {
+                case Metal.metal.Bronze:
+                    desiredColor = bronzeCol;
+                    break;
+                case Metal.metal.Copper:
+                    desiredColor = copperCol;
+                    break;
+                case Metal.metal.Tin:
+                    desiredColor = tinCol;
+                    break;
+            }
+            mat.SetColor("colourTo", desiredColor);
             steam.Play();
         }
         else
@@ -63,6 +95,9 @@ public class Quenching : Tool
         _slide.maxValue = completionTime;
         myTeam = WeaponVars.team.T1;
         steam.Stop();
+
+        axeModel.SetActive(false);
+        swordModel.SetActive(false);
     }
 
     // Update is called once per frame
@@ -108,6 +143,8 @@ public class Quenching : Tool
             outputWeapon = Weapon.weaponType.Blank;
             weaponOut.GetComponent<Weapon>().completed = true;
 
+            axeModel.SetActive(false);
+            swordModel.SetActive(false);
             hasContents = false;
             return weaponOut;
         }

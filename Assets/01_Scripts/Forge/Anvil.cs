@@ -23,6 +23,17 @@ public class Anvil : Tool
     [SerializeField] Image _slideFill = null;
 
     public ParticleSystem spark;
+
+    //WeaponDisplay
+    [SerializeField] GameObject axeModel = null;
+    [SerializeField] GameObject swordModel = null;
+    [SerializeField] Renderer render = null;
+    [SerializeField] Material mat = null;
+    //Colours
+    [SerializeField] Color bronzeCol;
+    [SerializeField] Color copperCol;
+    [SerializeField] Color tinCol;
+
     public override void TakeItem(GameObject item)
     {
         if (!hasContents)
@@ -32,7 +43,7 @@ public class Anvil : Tool
             canAnimate = true;
             inputMet = item.GetComponent<Metal>().myMetal;
             inputWeapon = item.GetComponent<Weapon>().myWeapon;
-
+            
 
             switch (inputWeapon)
             {
@@ -41,11 +52,30 @@ public class Anvil : Tool
                     break;
                 case Weapon.weaponType.Sword:
                     outputPrefab = Sword;
+                    render = swordModel.GetComponent<Renderer>();
+                    swordModel.SetActive(true);
                     break;
                 case Weapon.weaponType.Axe:
                     outputPrefab = Axe;
+                    render = axeModel.GetComponent<Renderer>();
+                    axeModel.SetActive(true);
                     break;
             }
+            mat = render.material;
+            var desiredColor = new Color();
+            switch (inputMet)
+            {
+                case Metal.metal.Bronze:
+                    desiredColor = bronzeCol;
+                    break;
+                case Metal.metal.Copper:
+                    desiredColor = copperCol;
+                    break;
+                case Metal.metal.Tin:
+                    desiredColor = tinCol;
+                    break;
+            }
+            mat.SetColor("colourTo", desiredColor);
         }
     }
 
@@ -61,6 +91,8 @@ public class Anvil : Tool
         outputMet = inputMet;
         outputWeapon = inputWeapon;
         _slide.maxValue = completionTime;
+        axeModel.SetActive(false);
+        swordModel.SetActive(false);
     }
 
     // Update is called once per frame
@@ -112,6 +144,8 @@ public class Anvil : Tool
                 outputMet = Metal.metal.Blank;
                 outputWeapon = Weapon.weaponType.Blank;
 
+                swordModel.SetActive(false);
+                axeModel.SetActive(false);
                 hasContents = false;
                 timer -= completionTime;
                 _slideFill.color = Color.white;
