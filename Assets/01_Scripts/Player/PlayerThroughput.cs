@@ -56,9 +56,12 @@ public class PlayerThroughput : MonoBehaviour
 
     private void Update()
     {
-        if (ready)
+        if (SceneManager.GetActiveScene().buildIndex == SceneManager.GetSceneByBuildIndex(0).buildIndex)
         {
-            LevelSelect.instance.GetPlayerReady(playerIndex);
+            if (ready && !LevelSelect.instance.GetPlayerReady(playerIndex))
+            {
+                LevelSelect.instance.SetPlayerReady(playerIndex);
+            }
         }
 
         if (PlayerChar == null)

@@ -50,7 +50,7 @@ public class LevelSelect : MonoBehaviour
         maxPlayers = i;
     }
 
-    public void GetPlayerReady(int i)
+    public void SetPlayerReady(int i)
     {
         switch (i)
         {
@@ -71,10 +71,31 @@ public class LevelSelect : MonoBehaviour
                 print("P4Ready");
                 break;
         }
-        setPlayersReady();
+        setAllReady();
     }
 
-    public void setPlayersReady()
+    public bool GetPlayerReady(int i)
+    {
+        var boolVal = false;
+        switch (i)
+        {
+            case 1:
+                boolVal = player1Ready;
+                break;
+            case 2:
+                boolVal = player2Ready;
+                break;
+            case 3:
+                boolVal = player3Ready;
+                break;
+            case 4:
+                boolVal = player4Ready;
+                break;
+        }
+        return boolVal;
+    }
+
+    public void setAllReady()
     {
         switch (maxPlayers)
         {
