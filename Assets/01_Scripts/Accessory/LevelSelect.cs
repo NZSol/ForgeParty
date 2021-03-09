@@ -10,6 +10,9 @@ public class LevelSelect : MonoBehaviour
     public int levelVal;
 
 
+    public bool allPlayersReady = false;
+    bool player1Ready = false, player2Ready = false, player3Ready = false, player4Ready = false;
+
     private void Awake()
     {
         if (instance == null)
@@ -22,15 +25,9 @@ public class LevelSelect : MonoBehaviour
             if(instance != this)
             {
                 Destroy(gameObject);
-                //instance = this;
             }
-
         }
 
-        //if (SceneManager.GetActiveScene().buildIndex == SceneManager.GetSceneByBuildIndex(0).buildIndex)
-        //{
-        //    DontDestroyOnLoad(this.gameObject);
-        //}
     }
 
     public void setLevel()
@@ -46,20 +43,67 @@ public class LevelSelect : MonoBehaviour
     {
         levelVal = var;
     }
-    public void assign01()
+
+    int maxPlayers = 0;
+    public void AssignPlayerCount (int i)
     {
-        levelVal = 0;
+        maxPlayers = i;
     }
-    public void assign02()
+
+    public void GetPlayerReady(int i)
     {
-        levelVal = 1;
+        switch (i)
+        {
+            case 1:
+                player1Ready = true;
+                print("P1Ready");
+                break;
+            case 2:
+                player2Ready = true;
+                print("P2Ready");
+                break;
+            case 3:
+                player3Ready = true;
+                print("P3Ready");
+                break;
+            case 4:
+                player4Ready = true;
+                print("P4Ready");
+                break;
+        }
+        setPlayersReady();
     }
-    public void assign03()
+
+    public void setPlayersReady()
     {
-        levelVal = 2;
+        switch (maxPlayers)
+        {
+            case 1:
+                if (player1Ready)
+                {
+                    allPlayersReady = true;
+                }
+                break;
+
+            case 2:
+                if (player1Ready && player2Ready)
+                {
+                    allPlayersReady = true;
+                }
+                break;
+
+
+            case 4:
+                if (player1Ready && player2Ready && player3Ready && player4Ready)
+                {
+                    allPlayersReady = true;
+                }
+                break;
+        }
+        print("Are they all ready? " + allPlayersReady);
     }
-    public void assign04()
-    {
-        levelVal = 3;
-    }
+
+
+
+
 }

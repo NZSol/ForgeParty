@@ -7,12 +7,15 @@ using UnityEngine.SceneManagement;
 
 public class PlayerThroughput : MonoBehaviour
 {
-    [SerializeField] GameObject myPlayer = null;
+    public bool canAct = false;
+
+    public GameObject myPlayer = null;
+    public CharSelect.skin mySkin = 0;
 
     Movement moveScript;
 
     Interact interactScript;
-    CharSelect CharSelectScript;
+    public CharSelect CharSelectScript;
 
     [SerializeField] Scene curScene;
     [SerializeField] Scene titleScene;
@@ -27,6 +30,9 @@ public class PlayerThroughput : MonoBehaviour
     GameObject PlayerChar = null;
     public bool spawned = false;
 
+    public int playerIndex = 0;
+    public bool ready = false;
+
     private void Start()
     {
         StartCoroutine(DelayedStart());
@@ -38,6 +44,7 @@ public class PlayerThroughput : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         curScene = SceneManager.GetActiveScene();
         titleScene = SceneManager.GetSceneByBuildIndex(0);
+        CharSelectScript = GetComponent<CharSelect>();
         DontDestroyOnLoad(this.gameObject);
 
         if (curScene.buildIndex == titleScene.buildIndex)
@@ -49,6 +56,11 @@ public class PlayerThroughput : MonoBehaviour
 
     private void Update()
     {
+        if (ready)
+        {
+            LevelSelect.instance.GetPlayerReady(playerIndex);
+        }
+
         if (PlayerChar == null)
         {
             if (SceneManager.GetActiveScene().buildIndex == SceneManager.GetSceneByBuildIndex(2).buildIndex && !spawned)
@@ -72,15 +84,39 @@ public class PlayerThroughput : MonoBehaviour
         SceneManager.MoveGameObjectToScene(this.gameObject, SceneManager.GetActiveScene());
         eventSystem = GameObject.FindWithTag("Event");
         PlayerChar = Instantiate(myPlayer);
+        PlayerChar.GetComponent<CharSelect>().mySkin = mySkin;
         moveScript = PlayerChar.GetComponent<Movement>();
         interactScript = PlayerChar.GetComponent<Interact>();
         interactScript.active = true;
-        CharSelectScript = PlayerChar.GetComponent<CharSelect>();
         position.Positioning(PlayerChar);
     }
 
     public void readMove (CallbackContext context)
     {
+        if (curScene.buildIndex == SceneManager.GetSceneByBuildIndex(0).buildIndex)
+        {
+            if (!ready)
+            {
+                if (context.ReadValue<Vector2>().x == 1 && active)
+                {
+                    active = false;
+                    CharSelectScript.ChangeCharRight();
+                    print("hitting Right");
+                }
+                else if (context.ReadValue<Vector2>().x == -1 && active)
+                {
+                    active = false;
+                    CharSelectScript.ChangeCharLeft();
+                    print("hitting Left");
+                }
+            }
+            if (context.canceled)
+            {
+                print("cancelled");
+                active = true;
+            }
+        }
+
         if (moveScript != null)
         {
             moveScript.stick = context.ReadValue<Vector2>();
@@ -90,6 +126,23 @@ public class PlayerThroughput : MonoBehaviour
 
     public void readDash(CallbackContext context)
     {
+        if (curScene.buildIndex == SceneManager.GetSceneByBuildIndex(0).buildIndex)
+        {
+            if (context.started && active)
+            {
+                active = false;
+                if (canAct)
+                {
+                    ready = true;
+                }
+
+            }
+            if (context.canceled)
+            {
+                active = true;
+            }
+        }
+
         if (moveScript != null)
         {
             moveScript.Dash(context);
@@ -122,23 +175,6 @@ public class PlayerThroughput : MonoBehaviour
         }
     }
 
-
-    public void Rush(CallbackContext context)
-    {
-        
-        if (context.started && active)
-        {
-            active = false;
-            if (CharSelectScript != null)
-            {
-                CharSelectScript.ChangeChar();
-            }
-        }
-        if (context.canceled)
-        {
-            active = true;
-        }
-    }
 
     public void SetInput(PlayerInput input)
     {

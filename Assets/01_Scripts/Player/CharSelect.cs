@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class CharSelect : MonoBehaviour
 {
+    PlayerThroughput playerInputs;
+
     [SerializeField] Material woody = null;
     [SerializeField] Material jacob = null;
     [SerializeField] Material bill = null;
@@ -26,44 +28,50 @@ public class CharSelect : MonoBehaviour
 
     int curSkin = 0;
 
+    public skin mySkin;
+
     // Start is called before the first frame update
     void Start()
     {
+        playerInputs = gameObject.GetComponent<PlayerThroughput>();
         character = (skin)curSkin;
-        DisableAccessories();
-        charSwitch();
+        if (this.gameObject.tag == "Player")
+        {
+            DisableAccessories();
+            CharSwitch(mySkin);
+        }
     }
 
     void DisableAccessories()
     {
-        foreach(GameObject obj in billMesh)
+        foreach (GameObject obj in billMesh)
         {
             obj.SetActive(false);
         }
-        foreach(GameObject obj in woodyMesh)
+        foreach (GameObject obj in woodyMesh)
         {
             obj.SetActive(false);
         }
-        foreach(GameObject obj in jacobMesh)
+        foreach (GameObject obj in jacobMesh)
         {
             obj.SetActive(false);
         }
-        foreach(GameObject obj in cherryMesh)
+        foreach (GameObject obj in cherryMesh)
         {
             obj.SetActive(false);
         }
-        foreach(GameObject obj in heatherMesh)
+        foreach (GameObject obj in heatherMesh)
         {
             obj.SetActive(false);
         }
-        foreach(GameObject obj in markMesh)
+        foreach (GameObject obj in markMesh)
         {
             obj.SetActive(false);
         }
     }
 
 
-    public void ChangeChar()
+    public void ChangeCharRight()
     {
         curSkin++;
         if (curSkin == (int)CharSelect.skin.End)
@@ -71,13 +79,23 @@ public class CharSelect : MonoBehaviour
             curSkin = 0;
         }
         character = (CharSelect.skin)curSkin;
-
-        charSwitch();
+        SendCharacterInfo(character);
+    }
+    public void ChangeCharLeft()
+    {
+        curSkin--;
+        if (curSkin < 0)
+        {
+            curSkin = (int)CharSelect.skin.End - 1;
+        }
+        character = (CharSelect.skin)curSkin;
+        SendCharacterInfo(character);
     }
 
-    void charSwitch()
+    public void CharSwitch(skin activeSkin)
     {
-        switch (character)
+        mySkin = activeSkin;
+        switch (mySkin)
         {
             case CharSelect.skin.Bill:
                 foreach (GameObject mesh in baseMesh)
@@ -192,5 +210,9 @@ public class CharSelect : MonoBehaviour
         }
     }
 
+    void SendCharacterInfo(skin texture)
+    {
+        playerInputs.mySkin = character;
+    }
 
 }

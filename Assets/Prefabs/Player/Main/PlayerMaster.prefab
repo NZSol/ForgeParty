@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1333407521725570227}
   - component: {fileID: -6977860970510129612}
   - component: {fileID: -3889443434190174815}
+  - component: {fileID: 684344572378900407}
   m_Layer: 0
   m_Name: PlayerMaster
   m_TagString: Container
@@ -156,6 +157,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07eaa4d3e08d1674b932dae07f348c98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canAct: 0
   myPlayer: {fileID: 8723602427150979079, guid: 37c9c2da7598f7044a2577328776c117,
     type: 3}
   curScene:
@@ -163,3 +165,41 @@ MonoBehaviour:
   titleScene:
     m_Handle: 0
   eventSystem: {fileID: 0}
+  spawned: 0
+  playerIndex: 0
+  ready: 0
+--- !u!114 &684344572378900407
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1333407521725570239}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6b723bde69b47041b8c5d6cb2923153, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  woody: {fileID: 2100000, guid: ff1607a0da52c9f49ac0aaf27f10bcec, type: 2}
+  jacob: {fileID: 2100000, guid: 07e6e8d38f543ba41b793f7a3d6e972d, type: 2}
+  bill: {fileID: 2100000, guid: 6c460b7c0b742b5428e00bc235ac9b7e, type: 2}
+  cherry: {fileID: 2100000, guid: 05105d9374abd3144879a3d47a966713, type: 2}
+  heather: {fileID: 2100000, guid: 71a55bf8693ebe640a85e1d85afe2cfe, type: 2}
+  mark: {fileID: 2100000, guid: f8d45da835ad2d64eb8bac497771fe26, type: 2}
+  baseMesh:
+  - {fileID: 6641713786794075059, guid: 37c9c2da7598f7044a2577328776c117, type: 3}
+  - {fileID: 579817064896489742, guid: 37c9c2da7598f7044a2577328776c117, type: 3}
+  billMesh:
+  - {fileID: 2923679003508166047, guid: 37c9c2da7598f7044a2577328776c117, type: 3}
+  woodyMesh:
+  - {fileID: 903673355239999614, guid: 37c9c2da7598f7044a2577328776c117, type: 3}
+  jacobMesh:
+  - {fileID: 594972789307085234, guid: 37c9c2da7598f7044a2577328776c117, type: 3}
+  cherryMesh:
+  - {fileID: 4127495218804577288, guid: 37c9c2da7598f7044a2577328776c117, type: 3}
+  - {fileID: 8544398362929864903, guid: 37c9c2da7598f7044a2577328776c117, type: 3}
+  heatherMesh:
+  - {fileID: 2972394598486676957, guid: 37c9c2da7598f7044a2577328776c117, type: 3}
+  markMesh:
+  - {fileID: 4253922651039149345, guid: 37c9c2da7598f7044a2577328776c117, type: 3}
+  character: 0

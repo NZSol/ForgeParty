@@ -53,7 +53,6 @@ public class BindToPlayer : MonoBehaviour
             {
                 Destroy(obj);
             }
-
             players.Clear();
         }
     }
@@ -81,8 +80,11 @@ public class BindToPlayer : MonoBehaviour
     public void JoinGame(PlayerInput input)
     {
         players.Add(input.gameObject);
+        var i = players.Count;
         input.gameObject.GetComponent<PlayerThroughput>().SetInput(input);
+        input.gameObject.GetComponent<PlayerThroughput>().playerIndex = i;
         DontDestroyOnLoad(input.gameObject);
+        input.gameObject.GetComponent<PlayerThroughput>().canAct = true;
         EnableButton();
     }
 
@@ -91,11 +93,7 @@ public class BindToPlayer : MonoBehaviour
 
         if (SceneManager.GetActiveScene() == titleScene)
         {
-            if (players.Count >= 1)
-            {
-                Debug.Log(players.Count + "    " + InputObjs.Length);
-            }
-            if (players.Count == InputObjs.Length)
+            if (LevelSelect.instance.allPlayersReady)
             {
                 gameObject.GetComponent<FirstSelect>().SetBtn();
             }
