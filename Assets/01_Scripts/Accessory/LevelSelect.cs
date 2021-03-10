@@ -74,6 +74,30 @@ public class LevelSelect : MonoBehaviour
         setAllReady();
     }
 
+    public void SetPlayerUnready(int i)
+    {
+        switch (i)
+        {
+            case 1:
+                player1Ready = false;
+                print("P1UnReady");
+                break;
+            case 2:
+                player2Ready = false;
+                print("P2UnReady");
+                break;
+            case 3:
+                player3Ready = false;
+                print("P3UnReady");
+                break;
+            case 4:
+                player4Ready = false;
+                print("P4UnReady");
+                break;
+        }
+        allPlayersReady = false;
+    }
+
     public bool GetPlayerReady(int i)
     {
         var boolVal = false;
@@ -123,7 +147,6 @@ public class LevelSelect : MonoBehaviour
         }
         print("Are they all ready? " + allPlayersReady);
     }
-
 
 
 

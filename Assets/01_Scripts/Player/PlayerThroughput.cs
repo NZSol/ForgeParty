@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEngine.InputSystem.InputAction;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 
 public class PlayerThroughput : MonoBehaviour
 {
@@ -25,7 +26,7 @@ public class PlayerThroughput : MonoBehaviour
     [SerializeField] GameObject eventSystem = null;
 
     PlayerInput input;
-    bool active = false;
+    bool active = true;
 
     GameObject PlayerChar = null;
     public bool spawned = false;
@@ -37,6 +38,7 @@ public class PlayerThroughput : MonoBehaviour
     {
         StartCoroutine(DelayedStart());
         spawned = false;
+        CharSelectScript = GetComponent<CharSelect>();
     }
 
     IEnumerator DelayedStart()
@@ -44,7 +46,6 @@ public class PlayerThroughput : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         curScene = SceneManager.GetActiveScene();
         titleScene = SceneManager.GetSceneByBuildIndex(0);
-        CharSelectScript = GetComponent<CharSelect>();
         DontDestroyOnLoad(this.gameObject);
 
         if (curScene.buildIndex == titleScene.buildIndex)
@@ -61,6 +62,10 @@ public class PlayerThroughput : MonoBehaviour
             if (ready && !LevelSelect.instance.GetPlayerReady(playerIndex))
             {
                 LevelSelect.instance.SetPlayerReady(playerIndex);
+            }
+            if (!ready && LevelSelect.instance.GetPlayerReady(playerIndex))
+            {
+                LevelSelect.instance.SetPlayerUnready(playerIndex);
             }
         }
 
@@ -159,15 +164,40 @@ public class PlayerThroughput : MonoBehaviour
             interactScript.InteractPress(context);
         }
 
-        if (curScene.buildIndex == titleScene.buildIndex)
+        if (context.started && active)
         {
-            if (eventSystem == null)
+            if (curScene.buildIndex == titleScene.buildIndex)
             {
-                eventSystem = GameObject.FindWithTag("Event");
+                active = false;
+                if (ready)
+                {
+                    ready = false;
+                    print("ready");
+                    StartCoroutine(DeselectBtn());
+                }
+                else
+                {
+                    print("unready");
+                    if (eventSystem == null)
+                    {
+                        eventSystem = GameObject.FindWithTag("Event");
+                    }
+                    eventSystem.GetComponent<PlayerJoinHandler>().LeavePlayer(input);
+                    eventSystem.GetComponent<PlayerJoinHandler>().CancelFunc();
+                }
             }
-            eventSystem.GetComponent<PlayerJoinHandler>().LeavePlayer(input);
-            eventSystem.GetComponent<PlayerJoinHandler>().CancelFunc();
         }
+        if (context.canceled)
+        {
+            active = true;
+        }
+    }
+
+    IEnumerator DeselectBtn()
+    {
+        yield return new WaitForSeconds(0.05f);
+        EventSystem.current.SetSelectedGameObject(null);
+        yield return null;
     }
 
     public void readHold(CallbackContext context)
