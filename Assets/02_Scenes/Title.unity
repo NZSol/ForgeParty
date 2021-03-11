@@ -22677,10 +22677,12 @@ MonoBehaviour:
   players: []
   join: {fileID: 308992411}
   Events: {fileID: 308992407}
-  InputObjs:
-  - {fileID: 5115802575137043040}
+  InputObjs: []
   homeScreen: {fileID: 1289686607}
   JoinInstruct: {fileID: 2128950883}
+  charIconParent: {fileID: 1214561032}
+  charSelectIcon: {fileID: 1205553959995803810, guid: 2e191d9b4c921d34e97c5a1a59485142,
+    type: 3}
 --- !u!1 &557340623
 GameObject:
   m_ObjectHideFlags: 0
@@ -32231,6 +32233,8 @@ MonoBehaviour:
   - {fileID: 3394181215193370787}
   homeScreen: {fileID: 1289686607}
   JoinInstruct: {fileID: 0}
+  charIconParent: {fileID: 0}
+  charSelectIcon: {fileID: 0}
 --- !u!114 &733635568
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -41806,6 +41810,8 @@ MonoBehaviour:
   - {fileID: 1478629896}
   homeScreen: {fileID: 1289686607}
   JoinInstruct: {fileID: 18753524}
+  charIconParent: {fileID: 0}
+  charSelectIcon: {fileID: 0}
 --- !u!1 &1075207526
 GameObject:
   m_ObjectHideFlags: 0
@@ -56865,6 +56871,8 @@ MonoBehaviour:
   - {fileID: 1242038559}
   homeScreen: {fileID: 1289686607}
   JoinInstruct: {fileID: 2017323424}
+  charIconParent: {fileID: 0}
+  charSelectIcon: {fileID: 0}
 --- !u!114 &1330891232
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -75034,7 +75042,7 @@ PrefabInstance:
     - target: {fileID: 7713220821755497390, guid: c223a7b9a2f01f44d9746d99825ebd10,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 960.1017
+      value: 960.0632
       objectReference: {fileID: 0}
     - target: {fileID: 7713220821755497390, guid: c223a7b9a2f01f44d9746d99825ebd10,
         type: 3}
@@ -77299,12 +77307,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!1 &5115802575137043040 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3394181217179306188, guid: c8f5897a24e43c44da655ac8a5dac50c,
-    type: 3}
-  m_PrefabInstance: {fileID: 7630353974110255788}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &5115802575137043041 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3394181217179306189, guid: c8f5897a24e43c44da655ac8a5dac50c,
@@ -78826,6 +78828,8 @@ MonoBehaviour:
   - {fileID: 697701749}
   homeScreen: {fileID: 1289686607}
   JoinInstruct: {fileID: 0}
+  charIconParent: {fileID: 0}
+  charSelectIcon: {fileID: 0}
 --- !u!114 &7186953427608885802
 MonoBehaviour:
   m_ObjectHideFlags: 0

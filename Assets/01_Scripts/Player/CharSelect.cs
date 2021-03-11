@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CharSelect : MonoBehaviour
 {
@@ -21,6 +22,17 @@ public class CharSelect : MonoBehaviour
     [SerializeField] GameObject[] heatherMesh = null;
     [SerializeField] GameObject[] markMesh = null;
 
+    public Image charImg;
+
+    [SerializeField] Sprite billImg = null;
+    [SerializeField] Sprite woodyImg = null;
+    [SerializeField] Sprite jacobImg = null;
+    [SerializeField] Sprite markImg = null;
+    [SerializeField] Sprite heatherImg = null;
+    [SerializeField] Sprite cherryImg = null;
+
+    public Text txt = null;
+
     List<GameObject[]> allMesh = new List<GameObject[]>();
 
     public enum skin { Bill, Woody, Jacob, Cherry, Heather, Mark, End}
@@ -40,6 +52,12 @@ public class CharSelect : MonoBehaviour
             DisableAccessories();
             CharSwitch(mySkin);
         }
+    }
+
+    public void AssignSelect(PlayerSelectSetup setupScript)
+    {
+        charImg = setupScript.CharacterImage;
+        txt = setupScript.NameText;
     }
 
     void DisableAccessories()
@@ -214,5 +232,44 @@ public class CharSelect : MonoBehaviour
     {
         playerInputs.mySkin = character;
     }
+
+    public void IconSwitch(skin activeSkin)
+    {
+        character = activeSkin;
+        switch (character)
+        {
+            case CharSelect.skin.Bill:
+                charImg.sprite = billImg;
+                txt.text = "Bill";
+                break;
+
+            case CharSelect.skin.Woody:
+                charImg.sprite = woodyImg;
+                txt.text = "Woody";
+                break;
+
+            case CharSelect.skin.Jacob:
+                charImg.sprite = jacobImg;
+                txt.text = "Jacob";
+                break;
+
+
+            case CharSelect.skin.Cherry:
+                charImg.sprite = cherryImg;
+                txt.text = "Cherry";
+                break;
+
+            case CharSelect.skin.Heather:
+                charImg.sprite = heatherImg;
+                txt.text = "Heather";
+                break;
+
+            case CharSelect.skin.Mark:
+                charImg.sprite = markImg;
+                txt.text = "Mark";
+                break;
+        }
+    }
+
 
 }

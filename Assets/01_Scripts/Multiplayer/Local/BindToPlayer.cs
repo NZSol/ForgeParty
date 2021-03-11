@@ -22,7 +22,7 @@ public class BindToPlayer : MonoBehaviour
     Scene curScene;
     Scene titleScene;
 
-    [SerializeField] GameObject[] InputObjs = new GameObject[0];
+    [SerializeField] List<GameObject> InputObjs = new List<GameObject>();
 
     bool primed = true;
     [SerializeField] GameObject homeScreen = null;
@@ -30,6 +30,8 @@ public class BindToPlayer : MonoBehaviour
     [SerializeField]
     GameObject JoinInstruct = null;
 
+    [SerializeField] GameObject charIconParent = null;
+    [SerializeField] GameObject charSelectIcon = null;
 
     private void OnEnable()
     {
@@ -85,6 +87,9 @@ public class BindToPlayer : MonoBehaviour
         input.gameObject.GetComponent<PlayerThroughput>().playerIndex = i;
         DontDestroyOnLoad(input.gameObject);
         input.gameObject.GetComponent<PlayerThroughput>().canAct = true;
+        var character = Instantiate(charSelectIcon, charIconParent.transform);
+        input.gameObject.GetComponent<CharSelect>().AssignSelect(character.GetComponent<PlayerSelectSetup>());
+        InputObjs.Add(character);
         EnableButton();
     }
 
@@ -100,12 +105,13 @@ public class BindToPlayer : MonoBehaviour
         }
     }
 
+
     void EnableButton()
     {
         for (int i = 0; i < players.Count; i++)
         {
             InputObjs[i].SetActive(true);
-            if (players.Count == InputObjs.Length)
+            if (players.Count == InputObjs.Count)
             {
                 JoinInstruct.SetActive(false);
             }

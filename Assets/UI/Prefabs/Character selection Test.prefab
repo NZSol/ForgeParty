@@ -316,6 +316,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1205553959995803837}
+  - component: {fileID: 3548663523037047291}
   m_Layer: 5
   m_Name: Character selection Test
   m_TagString: Untagged
@@ -345,6 +346,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &3548663523037047291
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1205553959995803810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39c7b59eb5b3b0f4eb9e10cbcd2a3d6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CharacterImage: {fileID: 1626908580256004455}
+  NameText: {fileID: 1205553959532423150}
 --- !u!1 &1626908578653137163
 GameObject:
   m_ObjectHideFlags: 0
@@ -753,7 +768,7 @@ GameObject:
   - component: {fileID: 1626908580256004455}
   m_Layer: 5
   m_Name: Image
-  m_TagString: Untagged
+  m_TagString: Finish
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -774,7 +789,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.000013351, y: -8.375}
+  m_AnchoredPosition: {x: 0.000013351, y: 33}
   m_SizeDelta: {x: 243.18301, y: 243.18301}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1626908580256004454
@@ -805,7 +820,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 98565b74de5c2a547b1f79b5034f5b1f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: fcab5224bdcbcc543b039832fd649e8d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

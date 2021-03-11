@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 using static UnityEngine.InputSystem.InputAction;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class PlayerThroughput : MonoBehaviour
 {
@@ -34,6 +35,8 @@ public class PlayerThroughput : MonoBehaviour
     public int playerIndex = 0;
     public bool ready = false;
 
+    [SerializeField] GameObject IconSelect = null;
+
     private void Start()
     {
         StartCoroutine(DelayedStart());
@@ -54,6 +57,7 @@ public class PlayerThroughput : MonoBehaviour
 
         }
     }
+
 
     private void Update()
     {
@@ -78,6 +82,7 @@ public class PlayerThroughput : MonoBehaviour
             }
         }
     }
+
     IEnumerator DelayedUpdate()
     {
         yield return new WaitForSeconds(0.5f);
@@ -109,18 +114,17 @@ public class PlayerThroughput : MonoBehaviour
                 {
                     active = false;
                     CharSelectScript.ChangeCharRight();
-                    print("hitting Right");
+                    CharSelectScript.IconSwitch(mySkin);
                 }
                 else if (context.ReadValue<Vector2>().x == -1 && active)
                 {
                     active = false;
                     CharSelectScript.ChangeCharLeft();
-                    print("hitting Left");
+                    CharSelectScript.IconSwitch(mySkin);
                 }
             }
             if (context.canceled)
             {
-                print("cancelled");
                 active = true;
             }
         }
