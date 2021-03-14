@@ -499,11 +499,11 @@ GameObject:
   m_Component:
   - component: {fileID: 101990462383291906}
   - component: {fileID: 6774620526093127378}
+  - component: {fileID: 2746183161207946606}
   - component: {fileID: 555313882368917089}
   - component: {fileID: 1740690187645314298}
-  - component: {fileID: 2746183161207946606}
   m_Layer: 10
-  m_Name: Ore Wagon (2)
+  m_Name: Copper Wagon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -541,6 +541,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 9, y: 8.05, z: 10}
   m_Center: {x: -0.3, y: 3.47, z: 0}
+--- !u!114 &2746183161207946606
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5843515078191817450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e388c545032a6bd4d9806e78d406611c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myMetal: 2
 --- !u!114 &555313882368917089
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -556,6 +569,7 @@ MonoBehaviour:
   outputPrefab: {fileID: 0}
   charging: 0
   tool: 0
+  hasContents: 0
   Ore:
   - {fileID: 4470121786007449181, guid: 24d7cac4a379cfd41b34a0323ca06029, type: 3}
   - {fileID: 1256153791256583291, guid: 46249b69ac76d4b4b80b10e44731c58d, type: 3}
@@ -584,19 +598,6 @@ MonoBehaviour:
   isBack: 0
   backOutline: {fileID: 0}
   backMask: {fileID: 0}
---- !u!114 &2746183161207946606
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5843515078191817450}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e388c545032a6bd4d9806e78d406611c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  myMetal: 2
 --- !u!1 &6847816315688745861
 GameObject:
   m_ObjectHideFlags: 0

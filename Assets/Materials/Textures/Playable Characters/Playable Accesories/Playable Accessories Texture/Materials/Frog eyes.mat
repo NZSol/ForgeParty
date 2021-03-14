@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-6298249459937238503
+--- !u!114 &-5175167468582162732
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
@@ -20,23 +20,19 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Woody
-  m_Shader: {fileID: -6465566751694194690, guid: 8c693ad34c9eba34c8757fa615934395,
-    type: 3}
+  m_Name: Frog eyes
+  m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
+  m_CustomRenderQueue: 2000
+  stringTagMap:
+    RenderType: Opaque
   disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - Texture2D_B23D4684:
-        m_Texture: {fileID: 2800000, guid: 93b4e0dcd9ca17e4294773b62f18098a, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     - _BaseMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -66,10 +62,6 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - Vector1_47E712A4: 0.42
-    - Vector1_97CBE5A8: 0.06
-    - Vector1_A3AF187E: 0.28
-    - Vector1_C1DD516E: 0.37
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
@@ -92,12 +84,8 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - ColorFrom: {r: 1, g: 1, b: 1, a: 0}
-    - Color_1F9491C8: {r: 0.5849056, g: 0.2125429, b: 0.1682983, a: 1}
-    - Color_3DE43374: {r: 0.3372549, g: 0.121568635, b: 0.15294118, a: 1}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
-    - colourTo: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []

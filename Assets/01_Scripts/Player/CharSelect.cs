@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class CharSelect : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class CharSelect : MonoBehaviour
     [SerializeField] Material cherry = null;
     [SerializeField] Material heather = null;
     [SerializeField] Material mark = null;
+    [SerializeField] Material frog = null;
 
     [SerializeField] GameObject[] baseMesh = null;
     [SerializeField] GameObject[] billMesh = null;
@@ -21,6 +23,7 @@ public class CharSelect : MonoBehaviour
     [SerializeField] GameObject[] cherryMesh = null;
     [SerializeField] GameObject[] heatherMesh = null;
     [SerializeField] GameObject[] markMesh = null;
+    [SerializeField] GameObject[] frogMesh = null;
 
     public Image charImg;
 
@@ -30,6 +33,7 @@ public class CharSelect : MonoBehaviour
     [SerializeField] Sprite markImg = null;
     [SerializeField] Sprite heatherImg = null;
     [SerializeField] Sprite cherryImg = null;
+    [SerializeField] Sprite frogImage = null;
 
     public Text txt = null;
 
@@ -39,7 +43,7 @@ public class CharSelect : MonoBehaviour
 
     List<GameObject[]> allMesh = new List<GameObject[]>();
 
-    public enum skin { Bill, Woody, Jacob, Cherry, Heather, Mark, End}
+    public enum skin { Bill, Woody, Jacob, Cherry, Heather, Mark, Frog, End}
     public skin character;
 
     int curSkin = 0;
@@ -51,7 +55,10 @@ public class CharSelect : MonoBehaviour
     {
         playerInputs = gameObject.GetComponent<PlayerThroughput>();
         character = (skin)curSkin;
-        IconSwitch(character);
+        if (SceneManager.GetActiveScene().buildIndex == SceneManager.GetSceneByBuildIndex(0).buildIndex)
+        {
+            IconSwitch(character);
+        }
         if (this.gameObject.tag == "Player")
         {
             DisableAccessories();
@@ -103,6 +110,10 @@ public class CharSelect : MonoBehaviour
             obj.SetActive(false);
         }
         foreach (GameObject obj in markMesh)
+        {
+            obj.SetActive(false);
+        }
+        foreach (GameObject obj in frogMesh)
         {
             obj.SetActive(false);
         }
@@ -245,6 +256,24 @@ public class CharSelect : MonoBehaviour
                 }
                 break;
 
+            case CharSelect.skin.Frog:
+                foreach (GameObject mesh in baseMesh)
+                {
+                    mesh.GetComponent<SkinnedMeshRenderer>().material = frog;
+                }
+
+                //Accessories
+                foreach (GameObject mesh in frogMesh)
+                {
+                    mesh.SetActive(true);
+                }
+
+                foreach (GameObject mesh in markMesh)
+                {
+                    mesh.SetActive(false);
+                }
+                break;
+
         }
     }
 
@@ -287,6 +316,11 @@ public class CharSelect : MonoBehaviour
             case CharSelect.skin.Mark:
                 charImg.sprite = markImg;
                 txt.text = "Mark";
+                break;
+
+            case CharSelect.skin.Frog:
+                charImg.sprite = markImg;
+                txt.text = "Forg";
                 break;
         }
     }
