@@ -56,6 +56,7 @@ public class BindToPlayer : MonoBehaviour
                 Destroy(obj);
             }
             players.Clear();
+            InputObjs.Clear();
         }
     }
 

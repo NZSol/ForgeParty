@@ -33,6 +33,10 @@ public class CharSelect : MonoBehaviour
 
     public Text txt = null;
 
+    public Image PlayerBtn = null;
+    public Sprite disabledImage = null;
+    public Sprite enabledImage = null;
+
     List<GameObject[]> allMesh = new List<GameObject[]>();
 
     public enum skin { Bill, Woody, Jacob, Cherry, Heather, Mark, End}
@@ -47,6 +51,7 @@ public class CharSelect : MonoBehaviour
     {
         playerInputs = gameObject.GetComponent<PlayerThroughput>();
         character = (skin)curSkin;
+        IconSwitch(character);
         if (this.gameObject.tag == "Player")
         {
             DisableAccessories();
@@ -58,6 +63,21 @@ public class CharSelect : MonoBehaviour
     {
         charImg = setupScript.CharacterImage;
         txt = setupScript.NameText;
+        PlayerBtn = setupScript.buttonImage;
+        disabledImage = setupScript.disableImage;
+        enabledImage = setupScript.enableImage;
+    }
+
+    public void InvertBtnActive()
+    {
+        if (PlayerBtn.sprite == disabledImage)
+        {
+            PlayerBtn.sprite = enabledImage;
+        }
+        else
+        {
+            PlayerBtn.sprite = disabledImage;
+        }
     }
 
     void DisableAccessories()

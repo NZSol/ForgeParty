@@ -66,10 +66,12 @@ public class PlayerThroughput : MonoBehaviour
             if (ready && !LevelSelect.instance.GetPlayerReady(playerIndex))
             {
                 LevelSelect.instance.SetPlayerReady(playerIndex);
+                CharSelectScript.InvertBtnActive();
             }
             if (!ready && LevelSelect.instance.GetPlayerReady(playerIndex))
             {
                 LevelSelect.instance.SetPlayerUnready(playerIndex);
+                CharSelectScript.InvertBtnActive();
             }
         }
 
