@@ -232,25 +232,17 @@ public class Interact : MonoBehaviour
         {
             if (context.started && inputArmed)
             {
-                //drop item
-                if (toolDist > range)
+                inputArmed = false;
+                if (heldObj != null)
                 {
-                    dropItem();
+                    deliverItem();
+                    SetColors();
                 }
                 else
                 {
-                    if (heldObj != null)
-                    {
-                        deliverItem();
-                        SetColors();
-                    }
-                    else
-                    {
-                        collectItem();
-                        checkItem();
-                    }
+                    collectItem();
+                    checkItem();
                 }
-                inputArmed = false;
             }
             if (context.canceled)
             {
@@ -290,7 +282,6 @@ public class Interact : MonoBehaviour
             switch (heldObj.GetComponent<Item>().tool)
             {
                 case Item.Tool.Furnace:
-
                     if (activeTool.GetComponent<Tool>().tool == Tool.curTool.Furnace)
                     {
                         activeTool.GetComponent<Tool>().TakeItem(heldObj);
@@ -299,7 +290,6 @@ public class Interact : MonoBehaviour
                     break;
 
                 case Item.Tool.Cast:
-
                     if (activeTool.GetComponent<Tool>().tool == Tool.curTool.Cast && !activeTool.GetComponent<Tool>().hasContents)
                     {
                         activeTool.GetComponent<Tool>().TakeItem(heldObj);
@@ -310,7 +300,6 @@ public class Interact : MonoBehaviour
 
 
                 case Item.Tool.Anvil:
-
                     if (activeTool.GetComponent<Tool>().tool == Tool.curTool.Anvil && !activeTool.GetComponent<Tool>().hasContents)
                     {
                         activeTool.GetComponent<Tool>().TakeItem(heldObj);
@@ -319,8 +308,23 @@ public class Interact : MonoBehaviour
                     break;
 
                 case Item.Tool.Bucket:
-
                     if (activeTool.GetComponent<Tool>().tool == Tool.curTool.Bucket && !activeTool.GetComponent<Tool>().hasContents)
+                    {
+                        activeTool.GetComponent<Tool>().TakeItem(heldObj);
+                        Destroy(heldObj);
+                    }
+                    break;
+
+                case Item.Tool.Bin:
+                    if (activeTool.GetComponent<Tool>().tool == Tool.curTool.Bin)
+                    {
+                        activeTool.GetComponent<Tool>().TakeItem(heldObj);
+                        Destroy(heldObj);
+                    }
+                    break;
+
+                case Item.Tool.Bench:
+                    if (activeTool.GetComponent<Tool>().tool == Tool.curTool.Bin && !activeTool.GetComponent<Tool>().hasContents)
                     {
                         activeTool.GetComponent<Tool>().TakeItem(heldObj);
                         Destroy(heldObj);
@@ -338,31 +342,31 @@ public class Interact : MonoBehaviour
             {
                 if (toolDist <= range)
                 {
-                    activeTool.GetComponent<Tool>().charging = true;
-                    switch (activeTool.currentTool())
+                    if (!activeTool.GetComponent<Tool>().charging)
                     {
+                        activeTool.GetComponent<Tool>().charging = true;
+                        switch (activeTool.currentTool())
+                        {
 
-                        case Tool.curTool.Anvil:
-                            print("hitting");
-                            doChecks = true;
-                            var toolComponent = curTool.GetComponent<Anvil>();
-                            print(toolComponent.canAnimate + " Can I animate?");
-                            print(toolComponent.hasContents + " Do I have contents?");
-                            if (toolComponent.hasContents && toolComponent.canAnimate)
-                            {
-                                playerAnims.AnvilAnim();
-                            }
-                            else
-                            {
-                                //doChecks = false;
-                                playerAnims.DefaultActionState();
-                            }
-                            break;
+                            case Tool.curTool.Anvil:
+                                doChecks = true;
+                                var toolComponent = curTool.GetComponent<Anvil>();
+                                if (toolComponent.hasContents && toolComponent.canAnimate)
+                                {
+                                    playerAnims.AnvilAnim();
+                                }
+                                else
+                                {
+                                    //doChecks = false;
+                                    playerAnims.DefaultActionState();
+                                }
+                                break;
 
-                        case Tool.curTool.Furnace:
-                            playerAnims.furnaceAnim();
+                            case Tool.curTool.Furnace:
+                                playerAnims.furnaceAnim();
 
-                            break;
+                                break;
+                        }
                     }
                 }
             }
