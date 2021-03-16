@@ -314,23 +314,24 @@ public class Interact : MonoBehaviour
                         Destroy(heldObj);
                     }
                     break;
-
-                case Item.Tool.Bin:
-                    if (activeTool.GetComponent<Tool>().tool == Tool.curTool.Bin)
-                    {
-                        activeTool.GetComponent<Tool>().TakeItem(heldObj);
-                        Destroy(heldObj);
-                    }
-                    break;
-
-                case Item.Tool.Bench:
-                    if (activeTool.GetComponent<Tool>().tool == Tool.curTool.Bin && !activeTool.GetComponent<Tool>().hasContents)
-                    {
-                        activeTool.GetComponent<Tool>().TakeItem(heldObj);
-                        Destroy(heldObj);
-                    }
-                    break;
             }
+
+            switch (activeTool.currentTool())
+            {
+            case Tool.curTool.Bin:
+                Destroy(heldObj);
+                break;
+
+            case Tool.curTool.Bench:
+                if (activeTool.GetComponent<Tool>().tool == Tool.curTool.Bench && !activeTool.GetComponent<Tool>().hasContents)
+                {
+                    activeTool.GetComponent<Tool>().TakeItem(heldObj);
+                    Destroy(heldObj);
+                }
+                break;
+
+            }
+
         }
 
     //FUNCTION ON LEFT BUTTON HOLD
