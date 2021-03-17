@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 public class Furnace : Tool
 {
-    [SerializeField] float timer = 0;
     [SerializeField] float maxTimer = 5;
     [SerializeField] float temperature = 0;
 
@@ -98,7 +97,14 @@ public class Furnace : Tool
     // Update is called once per frame
     void Update()
     {
-        
+        if (activeMetal != Metal.metal.Blank || secondMetal != Metal.metal.Blank)
+        {
+            hasContents = true;
+        }
+        else
+        {
+            hasContents = false;
+        }
         if (activeMetal != Metal.metal.Blank)
         {
             displayCheck = true;

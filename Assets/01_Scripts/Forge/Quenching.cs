@@ -20,9 +20,6 @@ public class Quenching : Tool
     [SerializeField] Slider _slide = null;
 
 
-    public float timer = 0;
-    public float completionTime = 5;
-
     [SerializeField] ParticleSystem steam = null;
 
     //Feedback Asset

@@ -61,6 +61,7 @@ public class Interact : MonoBehaviour
     float toolDist = 0;
     Tool curTool;
     bool doChecks = false;
+    bool idling = true;
 
     public GameObject heldObj = null;
     [SerializeField] Transform LHand;
@@ -155,6 +156,19 @@ public class Interact : MonoBehaviour
         else
         {
             activeTool.GetComponent<Outline>().OutlineColor = Color.yellow;
+            switch (activeTool.currentTool())
+            {
+                case Tool.curTool.Anvil:
+                    break;
+
+                case Tool.curTool.Furnace:
+                    var toolComponent = activeTool.GetComponent<Tool>();
+                    if (toolComponent.hasContents && !toolComponent.completed && idling)
+                    {
+                        //playerAnims.furnaceWait();
+                    }
+                    break;
+            }
         }
 
         if (heldObj == null)
@@ -252,20 +266,6 @@ public class Interact : MonoBehaviour
     }
 
 
-        void dropItem()
-        {
-            if (heldObj != null)
-            {
-                heldObj.transform.parent = null;
-                heldObj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
-                heldObj = null;
-            }
-            else
-            {
-                Debug.Log("Trying to drop empty heldObj");
-            }
-        }
-
         void collectItem()
         {
             heldObj = activeTool.GiveItem();
@@ -325,11 +325,11 @@ public class Interact : MonoBehaviour
             case Tool.curTool.Bench:
                 if (activeTool.GetComponent<Tool>().tool == Tool.curTool.Bench && !activeTool.GetComponent<Tool>().hasContents)
                 {
+                    activeTool.GetComponent<Tool>().hasContents = true;
                     activeTool.GetComponent<Tool>().TakeItem(heldObj);
                     Destroy(heldObj);
                 }
                 break;
-
             }
 
         }
@@ -339,49 +339,107 @@ public class Interact : MonoBehaviour
     {
         if (active)
         {
-            if (context.started)
+            var toolComponent = activeTool.GetComponent<Tool>();
+
+            if (toolDist < range && toolComponent.hasContents && !toolComponent.completed)
             {
-                if (toolDist <= range)
+
+                if (context.started && inputArmed)
                 {
-                    if (!activeTool.GetComponent<Tool>().charging)
+                    inputArmed = false;
+                    switch (activeTool.currentTool())
                     {
-                        activeTool.GetComponent<Tool>().charging = true;
-                        switch (activeTool.currentTool())
-                        {
+                        case Tool.curTool.Anvil:
+                            playerAnims.AnvilAnimDrop();
+                            var value = toolComponent.completionTime;
+                            toolComponent.timer += (value / value);
+                            break;
 
-                            case Tool.curTool.Anvil:
-                                doChecks = true;
-                                var toolComponent = curTool.GetComponent<Anvil>();
-                                if (toolComponent.hasContents && toolComponent.canAnimate)
-                                {
-                                    playerAnims.AnvilAnim();
-                                }
-                                else
-                                {
-                                    //doChecks = false;
-                                    playerAnims.DefaultActionState();
-                                }
-                                break;
+                        case Tool.curTool.Furnace:
+                            playerAnims.furnaceAnimDrop();
+                            idling = false;
+                            break;
 
-                            case Tool.curTool.Furnace:
-                                playerAnims.furnaceAnim();
 
-                                break;
-                        }
+                    }
+                }
+                if (context.canceled)
+                {
+                    inputArmed = true;
+                    switch (activeTool.currentTool())
+                    {
+                        case Tool.curTool.Anvil:
+                            playerAnims.AnvilAnimRaise();
+                            break;
+
+                        case Tool.curTool.Furnace:
+                            playerAnims.furnaceAnimRaise();
+                            //StartCoroutine(EnableIdling());
+                            break;
+
+
                     }
                 }
             }
-            if (context.canceled)
+            //else if (!activeTool.GetComponent<Tool>().hasContents || activeTool.GetComponent<Tool>().completed)
+            //{
+            //    playerAnims.DefaultActionState();
+            //}
+
+
+
+
+            if (context.started && inputArmed)
             {
-                doChecks = false;
-                activeTool.GetComponent<Tool>().charging = false;
-                playerAnims.DefaultActionState();
+                inputArmed = false;
+                if (toolDist <= range)
+                {
+                    activeTool.GetComponent<Tool>().timer += (5 / activeTool.GetComponent<Tool>().completionTime);
+
+
+                    //if (activeTool.GetComponent<Tool>().charging == false)
+                    //{
+                    //    activeTool.GetComponent<Tool>().charging = true;
+                    //    switch (activeTool.currentTool())
+                    //    {
+
+                    //        case Tool.curTool.Anvil:
+                    //            doChecks = true;
+                    //            var toolComponent = curTool.GetComponent<Anvil>();
+                    //            if (toolComponent.hasContents && toolComponent.canAnimate)
+                    //            {
+                    //                playerAnims.AnvilAnim();
+                    //            }
+                    //            else
+                    //            {
+                    //                //doChecks = false;
+                    //                playerAnims.DefaultActionState();
+                    //            }
+                    //            break;
+
+                    //        case Tool.curTool.Furnace:
+                    //            playerAnims.furnaceAnim();
+
+                    //            break;
+                    //    }
+                    //}
+                }
             }
+            //if (context.canceled)
+            //{
+            //    doChecks = false;
+            //    activeTool.GetComponent<Tool>().charging = false;
+            //    playerAnims.DefaultActionState();
+            //}
         }
     }
 
     //ACCESSORY
-
+    IEnumerator EnableIdling()
+    {
+        yield return new WaitForSeconds(0.5f);
+        idling = true;
+    }
     void positionHeldObj()
     {
         switch (heldObj.GetComponent<Item>().tool)

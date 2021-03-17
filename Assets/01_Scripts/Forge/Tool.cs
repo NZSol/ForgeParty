@@ -11,9 +11,12 @@ public abstract class Tool : MonoBehaviour
     public curTool tool;
 
     public bool hasContents = false;
+    public bool completed = false;
+    public float timer = 0;
+    public float completionTime = 5;
 
     public abstract void TakeItem(GameObject item);
-    //public abstract void Use();
+
     public abstract GameObject GiveItem();
 
     public curTool currentTool()

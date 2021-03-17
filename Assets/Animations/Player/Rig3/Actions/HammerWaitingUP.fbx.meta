@@ -1,11 +1,11 @@
 fileFormatVersion: 2
-guid: 561906c23a9455843beaa984c4c38782
+guid: 25021ed6c3c83af4b8432635f365ce40
 ModelImporter:
   serializedVersion: 20101
   internalIDToNameTable:
   - first:
       74: 1827226128182048838
-    second: Bellows
+    second: HammerWaitUP
   externalObjects: {}
   materials:
     materialImportMode: 1
@@ -15,9 +15,9 @@ ModelImporter:
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
-    resampleCurves: 1
+    resampleCurves: 0
     optimizeGameObjects: 0
-    motionNodeName: 
+    motionNodeName: root_jnt
     rigImportErrors: 
     rigImportWarnings: 
     animationImportErrors: 
@@ -26,7 +26,7 @@ ModelImporter:
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
     importConstraints: 0
-    animationCompression: 1
+    animationCompression: 0
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
@@ -35,11 +35,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Bellows
+      name: HammerWaitUP
       takeName: Take 001
       internalID: 0
-      firstFrame: 2
-      lastFrame: 38
+      firstFrame: 35
+      lastFrame: 35
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -58,11 +58,18 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.32824427
+        functionName: SparkPlay
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
+      additiveReferencePoseFrame: 7.46
     isReadable: 0
   meshes:
     lODScreenPercentages: []

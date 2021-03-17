@@ -108,95 +108,116 @@ public class PlayerThroughput : MonoBehaviour
 
     public void readMove (CallbackContext context)
     {
-        if (curScene.buildIndex == SceneManager.GetSceneByBuildIndex(0).buildIndex)
+        switch (SceneManager.GetActiveScene().buildIndex)
         {
-            if (!ready)
-            {
-                if (context.ReadValue<Vector2>().x == 1 && active)
+            //MENUS
+            case 0:
+                if (!ready)
                 {
-                    active = false;
-                    CharSelectScript.ChangeCharRight();
-                    CharSelectScript.IconSwitch(mySkin);
+                    if (context.ReadValue<Vector2>().x == 1 && active)
+                    {
+                        active = false;
+                        CharSelectScript.ChangeCharRight();
+                        CharSelectScript.IconSwitch(mySkin);
+                    }
+                    else if (context.ReadValue<Vector2>().x == -1 && active)
+                    {
+                        active = false;
+                        CharSelectScript.ChangeCharLeft();
+                        CharSelectScript.IconSwitch(mySkin);
+                    }
                 }
-                else if (context.ReadValue<Vector2>().x == -1 && active)
+                if (context.canceled)
                 {
-                    active = false;
-                    CharSelectScript.ChangeCharLeft();
-                    CharSelectScript.IconSwitch(mySkin);
+                    active = true;
                 }
-            }
-            if (context.canceled)
-            {
-                active = true;
-            }
+                break;
+                //GAMEPLAY
+            case 2:
+                if (moveScript != null)
+                {
+                    moveScript.stick = context.ReadValue<Vector2>();
+                    moveScript.Move(context);
+                }
+                break;
         }
 
-        if (moveScript != null)
-        {
-            moveScript.stick = context.ReadValue<Vector2>();
-            moveScript.Move(context);
-        }
     }
 
     public void readDash(CallbackContext context)
     {
-        if (curScene.buildIndex == SceneManager.GetSceneByBuildIndex(0).buildIndex)
+        switch (SceneManager.GetActiveScene().buildIndex)
         {
-            if (context.started && active)
-            {
-                active = false;
-                if (canAct)
+            //MENUS
+            case 0:
+                if (context.started && active)
                 {
-                    ready = true;
+                    active = false;
+                    if (canAct)
+                    {
+                        ready = true;
+                    }
+
                 }
+                if (context.canceled)
+                {
+                    active = true;
+                }
+                break;
 
-            }
-            if (context.canceled)
-            {
-                active = true;
-            }
-        }
-
-        if (moveScript != null)
-        {
-            moveScript.Dash(context);
+                //GAMEPLAY
+            case 1:
+                if (moveScript != null)
+                {
+                    moveScript.Dash(context);
+                }
+                break;
         }
     }
 
     public void readPress(CallbackContext context)
     {
-        if (interactScript != null)
+        switch (SceneManager.GetActiveScene().buildIndex)
         {
-            interactScript.InteractPress(context);
+            //MENUS
+            case 0:
+                if (context.started && active)
+                {
+                    if (curScene.buildIndex == titleScene.buildIndex)
+                    {
+                        active = false;
+                        if (ready)
+                        {
+                            ready = false;
+                            print("ready");
+                            StartCoroutine(DeselectBtn());
+                        }
+                        else
+                        {
+                            print("unready");
+                            if (eventSystem == null)
+                            {
+                                eventSystem = GameObject.FindWithTag("Event");
+                            }
+                            eventSystem.GetComponent<PlayerJoinHandler>().LeavePlayer(input);
+                            eventSystem.GetComponent<PlayerJoinHandler>().CancelFunc();
+                        }
+                    }
+                }
+                if (context.canceled)
+                {
+                    active = true;
+                }
+                break;
+            //GAMEPLAY
+            case 2:
+                if (interactScript != null)
+                {
+                    interactScript.InteractPress(context);
+                }
+                break;
         }
 
-        if (context.started && active)
-        {
-            if (curScene.buildIndex == titleScene.buildIndex)
-            {
-                active = false;
-                if (ready)
-                {
-                    ready = false;
-                    print("ready");
-                    StartCoroutine(DeselectBtn());
-                }
-                else
-                {
-                    print("unready");
-                    if (eventSystem == null)
-                    {
-                        eventSystem = GameObject.FindWithTag("Event");
-                    }
-                    eventSystem.GetComponent<PlayerJoinHandler>().LeavePlayer(input);
-                    eventSystem.GetComponent<PlayerJoinHandler>().CancelFunc();
-                }
-            }
-        }
-        if (context.canceled)
-        {
-            active = true;
-        }
     }
 
     IEnumerator DeselectBtn()

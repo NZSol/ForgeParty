@@ -95,25 +95,44 @@ public class Animation : MonoBehaviour
     }
 
 
-    public void AnvilAnim()
+    public void AnvilAnimRaise()
     {
         anim.SetLayerWeight(2, 1);
-        anim.SetBool("Anvil", true);
+
+        anim.CrossFade("HammerRaise", 0.05f, 2);
+        hammer.SetActive(true);
+    }
+    public void AnvilAnimDrop()
+    {
+        anim.CrossFade("HammerDrop", 0.05f, 2);
         hammer.SetActive(true);
     }
 
-    public void furnaceAnim()
+
+    public void furnaceAnimDrop()
     {
         anim.SetLayerWeight(2, 1);
-        anim.SetBool("Bellows", true);
+
+        anim.Play("BellowsPress", 2);
+        bellows.SetActive(true);
+    }
+    public void furnaceAnimRaise()
+    {
+
+        anim.Play("BellowsLift", 2);
+        bellows.SetActive(true);
+    }
+
+    public void furnaceWait()
+    {
+        anim.Play("BellowsWait", 2);
         bellows.SetActive(true);
     }
 
     public void DefaultActionState()
     {
         anim.SetLayerWeight(2, 0);
-        anim.SetBool("Anvil", false);
-        anim.SetBool("Bellows", false);
+        
 
         hammer.SetActive(false);
         bellows.SetActive(false);

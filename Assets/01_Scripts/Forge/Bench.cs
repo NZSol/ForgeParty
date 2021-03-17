@@ -6,7 +6,7 @@ public class Bench : Tool
 {
     GameObject myObject;
 
-    [SerializeField] Transform parentPos = null;
+    [SerializeField] Transform benchmark = null;
     Vector3 baseScale = Vector3.zero;
 
     public override GameObject GiveItem()
@@ -24,7 +24,7 @@ public class Bench : Tool
 
     public override void TakeItem(GameObject item)
     {
-        myObject = Instantiate(item, parentPos);
+        myObject = Instantiate(item, benchmark);
         baseScale = myObject.transform.localScale;
         switch (item.GetComponent<Item>().tool)
         {

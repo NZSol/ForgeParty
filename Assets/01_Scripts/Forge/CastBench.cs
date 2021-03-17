@@ -14,7 +14,6 @@ public class CastBench : Tool
     [SerializeField] Slider _slide = null;
 
     //Timer Values
-    public float timer = 0;
     public float maxTimer = 5;
 
     //Inserts

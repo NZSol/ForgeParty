@@ -5,8 +5,6 @@ using UnityEngine.UI;
 
 public class Anvil : Tool
 {
-    public float timer = 0;
-    public float completionTime = 5;
     public bool canAnimate = false;
 
     //OUTPUT ENUM VALUES
