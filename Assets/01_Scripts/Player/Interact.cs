@@ -61,13 +61,18 @@ public class Interact : MonoBehaviour
     float toolDist = 0;
     Tool curTool;
     bool doChecks = false;
-    bool idling = true;
+    bool moving = false;
 
     public GameObject heldObj = null;
     [SerializeField] Transform LHand;
     [SerializeField] Transform WeaponHoldPos;
     [SerializeField] Transform cruciblePos;
     [SerializeField] Transform headPos;
+
+    public float ValMultiplier = 0;
+    public float valMultiplierMax = 0;
+    bool heldCounter = false;
+    public bool canAnimate = true;
 
     // Start is called before the first frame update
     void Start()
@@ -156,24 +161,28 @@ public class Interact : MonoBehaviour
         else
         {
             activeTool.GetComponent<Outline>().OutlineColor = Color.yellow;
-            switch (activeTool.currentTool())
+            var toolComponent = activeTool.GetComponent<Tool>();
+            if (!moving && toolComponent.hasContents)
             {
-                case Tool.curTool.Anvil:
-                    break;
-
-                case Tool.curTool.Furnace:
-                    var toolComponent = activeTool.GetComponent<Tool>();
-                    if (toolComponent.hasContents && !toolComponent.completed && idling)
-                    {
-                        //playerAnims.furnaceWait();
-                    }
-                    break;
+                canAnimate = true;
+            }
+            else
+            {
+                canAnimate = false;
+                playerAnims.DefaultActionState();
             }
         }
 
         if (heldObj == null)
         {
             anim.SetLayerWeight(1, 0);
+        }
+
+        //Increase Multiplier when started context on hold btn
+        if (heldCounter)
+        {
+            ValMultiplier += Time.deltaTime * 8;
+            ValMultiplier = Mathf.Clamp(ValMultiplier, 0, valMultiplierMax);
         }
     }
 
@@ -235,6 +244,18 @@ public class Interact : MonoBehaviour
                     }
                     break;
             }
+        }
+    }
+
+    public void DetectMove(CallbackContext context)
+    {
+        if (context.ReadValue<Vector2>() != Vector2.zero)
+        {
+            moving = true;
+        }
+        else
+        {
+            moving = false;
         }
     }
 
@@ -344,28 +365,10 @@ public class Interact : MonoBehaviour
             if (toolDist < range && toolComponent.hasContents && !toolComponent.completed)
             {
 
-                if (context.started && inputArmed)
+                if (context.started && inputArmed && canAnimate)
                 {
+                    heldCounter = true;
                     inputArmed = false;
-                    switch (activeTool.currentTool())
-                    {
-                        case Tool.curTool.Anvil:
-                            playerAnims.AnvilAnimDrop();
-                            var value = toolComponent.completionTime;
-                            toolComponent.timer += (value / value);
-                            break;
-
-                        case Tool.curTool.Furnace:
-                            playerAnims.furnaceAnimDrop();
-                            idling = false;
-                            break;
-
-
-                    }
-                }
-                if (context.canceled)
-                {
-                    inputArmed = true;
                     switch (activeTool.currentTool())
                     {
                         case Tool.curTool.Anvil:
@@ -373,73 +376,46 @@ public class Interact : MonoBehaviour
                             break;
 
                         case Tool.curTool.Furnace:
+                            playerAnims.furnaceAnimDrop();
+                            break;
+
+
+                    }
+                }
+                if (context.canceled)
+                {
+                    heldCounter = false;
+                    inputArmed = true;
+                    switch (activeTool.currentTool())
+                    {
+                        case Tool.curTool.Anvil:
+                            playerAnims.AnvilAnimDrop();
+                            StartCoroutine(HammerEnact());
+                            valMultiplierMax = 2.5f;
+                            break;
+
+                        case Tool.curTool.Furnace:
                             playerAnims.furnaceAnimRaise();
-                            //StartCoroutine(EnableIdling());
+                            valMultiplierMax = 1.5f;
+                            activeTool.GetComponent<Furnace>().IncreaseTemperature(1 * ValMultiplier);
+                            ValMultiplier = 0;
                             break;
 
 
                     }
                 }
             }
-            //else if (!activeTool.GetComponent<Tool>().hasContents || activeTool.GetComponent<Tool>().completed)
-            //{
-            //    playerAnims.DefaultActionState();
-            //}
-
-
-
-
-            if (context.started && inputArmed)
-            {
-                inputArmed = false;
-                if (toolDist <= range)
-                {
-                    activeTool.GetComponent<Tool>().timer += (5 / activeTool.GetComponent<Tool>().completionTime);
-
-
-                    //if (activeTool.GetComponent<Tool>().charging == false)
-                    //{
-                    //    activeTool.GetComponent<Tool>().charging = true;
-                    //    switch (activeTool.currentTool())
-                    //    {
-
-                    //        case Tool.curTool.Anvil:
-                    //            doChecks = true;
-                    //            var toolComponent = curTool.GetComponent<Anvil>();
-                    //            if (toolComponent.hasContents && toolComponent.canAnimate)
-                    //            {
-                    //                playerAnims.AnvilAnim();
-                    //            }
-                    //            else
-                    //            {
-                    //                //doChecks = false;
-                    //                playerAnims.DefaultActionState();
-                    //            }
-                    //            break;
-
-                    //        case Tool.curTool.Furnace:
-                    //            playerAnims.furnaceAnim();
-
-                    //            break;
-                    //    }
-                    //}
-                }
-            }
-            //if (context.canceled)
-            //{
-            //    doChecks = false;
-            //    activeTool.GetComponent<Tool>().charging = false;
-            //    playerAnims.DefaultActionState();
-            //}
         }
     }
 
-    //ACCESSORY
-    IEnumerator EnableIdling()
+    IEnumerator HammerEnact()
     {
-        yield return new WaitForSeconds(0.5f);
-        idling = true;
+        yield return new WaitForSeconds(0.2f);
+        activeTool.GetComponent<Anvil>().IncreaseTimer(1 * ValMultiplier);
+        ValMultiplier = 0;
     }
+
+    //ACCESSORY
     void positionHeldObj()
     {
         switch (heldObj.GetComponent<Item>().tool)

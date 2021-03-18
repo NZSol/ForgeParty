@@ -36,6 +36,7 @@ public class Anvil : Tool
     {
         if (!hasContents)
         {
+            timer = 0;
             _slideFill.color = Color.white;
             hasContents = true;
             canAnimate = true;
@@ -76,6 +77,21 @@ public class Anvil : Tool
             mat.SetColor("colourTo", desiredColor);
         }
     }
+    public void IncreaseTimer(float val)
+    {
+        if (timer < completionTime)
+        {
+            timer += val;
+            if (timer >= completionTime)
+            {
+                hasContents = false;
+                outputMet = inputMet;
+                outputWeapon = inputWeapon;
+
+            }
+        }
+        
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -96,26 +112,6 @@ public class Anvil : Tool
     // Update is called once per frame
     void Update()
     {
-        if (charging)
-        {
-            if (inputWeapon != Weapon.weaponType.Blank)
-            {
-                canAnimate = true;
-                timer += Time.deltaTime;
-            }
-
-            if (timer >= completionTime && canAnimate)
-            {
-                outputMet = inputMet;
-                outputWeapon = inputWeapon;
-
-                inputMet = Metal.metal.Blank;
-                inputWeapon = Weapon.weaponType.Blank;
-                charging = false;
-                canAnimate = false;
-            }
-        }
-
         _slide.value = timer;
         if (_slide.value >= completionTime)
         {
@@ -138,13 +134,15 @@ public class Anvil : Tool
                 var weaponOut = Instantiate(outputPrefab);
                 weaponOut.GetComponent<Metal>().myMetal = outputMet;
                 weaponOut.GetComponent<Weapon>().myWeapon = outputWeapon;
+                timer = 0;
 
                 outputMet = Metal.metal.Blank;
                 outputWeapon = Weapon.weaponType.Blank;
+                inputMet = Metal.metal.Blank;
+                inputWeapon = Weapon.weaponType.Blank;
 
                 swordModel.SetActive(false);
                 axeModel.SetActive(false);
-                hasContents = false;
                 timer -= completionTime;
                 _slideFill.color = Color.white;
                 return weaponOut;

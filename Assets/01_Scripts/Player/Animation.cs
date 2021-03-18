@@ -104,7 +104,7 @@ public class Animation : MonoBehaviour
     }
     public void AnvilAnimDrop()
     {
-        anim.CrossFade("HammerDrop", 0.05f, 2);
+        anim.CrossFade("HammerSwing", 0.05f, 2);
         hammer.SetActive(true);
     }
 
@@ -120,12 +120,6 @@ public class Animation : MonoBehaviour
     {
 
         anim.Play("BellowsLift", 2);
-        bellows.SetActive(true);
-    }
-
-    public void furnaceWait()
-    {
-        anim.Play("BellowsWait", 2);
         bellows.SetActive(true);
     }
 

@@ -138,6 +138,7 @@ public class PlayerThroughput : MonoBehaviour
                 {
                     moveScript.stick = context.ReadValue<Vector2>();
                     moveScript.Move(context);
+                    interactScript.DetectMove(context);
                 }
                 break;
         }
@@ -166,7 +167,7 @@ public class PlayerThroughput : MonoBehaviour
                 break;
 
                 //GAMEPLAY
-            case 1:
+            case 2:
                 if (moveScript != null)
                 {
                     moveScript.Dash(context);

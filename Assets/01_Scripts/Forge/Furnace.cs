@@ -196,22 +196,24 @@ public class Furnace : Tool
 
         }
     }
-    private void FixedUpdate()
+
+    public void IncreaseTemperature (float value)
     {
-        //if charging bool in attached component is true, start increasing temperature
-        if (charging)
+        if (temperature > _slide.maxValue)
         {
-            if (temperature < _slide.maxValue)
-            {
-                temperature += Time.deltaTime * 4;
-            }
+            temperature = _slide.maxValue;
         }
         else
         {
-            if (temperature > 0)
-            {
-                temperature -= Time.deltaTime / coolingMultiplier;
-            }
+            temperature += value;
+        }
+    }
+    private void FixedUpdate()
+    {
+        //if charging bool in attached component is true, start increasing temperature
+        if (temperature > 0)
+        {
+            temperature -= Time.deltaTime / coolingMultiplier;
         }
     }
 
