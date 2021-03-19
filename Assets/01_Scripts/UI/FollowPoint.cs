@@ -5,9 +5,14 @@ using UnityEngine;
 public class FollowPoint : MonoBehaviour
 {
     public Transform point;
+    Camera mainCam = null;
     // Update is called once per frame
+    private void Start()
+    {
+        mainCam = Camera.main;
+    }
     void Update()
     {
-        transform.position = Camera.main.WorldToScreenPoint(point.position);
+        transform.position = mainCam.WorldToScreenPoint(point.position);
     }
 }

@@ -178,47 +178,42 @@ public class PlayerThroughput : MonoBehaviour
 
     public void readPress(CallbackContext context)
     {
-        switch (SceneManager.GetActiveScene().buildIndex)
+        if (interactScript != null)
         {
-            //MENUS
-            case 0:
-                if (context.started && active)
-                {
-                    if (curScene.buildIndex == titleScene.buildIndex)
-                    {
-                        active = false;
-                        if (ready)
-                        {
-                            ready = false;
-                            print("ready");
-                            StartCoroutine(DeselectBtn());
-                        }
-                        else
-                        {
-                            print("unready");
-                            if (eventSystem == null)
-                            {
-                                eventSystem = GameObject.FindWithTag("Event");
-                            }
-                            eventSystem.GetComponent<PlayerJoinHandler>().LeavePlayer(input);
-                            eventSystem.GetComponent<PlayerJoinHandler>().CancelFunc();
-                        }
-                    }
-                }
-                if (context.canceled)
-                {
-                    active = true;
-                }
-                break;
-            //GAMEPLAY
-            case 2:
-                if (interactScript != null)
-                {
-                    interactScript.InteractPress(context);
-                }
-                break;
+            interactScript.InteractPress(context);
         }
+    }
 
+    public void Cancel(CallbackContext context)
+    {
+        if (context.started && active)
+        {
+            print("hitting");
+            if (curScene.buildIndex == titleScene.buildIndex)
+            {
+                active = false;
+                if (ready)
+                {
+                    ready = false;
+                    print("ready");
+                    StartCoroutine(DeselectBtn());
+                }
+                else
+                {
+                    print("unready");
+                    if (eventSystem == null)
+                    {
+                        eventSystem = GameObject.FindWithTag("Event");
+                    }
+                    eventSystem.GetComponent<PlayerJoinHandler>().LeavePlayer(input);
+                    eventSystem.GetComponent<PlayerJoinHandler>().CancelFunc();
+                }
+            }
+        }
+        if (context.canceled)
+        {
+            active = true;
+        }
     }
 
     IEnumerator DeselectBtn()

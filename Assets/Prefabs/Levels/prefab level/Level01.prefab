@@ -16,6 +16,9 @@ MonoBehaviour:
   charging: 0
   tool: 6
   hasContents: 0
+  completed: 0
+  timer: 0
+  completionTime: 5
 --- !u!114 &4171097232122788565
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3528,6 +3531,9 @@ MonoBehaviour:
   charging: 0
   tool: 0
   hasContents: 0
+  completed: 0
+  timer: 0
+  completionTime: 5
   Ore:
   - {fileID: 4470121786007449181, guid: 24d7cac4a379cfd41b34a0323ca06029, type: 3}
   - {fileID: 1256153791256583291, guid: 46249b69ac76d4b4b80b10e44731c58d, type: 3}
@@ -3854,6 +3860,9 @@ MonoBehaviour:
   charging: 0
   tool: 5
   hasContents: 0
+  completed: 0
+  timer: 0
+  completionTime: 5
   benchmark: {fileID: 3139038150465858741}
 --- !u!1 &7749159854804716142
 GameObject:
@@ -4651,6 +4660,9 @@ MonoBehaviour:
   charging: 0
   tool: 0
   hasContents: 0
+  completed: 0
+  timer: 0
+  completionTime: 5
   Ore:
   - {fileID: 4470121786007449181, guid: 24d7cac4a379cfd41b34a0323ca06029, type: 3}
   - {fileID: 1256153791256583291, guid: 46249b69ac76d4b4b80b10e44731c58d, type: 3}
@@ -8990,6 +9002,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1801002073795444617, guid: 77d810e19a631404d8ad2f352f257803,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3371251772466132580, guid: 77d810e19a631404d8ad2f352f257803,
         type: 3}
       propertyPath: m_BoundingSphereOverride.x
@@ -9283,6 +9300,11 @@ PrefabInstance:
     - target: {fileID: 1563369821749955805, guid: 77d810e19a631404d8ad2f352f257803,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1801002073795444617, guid: 77d810e19a631404d8ad2f352f257803,
+        type: 3}
+      propertyPath: m_AnchorMax.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3371251772466132580, guid: 77d810e19a631404d8ad2f352f257803,

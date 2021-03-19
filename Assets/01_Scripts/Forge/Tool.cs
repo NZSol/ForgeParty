@@ -15,6 +15,7 @@ public abstract class Tool : MonoBehaviour
     public float timer = 0;
     public float completionTime = 5;
 
+    public bool rangeCheck = false;
     public abstract void TakeItem(GameObject item);
 
     public abstract GameObject GiveItem();

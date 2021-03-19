@@ -124,10 +124,15 @@ MonoBehaviour:
     m_ActionId: ecd733e0-0c84-4575-8eee-71d37c176b4e
     m_ActionName: Player/Dash[/DualShock4GamepadHID/buttonSouth,/XInputControllerWindows/buttonSouth]
   - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 07696023-cbe8-4188-beb9-c56004ea5d87
+    m_ActionName: Player/Rush[/DualShock4GamepadHID/buttonNorth,/Nintendo Wireless
+      Gamepad/button4]
+  - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: -3889443434190174815}
         m_TargetAssemblyTypeName: PlayerThroughput, Assembly-CSharp
-        m_MethodName: Rush
+        m_MethodName: Cancel
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -137,9 +142,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_ActionId: 07696023-cbe8-4188-beb9-c56004ea5d87
-    m_ActionName: Player/Rush[/DualShock4GamepadHID/buttonNorth,/Nintendo Wireless
-      Gamepad/button4]
+    m_ActionId: ecf9694a-8493-463f-b6b4-d3815d93bde1
+    m_ActionName: Player/Cancel[/Keyboard/escape,/XInputControllerWindows/buttonEast]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player

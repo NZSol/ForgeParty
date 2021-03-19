@@ -11,7 +11,10 @@ public class CastBench : Tool
     public Metal.metal input = new Metal.metal();
 
     //UI Slider
-    [SerializeField] Slider _slide = null;
+    [SerializeField] Image progressMeter = null;
+    [SerializeField] GameObject uiObj= null;
+    [SerializeField] Image tick = null;
+    [SerializeField] Image clock = null;
 
     //Timer Values
     public float maxTimer = 5;
@@ -41,13 +44,13 @@ public class CastBench : Tool
     // Start is called before the first frame update
     void Start()
     {
-        _slide.maxValue = timer;
+        progressMeter.fillAmount = timer / maxTimer;
         input = Metal.metal.Blank;
         outputMet = Metal.metal.Blank;
         weapon = gameObject.GetComponent<Weapon>().myWeapon;
-        _slide.maxValue = maxTimer;
         CastInner.SetActive(false);
         render.material = moldInnerMat;
+        uiObj.SetActive(false);
     }
 
     // Update is called once per frame
@@ -77,13 +80,25 @@ public class CastBench : Tool
 
         }
 
-        if (timer >= maxTimer)
+        if ((rangeCheck || hasContents) && !uiObj.activeSelf)
         {
-            timer = 0;
+            uiObj.SetActive(true);
+        }
+        else if (!rangeCheck && !hasContents && uiObj.activeSelf)
+        {
+            uiObj.SetActive(false);
+        }
+
+        if (timer >= maxTimer && outputMet == Metal.metal.Blank)
+        {
+            timer = maxTimer;
             outputMet = input;
             input = Metal.metal.Blank;
+            clock.enabled = false;
+            tick.enabled = true;
         }
-        _slide.value = timer;
+
+        progressMeter.fillAmount = timer/maxTimer;
     }
 
 
@@ -99,7 +114,10 @@ public class CastBench : Tool
             outputWeapon.GetComponent<Weapon>().myWeapon = weapon;
 
             outputMet = Metal.metal.Blank;
+            timer = 0;
 
+            clock.enabled = true;
+            tick.enabled = false;
             CastInner.SetActive(false);
             hasContents = false;
             return outputWeapon;

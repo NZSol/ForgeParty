@@ -17,8 +17,10 @@ public class Anvil : Tool
     [SerializeField] GameObject Sword = null;
     [SerializeField] GameObject Axe = null;
 
-    [SerializeField] Slider _slide = null;
-    [SerializeField] Image _slideFill = null;
+    [SerializeField] Image progressMeter = null;
+    [SerializeField] GameObject uiMeter = null;
+    [SerializeField] Image tick = null;
+    [SerializeField] Image clock = null;
 
     public ParticleSystem spark;
 
@@ -37,7 +39,7 @@ public class Anvil : Tool
         if (!hasContents)
         {
             timer = 0;
-            _slideFill.color = Color.white;
+
             hasContents = true;
             canAnimate = true;
             inputMet = item.GetComponent<Metal>().myMetal;
@@ -90,13 +92,17 @@ public class Anvil : Tool
 
             }
         }
+        print(timer + "  Timer");
+        print(completionTime + "  Complete");
         
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        //assign all enums blank in editor runtime
+        uiMeter.SetActive(false);
+        tick.enabled = false;
+        clock.enabled = true;
 
         inputWeapon = Weapon.weaponType.Blank;
         inputMet = Metal.metal.Blank;
@@ -104,7 +110,6 @@ public class Anvil : Tool
         spark.Stop();
         outputMet = inputMet;
         outputWeapon = inputWeapon;
-        _slide.maxValue = completionTime;
         axeModel.SetActive(false);
         swordModel.SetActive(false);
     }
@@ -112,10 +117,26 @@ public class Anvil : Tool
     // Update is called once per frame
     void Update()
     {
-        _slide.value = timer;
-        if (_slide.value >= completionTime)
+        progressMeter.fillAmount = timer/completionTime;
+
+        if (rangeCheck || hasContents)
         {
-            _slideFill.color = Color.green;
+            uiMeter.SetActive(true);
+        }
+        else if (uiMeter.activeSelf && !rangeCheck && (!hasContents && !completed))
+        {
+            uiMeter.SetActive(false);
+        }
+        if (timer >= completionTime)
+        {
+            clock.enabled = false;
+            tick.enabled = true;
+            completed = true;
+        }
+        else
+        {
+            tick.enabled = false;
+            clock.enabled = true;
         }
     }
 
@@ -140,11 +161,13 @@ public class Anvil : Tool
                 outputWeapon = Weapon.weaponType.Blank;
                 inputMet = Metal.metal.Blank;
                 inputWeapon = Weapon.weaponType.Blank;
+                completed = false;
 
                 swordModel.SetActive(false);
                 axeModel.SetActive(false);
                 timer -= completionTime;
-                _slideFill.color = Color.white;
+                clock.enabled = true;
+                tick.enabled = false;
                 return weaponOut;
             }
         }

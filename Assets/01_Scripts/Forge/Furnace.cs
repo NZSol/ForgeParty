@@ -41,7 +41,6 @@ public class Furnace : Tool
     [SerializeField] Image check = null;
     [SerializeField] Image clock = null;
     [SerializeField] Image borderVal = null;
-    public bool rangeCheck = false;
     bool displayCheck = false;
 
     //Colours for Metals

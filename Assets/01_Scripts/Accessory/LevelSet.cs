@@ -47,7 +47,6 @@ public class LevelSet : MonoBehaviour
     {
         GameObject god = GameObject.FindWithTag("LevelGod");
         curLevel = (levels)i;
-        print(curLevel);
         
         switch (curLevel)
         {

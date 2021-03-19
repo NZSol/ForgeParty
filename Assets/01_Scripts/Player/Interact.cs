@@ -59,7 +59,8 @@ public class Interact : MonoBehaviour
     //Game Variables
     public float range = 5;
     float toolDist = 0;
-    Tool curTool;
+    float currentToolDist = 0;
+    public Tool curTool;
     bool doChecks = false;
     bool moving = false;
 
@@ -95,13 +96,16 @@ public class Interact : MonoBehaviour
         curTool = activeTool;
     }
 
+
     // Update is called once per frame
     void Update()
     {
         activeTool = closestTool(Interactables.ToArray());
+        Debug.DrawRay(transform.position, (activeTool.transform.position - transform.position).normalized * range, Color.red);
         if (curTool != activeTool && curTool != null)
         {
             curTool.GetComponent<Outline>().OutlineColor = Color.white;
+            curTool.rangeCheck = false;
             curTool = activeTool;
         }
 
@@ -114,54 +118,22 @@ public class Interact : MonoBehaviour
             Debug.Log("No Active Tool");
         }
 
-        if (doChecks)
+        if (curTool != null)
         {
-            if (activeTool.GetComponent<Anvil>()) 
-            {
-                if (toolDist > range || activeTool.currentTool() != Tool.curTool.Anvil)
-                {
-                    doChecks = false;
-                }
-                else
-                {
-                    var thisAnvil = activeTool.GetComponent<Anvil>();
-                    if (thisAnvil.timer < thisAnvil.completionTime)
-                    {
-                        thisAnvil.canAnimate = true;
-                    }
-                    else
-                    {
-                        doChecks = false;
-                        thisAnvil.canAnimate = false;
-
-                        playerAnims.DefaultActionState();
-                    }
-                }
-            }
+            currentToolDist = Vector3.Distance(transform.position, curTool.transform.position);
         }
 
-        if (activeTool.GetComponent<Furnace>())
-        {
-            var thisFurnace = activeTool.GetComponent<Furnace>();
-            if (toolDist < range)
-            {
-                thisFurnace.rangeCheck = true;
-            }
-            else
-            {
-                thisFurnace.rangeCheck = false;
-            }
-        }
 
+        var toolComponent = activeTool.GetComponent<Tool>();
         if (toolDist >= range)
         {
-            activeTool.GetComponent<Tool>().charging = false;
             activeTool.GetComponent<Outline>().OutlineColor = Color.white;
+            toolComponent.rangeCheck = false;
         }
         else
         {
             activeTool.GetComponent<Outline>().OutlineColor = Color.yellow;
-            var toolComponent = activeTool.GetComponent<Tool>();
+            toolComponent.rangeCheck = true;
             if (!moving && toolComponent.hasContents)
             {
                 canAnimate = true;

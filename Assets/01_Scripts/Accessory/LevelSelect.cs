@@ -56,19 +56,15 @@ public class LevelSelect : MonoBehaviour
         {
             case 1:
                 player1Ready = true;
-                print("P1Ready");
                 break;
             case 2:
                 player2Ready = true;
-                print("P2Ready");
                 break;
             case 3:
                 player3Ready = true;
-                print("P3Ready");
                 break;
             case 4:
                 player4Ready = true;
-                print("P4Ready");
                 break;
         }
         setAllReady();
@@ -80,19 +76,15 @@ public class LevelSelect : MonoBehaviour
         {
             case 1:
                 player1Ready = false;
-                print("P1UnReady");
                 break;
             case 2:
                 player2Ready = false;
-                print("P2UnReady");
                 break;
             case 3:
                 player3Ready = false;
-                print("P3UnReady");
                 break;
             case 4:
                 player4Ready = false;
-                print("P4UnReady");
                 break;
         }
         allPlayersReady = false;
@@ -145,7 +137,6 @@ public class LevelSelect : MonoBehaviour
                 }
                 break;
         }
-        print("Are they all ready? " + allPlayersReady);
     }
 
 
