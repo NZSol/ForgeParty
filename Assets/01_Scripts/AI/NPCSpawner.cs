@@ -7,9 +7,11 @@ using UnityEngine.AI;
 public class NPCSpawner : MonoBehaviour
 {
     [SerializeField] private GameObject[] queuePositions = new GameObject[0];
+    [SerializeField] GameObject GodObj = null;
 
     [SerializeField] GameObject npcInstance = null;
     [SerializeField] GameObject[] npcType = new GameObject[0];
+
 
     public GameObject fleePos = null;
     public GameObject battlePos = null;
@@ -27,6 +29,14 @@ public class NPCSpawner : MonoBehaviour
     GameObject TeamWeaponList = null;
     private void Start()
     {
+        StartCoroutine(DelayedStart());
+    }
+    IEnumerator DelayedStart()
+    {
+        yield return new WaitForSeconds(0.5f);
+
+        queuePositions = GodObj.GetComponent<LevelSet>().CurLvl.gameObject.GetComponent<GetQueue>().myQueuePoints.ToArray();
+
         timer -= (timer + 1);
     }
 

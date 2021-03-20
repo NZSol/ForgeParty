@@ -23,6 +23,7 @@ public class Anvil : Tool
     [SerializeField] Image clock = null;
 
     public ParticleSystem spark;
+    public List<ParticleSystem> sparkContain = new List<ParticleSystem>();
 
     //WeaponDisplay
     [SerializeField] GameObject axeModel = null;
@@ -92,8 +93,6 @@ public class Anvil : Tool
 
             }
         }
-        print(timer + "  Timer");
-        print(completionTime + "  Complete");
         
     }
 
@@ -107,7 +106,10 @@ public class Anvil : Tool
         inputWeapon = Weapon.weaponType.Blank;
         inputMet = Metal.metal.Blank;
 
-        spark.Stop();
+        foreach (ParticleSystem spark in sparkContain)
+        {
+            spark.Stop();
+        }
         outputMet = inputMet;
         outputWeapon = inputWeapon;
         axeModel.SetActive(false);
@@ -178,7 +180,10 @@ public class Anvil : Tool
     }
     public void SparkPlay()
     {
-        spark.gameObject.SetActive(true);
+        foreach(ParticleSystem spark in sparkContain)
+        {
+            spark.gameObject.SetActive(true);
+        }
     }
 
 }

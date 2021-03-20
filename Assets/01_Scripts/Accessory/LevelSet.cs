@@ -18,7 +18,7 @@ public class LevelSet : MonoBehaviour
     levels curLevel;
 
     Vector3 position = new Vector3();
-    GameObject CurLvl = null;
+    public GameObject CurLvl = null;
 
     [SerializeField]
     Camera cam;
@@ -45,7 +45,7 @@ public class LevelSet : MonoBehaviour
 
     public void SetTargetLevel(int i)
     {
-        GameObject god = GameObject.FindWithTag("LevelGod");
+        GameObject god = this.gameObject;
         curLevel = (levels)i;
         
         switch (curLevel)

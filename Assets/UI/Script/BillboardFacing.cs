@@ -4,15 +4,11 @@ using UnityEngine;
 
 public class BillboardFacing : MonoBehaviour
 {
-    [SerializeField]
-    GameObject cam = null;
-    // Update is called once per frame
+    [SerializeField] GameObject cam = null;
+
     private void Start()
     {
         cam = GameObject.FindWithTag("MainCamera");
-    }
-    void Update()
-    {
         gameObject.transform.LookAt(cam.transform);
     }
 }
