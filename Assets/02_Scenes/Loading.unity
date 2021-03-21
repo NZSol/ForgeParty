@@ -136,6 +136,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1749282638}
     m_Modifications:
+    - target: {fileID: 919585823087072778, guid: 632b2e77c01bb4046bb7378e7394f884,
+        type: 3}
+      propertyPath: text
+      value: 
+      objectReference: {fileID: 1180933746}
+    - target: {fileID: 3708493810925061169, guid: 632b2e77c01bb4046bb7378e7394f884,
+        type: 3}
+      propertyPath: m_TagString
+      value: GameController
+      objectReference: {fileID: 0}
     - target: {fileID: 9214595768120974712, guid: 632b2e77c01bb4046bb7378e7394f884,
         type: 3}
       propertyPath: m_Name
@@ -326,6 +336,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1180933746 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1543206844722216122, guid: 632b2e77c01bb4046bb7378e7394f884,
+    type: 3}
+  m_PrefabInstance: {fileID: 374929356}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1643376965
 GameObject:
   m_ObjectHideFlags: 0
@@ -337,6 +359,7 @@ GameObject:
   - component: {fileID: 1643376968}
   - component: {fileID: 1643376967}
   - component: {fileID: 1643376966}
+  - component: {fileID: 1643376969}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -409,6 +432,37 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1643376969
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1643376965}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 0
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_RenderPostProcessing: 0
+  m_Antialiasing: 0
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_ClearDepth: 1
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_Version: 2
 --- !u!1 &1749282634
 GameObject:
   m_ObjectHideFlags: 0

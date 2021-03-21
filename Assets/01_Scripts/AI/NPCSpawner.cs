@@ -9,13 +9,14 @@ public class NPCSpawner : MonoBehaviour
     [SerializeField] private GameObject[] queuePositions = new GameObject[0];
     [SerializeField] GameObject GodObj = null;
 
+    [SerializeField] LevelSet level = null;
+
     [SerializeField] GameObject npcInstance = null;
     [SerializeField] GameObject[] npcType = new GameObject[0];
 
 
     public GameObject fleePos = null;
     public GameObject battlePos = null;
-    GameObject setQueuePosition = null;
 
     public float timer = 0;
     public float spawnTimer = 10;
@@ -35,7 +36,7 @@ public class NPCSpawner : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f);
 
-        queuePositions = GodObj.GetComponent<LevelSet>().CurLvl.gameObject.GetComponent<GetQueue>().myQueuePoints.ToArray();
+        queuePositions = level.CurLvl.gameObject.GetComponent<GetQueue>().myQueuePoints.ToArray();
 
         timer -= (timer + 1);
     }

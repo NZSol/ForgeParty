@@ -397,6 +397,7 @@ public class Interact : MonoBehaviour
                 heldObj.transform.parent = LHand;
                 heldObj.transform.localPosition = new Vector3(-0.47f, 0.93f, 0.17f);
                 heldObj.transform.localRotation = Quaternion.Euler(Vector3.zero);
+                heldObj.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
                 break;
 
             case Item.Tool.Cast:

@@ -161,6 +161,8 @@ public class Quenching : Tool
             axeModel.SetActive(false);
             swordModel.SetActive(false);
             hasContents = false;
+            clock.enabled = true;
+            tick.enabled = false;
             return weaponOut;
         }
     }

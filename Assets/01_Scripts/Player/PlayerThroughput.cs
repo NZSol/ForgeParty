@@ -132,6 +132,7 @@ public class PlayerThroughput : MonoBehaviour
                     active = true;
                 }
                 break;
+
                 //GAMEPLAY
             case 2:
                 if (moveScript != null)
@@ -213,6 +214,20 @@ public class PlayerThroughput : MonoBehaviour
         if (context.canceled)
         {
             active = true;
+        }
+    }
+
+    public void anyKey(CallbackContext context)
+    {
+        if (context.started)
+        {
+            print("calling anykey");
+            if (SceneManager.GetActiveScene().buildIndex == 1)
+            {
+                var loader = GameObject.FindWithTag("GameController").GetComponent<Loading>();
+                print(loader);
+                loader.contextReceived = true;
+            }
         }
     }
 
