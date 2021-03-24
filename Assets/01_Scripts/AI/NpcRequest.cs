@@ -62,6 +62,8 @@ public class NpcRequest : MonoBehaviour
     NPCSpawner parentScript;
     Animator anim;
 
+    int returnTime = 0;
+
     public void Start()
     {
         anim = gameObject.GetComponent<Animator>();
@@ -121,7 +123,18 @@ public class NpcRequest : MonoBehaviour
                 heldWeapon.transform.rotation = Quaternion.Euler(x: -90, y: +0, z: +90);
                 heldWeapon.GetComponent<WeaponVars>().setVar();
 
-
+                switch (teamVariables.GetComponent<StartPos>().playerCount)
+                {
+                    case 1:
+                        returnTime = (int)(heldWeapon.GetComponent<WeaponVars>().timeVal * 1.5f);
+                        break;
+                    case 2:
+                        returnTime = heldWeapon.GetComponent<WeaponVars>().timeVal;
+                        break;
+                    case 4:
+                        returnTime = (int)(heldWeapon.GetComponent<WeaponVars>().timeVal / 1.5f);
+                        break;
+                }
                 teamVariables.GetComponent<CountdownTimer>().GiveSeconds(time: heldWeapon.GetComponent<WeaponVars>().timeVal);
                 StatTracking.instance.addWeapon(i: 1);
 

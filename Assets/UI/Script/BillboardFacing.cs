@@ -9,6 +9,9 @@ public class BillboardFacing : MonoBehaviour
     private void Start()
     {
         cam = GameObject.FindWithTag("MainCamera");
+    }
+    private void Update()
+    {
         gameObject.transform.LookAt(cam.transform);
     }
 }

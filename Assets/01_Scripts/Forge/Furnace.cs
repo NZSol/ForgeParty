@@ -29,6 +29,7 @@ public class Furnace : Tool
     Vector3 endSize = new Vector3(1.5f, 1.5f, 1.5f);
 
     //Temperature Management
+    [SerializeField] Text displayCurTemperature = null;
     [SerializeField] Slider _slide = null;
     [SerializeField] float coolingMultiplier = 1;
 
@@ -96,6 +97,8 @@ public class Furnace : Tool
     // Update is called once per frame
     void Update()
     {
+        displayCurTemperature.text = (int)temperature + "°";
+
         if (activeMetal != Metal.metal.Blank || secondMetal != Metal.metal.Blank)
         {
             hasContents = true;

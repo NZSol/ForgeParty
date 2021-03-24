@@ -303,8 +303,11 @@ public class Interact : MonoBehaviour
                 case Item.Tool.Bucket:
                     if (activeTool.GetComponent<Tool>().tool == Tool.curTool.Bucket && !activeTool.GetComponent<Tool>().hasContents)
                     {
-                        activeTool.GetComponent<Tool>().TakeItem(heldObj);
-                        Destroy(heldObj);
+                        if (!heldObj.GetComponent<Weapon>().completed)
+                        {
+                            activeTool.GetComponent<Tool>().TakeItem(heldObj);
+                            Destroy(heldObj);
+                        }
                     }
                     break;
             }

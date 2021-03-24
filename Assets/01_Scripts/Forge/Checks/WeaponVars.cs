@@ -22,6 +22,7 @@ public class WeaponVars : MonoBehaviour
     bool active = true;
     public bool inFight = false;
 
+
     private void Start()
     {
         if (durability == 0)
@@ -41,13 +42,13 @@ public class WeaponVars : MonoBehaviour
             case Metal.metal.Bronze:
                 ///durability = 60;
                 ///damage = 10;
-                timeVal = 10;
+                timeVal = 12;
                 break;
 
             case Metal.metal.Copper:
                 ///durability = 30;
                 ///damage = 3;
-                timeVal = 7;
+                timeVal = 8;
                 break;
 
             case Metal.metal.Tin:
