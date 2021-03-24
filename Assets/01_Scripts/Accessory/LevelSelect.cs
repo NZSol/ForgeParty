@@ -12,6 +12,7 @@ public class LevelSelect : MonoBehaviour
 
     public bool allPlayersReady = false;
     bool player1Ready = false, player2Ready = false, player3Ready = false, player4Ready = false;
+    bool player1Exists = false, player2Exists = false, player3Exists = false, player4Exists = false;
 
     private void Awake()
     {
@@ -135,6 +136,29 @@ public class LevelSelect : MonoBehaviour
                 {
                     allPlayersReady = true;
                 }
+                else if (player1Ready && player2Ready && player3Ready && !player4Exists)
+                {
+                    allPlayersReady = true;
+                }
+                break;
+        }
+    }
+
+    public void SetExistance(int i)
+    {
+        switch (i)
+        {
+            case 1:
+                player1Exists = true;
+                break;
+            case 2:
+                player2Exists = true;
+                break;
+            case 3:
+                player3Exists = true;
+                break;
+            case 4:
+                player4Exists = true;
                 break;
         }
     }

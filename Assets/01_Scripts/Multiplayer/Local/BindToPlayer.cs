@@ -28,7 +28,7 @@ public class BindToPlayer : MonoBehaviour
     [SerializeField] GameObject homeScreen = null;
 
     [SerializeField]
-    GameObject[] JoinInstructions = null;
+    GameObject JoinInstructions = null;
 
     [SerializeField] GameObject charIconParent = null;
     [SerializeField] GameObject charSelectIcon = null;
@@ -114,10 +114,7 @@ public class BindToPlayer : MonoBehaviour
             InputObjs[i].SetActive(true);
             if (players.Count == InputObjs.Count)
             {
-                foreach (GameObject obj in JoinInstructions)
-                {
-                    obj.SetActive(false);
-                }
+                 JoinInstructions.SetActive(false);
             }
         }    
     }
@@ -128,10 +125,7 @@ public class BindToPlayer : MonoBehaviour
         {
             obj.SetActive(false);
         }
-        foreach (GameObject obj in JoinInstructions)
-        {
-            obj.SetActive(true);
-        }
+        JoinInstructions.SetActive(true);
     }
 
     public void disableJoin()

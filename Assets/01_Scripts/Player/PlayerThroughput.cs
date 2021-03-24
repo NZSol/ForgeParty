@@ -54,14 +54,14 @@ public class PlayerThroughput : MonoBehaviour
         if (curScene.buildIndex == titleScene.buildIndex)
         {
             eventSystem = GameObject.FindWithTag("Event");
-
+            LevelSelect.instance.SetExistance(playerIndex);
         }
     }
 
 
     private void Update()
     {
-        if (SceneManager.GetActiveScene().buildIndex == SceneManager.GetSceneByBuildIndex(0).buildIndex)
+        if (curScene.buildIndex == titleScene.buildIndex)
         {
             if (ready && !LevelSelect.instance.GetPlayerReady(playerIndex))
             {
