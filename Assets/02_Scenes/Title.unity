@@ -2913,7 +2913,7 @@ PrefabInstance:
     - target: {fileID: 5115802574057229760, guid: c925786deff497440bb0c3e07af16c66,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5115802574057229760, guid: c925786deff497440bb0c3e07af16c66,
         type: 3}
@@ -2998,6 +2998,41 @@ PrefabInstance:
     - target: {fileID: 5115802574057229760, guid: c925786deff497440bb0c3e07af16c66,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 5115802574057229760, guid: c925786deff497440bb0c3e07af16c66,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_TargetAssemblyTypeName
+      value: FirstSelect, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5115802574057229760, guid: c925786deff497440bb0c3e07af16c66,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5115802574057229760, guid: c925786deff497440bb0c3e07af16c66,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_Arguments.m_BoolArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5115802574057229760, guid: c925786deff497440bb0c3e07af16c66,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5115802574057229760, guid: c925786deff497440bb0c3e07af16c66,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_Target
+      value: 
+      objectReference: {fileID: 998173828}
+    - target: {fileID: 5115802574057229760, guid: c925786deff497440bb0c3e07af16c66,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_MethodName
+      value: SetBtn
+      objectReference: {fileID: 0}
+    - target: {fileID: 5115802574057229760, guid: c925786deff497440bb0c3e07af16c66,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 5115802574496443850, guid: c925786deff497440bb0c3e07af16c66,
@@ -63706,7 +63741,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.35817072, y: 0.48870373}
   m_AnchorMax: {x: 0.6414793, y: 0.69085187}
-  m_AnchoredPosition: {x: -0.31860352, y: 87.98218}
+  m_AnchoredPosition: {x: -0.31860352, y: 87.982185}
   m_SizeDelta: {x: 515.6949, y: 198.10513}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1566786766
@@ -64769,7 +64804,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.35817072, y: 0.48870373}
   m_AnchorMax: {x: 0.6414793, y: 0.69085187}
-  m_AnchoredPosition: {x: -0.31860352, y: 87.98218}
+  m_AnchoredPosition: {x: -0.31860352, y: 87.982185}
   m_SizeDelta: {x: 515.6949, y: 198.10513}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1610654386
@@ -76192,7 +76227,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.35817072, y: 0.48870373}
   m_AnchorMax: {x: 0.6414793, y: 0.69085187}
-  m_AnchoredPosition: {x: -0.31860352, y: 87.98218}
+  m_AnchoredPosition: {x: -0.31860352, y: 87.982185}
   m_SizeDelta: {x: 515.6949, y: 198.10513}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2128950885
@@ -78722,6 +78757,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 12800000, guid: e3ebd9918f35e024ea3f624ddbd633b7,
         type: 3}
+    - target: {fileID: 4119778940520879444, guid: aa19ae1f45f4cbc43b346a34ce07085f,
+        type: 3}
+      propertyPath: m_Value
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4119778940657562197, guid: aa19ae1f45f4cbc43b346a34ce07085f,
         type: 3}
       propertyPath: m_LocalScale.x

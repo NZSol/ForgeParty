@@ -28,11 +28,10 @@ public class SetVolume : MonoBehaviour
 
     private void Start()
     {
-        if (inEditor)
-        {
-            PlayerPrefs.SetInt("AmISet", 0);
-        }
         StartCoroutine(DisableSettingsOnDelay());
+
+        #region ResolutionAssignment
+
         Resolution = Screen.resolutions;
         ResolutionDropdown.ClearOptions();
         List<string> options = new List<string>();
@@ -74,11 +73,29 @@ public class SetVolume : MonoBehaviour
         ResolutionDropdown.value = currentResolutionIndex;
        
         ResolutionDropdown.RefreshShownValue();
+        #endregion
+
+        #region QualityAssignment
+
+        if (PlayerPrefs.GetInt("qualitySettingBool") == 0)
+        {
+            PlayerPrefs.SetInt("qualitySettingBool", 1);
+            PlayerPrefs.SetInt("myQuality", 3);
+            Settings.detail = PlayerPrefs.GetInt("myQuality");
+            Details.value = PlayerPrefs.GetInt("myQuality");
+        }
+        else
+        {
+            Settings.detail = PlayerPrefs.GetInt("myQuality");
+            Details.value = PlayerPrefs.GetInt("myQuality");
+        }
+        #endregion
 
 
-        Details.value = Settings.detail;
-       
-        VolumeSlider.value = Settings.Volume;
+        #region VolumeAssignment
+        VolumeSlider.value = PlayerPrefs.GetFloat("volume");
+
+        #endregion
     }
 
 
@@ -93,7 +110,6 @@ public class SetVolume : MonoBehaviour
     public void changeBool()
     {
         settingsOpen = !settingsOpen;
-        print(PlayerPrefs.GetInt("resolution"));
     }
 
     private void Update()
@@ -110,38 +126,26 @@ public class SetVolume : MonoBehaviour
 
    void SetDetail()
     {
-        Settings.detail = Details.value;
-
-        QualitySettings.SetQualityLevel(Details.value);
+        PlayerPrefs.SetInt("myQuality", Details.value);
+        Settings.detail = PlayerPrefs.GetInt("myQuality");
+        QualitySettings.SetQualityLevel(PlayerPrefs.GetInt("myQuality"));
     }
 
     void SetResolution()
     {
         Settings.resolution = ResolutionDropdown.value;
         PlayerPrefs.SetInt("resolution", ResolutionDropdown.value);
-        print("Setting Resolution to:   " + PlayerPrefs.GetInt("resolution"));
 
         Resolution newResolution = Resolution[PlayerPrefs.GetInt("resolution")];
         Screen.SetResolution(newResolution.width, newResolution.height, Screen.fullScreen);
-        
-        if (Screen.currentResolution.width != newResolution.width && Screen.currentResolution.height != newResolution.height)
-        {
-            print("Resolution not same");
-            print(newResolution + "   DesiredResolution");
-            print(Screen.currentResolution + "   CurResolution");
-        }
-        else
-        {
-            print("Resolution Same");
-        }
     }
 
     void SetVolumeM()
     {
-        Settings.Volume = VolumeSlider.value ;
+        PlayerPrefs.SetFloat("volume", VolumeSlider.value);
+        Settings.Volume = PlayerPrefs.GetFloat("volume");
 
-        mixer.SetFloat("VolumeMaster",VolumeSlider.value) ;
-
+        mixer.SetFloat("VolumeMaster", (int)Settings.Volume);
     }
 
 

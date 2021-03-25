@@ -133,7 +133,6 @@ GameObject:
   m_Component:
   - component: {fileID: 34383506}
   - component: {fileID: 34383509}
-  - component: {fileID: 34383508}
   - component: {fileID: 34383507}
   m_Layer: 8
   m_Name: SceneManager//ChangeScenesAndHasAudio
@@ -163,7 +162,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 34383505}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 24300002, guid: 2607f67ce211ab84da665639be476986,
     type: 2}
@@ -253,24 +252,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &34383508
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 34383505}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a5c8a61c9a88664eac239666a0605c2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bgMusic: {fileID: 34383507}
-  VolumeSlider: {fileID: 4119778939312105636}
-  mixer: {fileID: 24100000, guid: 2607f67ce211ab84da665639be476986, type: 2}
-  Details: {fileID: 4119778940023175989}
-  ResolutionDropdown: {fileID: 4119778939178904784}
-  Settings: {fileID: 11400000, guid: 1f3796864cda0c04a9a00897163ea6f0, type: 2}
 --- !u!114 &34383509
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5521,6 +5502,9 @@ MonoBehaviour:
   Details: {fileID: 4119778940023175989}
   ResolutionDropdown: {fileID: 4119778939178904784}
   Settings: {fileID: 11400000, guid: 1f3796864cda0c04a9a00897163ea6f0, type: 2}
+  myParent: {fileID: 0}
+  ResolutionText: {fileID: 0}
+  inEditor: 0
 --- !u!114 &4119778939829283104
 MonoBehaviour:
   m_ObjectHideFlags: 0

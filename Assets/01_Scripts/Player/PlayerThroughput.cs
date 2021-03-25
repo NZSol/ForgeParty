@@ -221,7 +221,6 @@ public class PlayerThroughput : MonoBehaviour
     {
         if (context.started)
         {
-            print("calling anykey");
             if (SceneManager.GetActiveScene().buildIndex == 1)
             {
                 var loader = GameObject.FindWithTag("GameController").GetComponent<Loading>();

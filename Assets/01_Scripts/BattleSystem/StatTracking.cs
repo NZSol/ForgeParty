@@ -40,13 +40,15 @@ public class StatTracking : MonoBehaviour
             }
         }
     }
+    private void Start()
+    {
+        ResetStats();
+    }
     bool count = true;
     bool set = false;
 
     private void Update()
     {
-        curTime = Time.time;
-
         if (screen.activeSelf)
         {
             count = false;
@@ -58,6 +60,13 @@ public class StatTracking : MonoBehaviour
             }
         }
     }
+
+    private void FixedUpdate()
+    {
+        curTime += Time.deltaTime;
+
+    }
+
 
     void setTextVars()
     {
@@ -95,5 +104,13 @@ public class StatTracking : MonoBehaviour
     public void addToPoint(int i)
     {
         pointsEarned = pointsEarned + i;
+    }
+
+    public void ResetStats()
+    {
+        pointsEarned = 0;
+        deliveredWeapons = 0;
+        timeSurvived = 0;
+        curTime = 0;
     }
 }

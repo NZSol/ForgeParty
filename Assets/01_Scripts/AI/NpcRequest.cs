@@ -7,6 +7,7 @@ using UnityEngine.AI;
 
 public class NpcRequest : MonoBehaviour
 {
+    public int playersCount = 0;
     GameObject teamVariables;
 
     public enum AIState { Queue, Flee, Fight};
@@ -94,6 +95,25 @@ public class NpcRequest : MonoBehaviour
 
             case Weapon.weaponType.Axe:
                 _activeWeapon = _axe;
+                break;
+        }
+
+        switch (playersCount)
+        {
+            case 1:
+                timerMax = 80;
+                break;
+                
+            case 2:
+                timerMax = 60;
+                break;
+                
+            case 3:
+                timerMax = 40;
+                break;
+            
+            case 4:
+                timerMax = 40;
                 break;
         }
     }
