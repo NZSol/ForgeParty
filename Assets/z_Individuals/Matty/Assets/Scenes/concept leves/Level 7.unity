@@ -245,6 +245,75 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!1001 &654065589
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 4681746717018587375}
+    m_Modifications:
+    - target: {fileID: 5568879256005120695, guid: 6462c03ccdd6703418b3960631a3572f,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 150.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5568879256005120695, guid: 6462c03ccdd6703418b3960631a3572f,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 27.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5568879256005120695, guid: 6462c03ccdd6703418b3960631a3572f,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 52.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 5568879256005120695, guid: 6462c03ccdd6703418b3960631a3572f,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.49437752
+      objectReference: {fileID: 0}
+    - target: {fileID: 5568879256005120695, guid: 6462c03ccdd6703418b3960631a3572f,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.5055599
+      objectReference: {fileID: 0}
+    - target: {fileID: 5568879256005120695, guid: 6462c03ccdd6703418b3960631a3572f,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.50556004
+      objectReference: {fileID: 0}
+    - target: {fileID: 5568879256005120695, guid: 6462c03ccdd6703418b3960631a3572f,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.49437752
+      objectReference: {fileID: 0}
+    - target: {fileID: 5568879256005120695, guid: 6462c03ccdd6703418b3960631a3572f,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 5568879256005120695, guid: 6462c03ccdd6703418b3960631a3572f,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 1.281
+      objectReference: {fileID: 0}
+    - target: {fileID: 5568879256005120695, guid: 6462c03ccdd6703418b3960631a3572f,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 5568879256005120695, guid: 6462c03ccdd6703418b3960631a3572f,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 5568879256005120698, guid: 6462c03ccdd6703418b3960631a3572f,
+        type: 3}
+      propertyPath: m_Name
+      value: big dust
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 6462c03ccdd6703418b3960631a3572f, type: 3}
 --- !u!1001 &665279324
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -470,6 +539,7 @@ MonoBehaviour:
   Events: {fileID: 1671417000}
   InputObjs: []
   homeScreen: {fileID: 0}
+  JoinInstruct: {fileID: 0}
 --- !u!114 &1671417002
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -552,6 +622,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentPlayerBind: {fileID: 0}
+  lvlSelect: {fileID: 0}
 --- !u!114 &1671417004
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -946,6 +1017,11 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 4577557460261911011}
+    - target: {fileID: 4681746717670229151, guid: 4ff9f6cc1dca15543975e6e7a74a69f5,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -189.6
+      objectReference: {fileID: 0}
     - target: {fileID: 5270755503144134519, guid: 4ff9f6cc1dca15543975e6e7a74a69f5,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -1043,3 +1119,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4ff9f6cc1dca15543975e6e7a74a69f5, type: 3}
+--- !u!4 &4681746717018587375 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6150500139136328675, guid: 4ff9f6cc1dca15543975e6e7a74a69f5,
+    type: 3}
+  m_PrefabInstance: {fileID: 4681746717018587374}
+  m_PrefabAsset: {fileID: 0}
