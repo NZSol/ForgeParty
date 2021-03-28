@@ -111,7 +111,7 @@ public class NpcRequest : MonoBehaviour
                 break;
             
             case 4:
-                timerMax = 40;
+                timerMax = 50;
                 break;
         }
         _slide.maxValue = timerMax;
