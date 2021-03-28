@@ -61,7 +61,7 @@ public class LevelSet : MonoBehaviour
 
             case levels.level2:
                 position = new Vector3(1.9f, 1.8f, 4.4f);
-                camPos = new Vector3(75.7f, 86.1f, -107.5f);
+                camPos = new Vector3(76.3f, 91.9f, -114.5f);
 
                 CurLvl = Instantiate(Level02, parent: god.transform);
 
