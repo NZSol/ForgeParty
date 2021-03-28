@@ -32,6 +32,7 @@ public class BindToPlayer : MonoBehaviour
 
     [SerializeField] GameObject charIconParent = null;
     [SerializeField] GameObject charSelectIcon = null;
+    [SerializeField] GameObject tutorialAsk = null;
 
     private void OnEnable()
     {
@@ -58,6 +59,13 @@ public class BindToPlayer : MonoBehaviour
             players.Clear();
             InputObjs.Clear();
         }
+
+        if (PlayerPrefs.GetInt("TutorialShown") == 0)
+        {
+            tutorialAsk.SetActive(true);
+            
+        }
+
     }
 
     private void OnDisable()

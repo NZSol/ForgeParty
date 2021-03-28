@@ -25,7 +25,9 @@ public class SetVolume : MonoBehaviour
     bool settingsOpen = true;
 
     public bool inEditor;
-
+    int curHeight = 0;
+    int curWidth = 0;
+    Resolution curRes;
     private void Start()
     {
         StartCoroutine(DisableSettingsOnDelay());
@@ -49,6 +51,7 @@ public class SetVolume : MonoBehaviour
                 {
                     PlayerPrefs.SetInt("resolution", i);
                     PlayerPrefs.SetInt("AmISet", 1);
+                    curRes = Resolution[i];
                 }
             }
         }
@@ -62,7 +65,7 @@ public class SetVolume : MonoBehaviour
                 {
                     width = Resolution[i].width;
                     height = Resolution[i].height;
-
+                    curRes = Resolution[i];
                     Screen.SetResolution(width, height, true);
                 }
             }
@@ -137,7 +140,10 @@ public class SetVolume : MonoBehaviour
         PlayerPrefs.SetInt("resolution", ResolutionDropdown.value);
 
         Resolution newResolution = Resolution[PlayerPrefs.GetInt("resolution")];
-        Screen.SetResolution(newResolution.width, newResolution.height, Screen.fullScreen);
+        if (curRes.width != newResolution.width && curRes.height != newResolution.height)
+        {
+            Screen.SetResolution(newResolution.width, newResolution.height, Screen.fullScreen);
+        }
     }
 
     void SetVolumeM()
