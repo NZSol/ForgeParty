@@ -51,31 +51,27 @@ public class NPCSpawner : MonoBehaviour
         switch (PlayersCount)
         {
             case 1:
-                print(PlayersCount);
                 spawnTimer = 15;
-                spawnDiffLow = -5;
-                spawnDiffHigh = 10;
+                spawnDiffLow = -8;
+                spawnDiffHigh = 5;
                 break;
 
             case 2:
-                print(PlayersCount);
-                spawnTimer = 15;
-                spawnDiffLow = -5;
-                spawnDiffLow = 5;
+                spawnTimer = 13;
+                spawnDiffLow = -8;
+                spawnDiffLow = 2;
                 break;
 
             case 3:
-                print(PlayersCount);
                 spawnTimer = 10;
-                spawnDiffLow = -6;
-                spawnDiffHigh = 4;
+                spawnDiffLow = -8;
+                spawnDiffHigh = 0;
                 break;
 
             case 4:
-                print(PlayersCount);
                 spawnTimer = 10;
-                spawnDiffLow = -6;
-                spawnDiffHigh = 4;
+                spawnDiffLow = -8;
+                spawnDiffHigh = 0;
                 break;
         }
     }
@@ -99,7 +95,6 @@ public class NPCSpawner : MonoBehaviour
             {
                 var instance = Instantiate(npcInstance, gameObject.transform);
                 instance.SetActive(true);
-                //instance.setQueuePosition(queuePositions[activeNpcs.Count]);
                 var instanceComponent = instance.GetComponent<NpcRequest>();
                 instanceComponent.GoalQueuePos = queuePositions[activeNpcs.Count];
                 activeNpcs.Add(instance);
@@ -112,6 +107,39 @@ public class NPCSpawner : MonoBehaviour
     void SetClass()
     {
         npcInstance = npcType[Random.Range(0, npcType.Length)];
+        var swordCounter = 0;
+        var axeCounter = 0;
+        GameObject nextNPC = null;
+
+        if (nextNPC == null)
+        {
+            npcInstance = npcType[Random.Range(0, npcType.Length)];
+        }
+        else
+        {
+            npcInstance = nextNPC;
+            nextNPC = null;
+        }
+
+        if (npcInstance == npcType[0])
+        {
+            swordCounter++;
+            axeCounter = 0;
+        }
+        else
+        {
+            axeCounter++;
+            swordCounter = 0;
+        }
+        
+        if (swordCounter == 3)
+        {
+            nextNPC = npcType[1];
+        }
+        else if (axeCounter == 3)
+        {
+            nextNPC = npcType[0];
+        }
     }
 
     public void listRemove(GameObject obj)

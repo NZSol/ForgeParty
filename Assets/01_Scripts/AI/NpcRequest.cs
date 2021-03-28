@@ -83,8 +83,6 @@ public class NpcRequest : MonoBehaviour
 
         Bubble.gameObject.SetActive(false);
 
-        _slide.maxValue = timerMax;
-
         alive = true;
 
         switch (weapon)
@@ -116,6 +114,7 @@ public class NpcRequest : MonoBehaviour
                 timerMax = 40;
                 break;
         }
+        _slide.maxValue = timerMax;
     }
 
     [SerializeField] GameObject heldWeapon = null;
