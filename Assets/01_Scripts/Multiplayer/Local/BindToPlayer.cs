@@ -32,7 +32,6 @@ public class BindToPlayer : MonoBehaviour
 
     [SerializeField] GameObject charIconParent = null;
     [SerializeField] GameObject charSelectIcon = null;
-    [SerializeField] GameObject tutorialAsk = null;
 
     private void OnEnable()
     {
@@ -51,7 +50,7 @@ public class BindToPlayer : MonoBehaviour
         {
             join.SetPlayerBind(this);
             Events.GetComponent<PlayerInputManager>().EnableJoining();
-            GetComponent<FirstSelect>().deselect();
+            //GetComponent<FirstSelect>().deselect();
             foreach (GameObject obj in players)
             {
                 Destroy(obj);
@@ -60,11 +59,6 @@ public class BindToPlayer : MonoBehaviour
             InputObjs.Clear();
         }
 
-        if (PlayerPrefs.GetInt("TutorialShown") == 0)
-        {
-            tutorialAsk.SetActive(true);
-            
-        }
 
     }
 
@@ -133,7 +127,7 @@ public class BindToPlayer : MonoBehaviour
         {
             obj.SetActive(false);
         }
-        JoinInstructions.SetActive(true);
+        JoinInstructions.SetActive(false);
     }
 
     public void disableJoin()

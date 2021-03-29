@@ -40,6 +40,7 @@ public class FirstSelect : MonoBehaviour
     {
         StartCoroutine(highlight());
     }
+
     public void SetBtnTuto()
     {
         StartCoroutine(highlight());

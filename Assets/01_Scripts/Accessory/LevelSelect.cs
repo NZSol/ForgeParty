@@ -9,10 +9,13 @@ public class LevelSelect : MonoBehaviour
     public static LevelSelect instance = null;
     public int levelVal;
 
+    [SerializeField] GameObject TutoQuestionPanel = null;
 
     public bool allPlayersReady = false;
     bool player1Ready = false, player2Ready = false, player3Ready = false, player4Ready = false;
     bool player1Exists = false, player2Exists = false, player3Exists = false, player4Exists = false;
+
+    public bool setPrefFalse = false;
 
     private void Awake()
     {
@@ -29,6 +32,14 @@ public class LevelSelect : MonoBehaviour
             }
         }
 
+    }
+
+    private void Start()
+    {
+        if (setPrefFalse)
+        {
+            PlayerPrefs.SetInt("SeenTutorial", 0);
+        }
     }
 
     public void setLevel()
@@ -164,5 +175,18 @@ public class LevelSelect : MonoBehaviour
     }
 
 
+    public void SetPlayerPrefTutorial()
+    {
+        PlayerPrefs.SetInt("SeenTutorial", 1);
+    }
+
+    public void CheckPlayerPrefTutorial()
+    {
+        if (PlayerPrefs.GetInt("SeenTutorial") == 0)
+        {
+            TutoQuestionPanel.SetActive(true);
+            SetPlayerPrefTutorial();
+        }
+    }
 
 }

@@ -4481,7 +4481,7 @@ GameObject:
   m_Component:
   - component: {fileID: 174414167}
   m_Layer: 5
-  m_Name: Connect to screenSwaper
+  m_Name: nextBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -23419,15 +23419,15 @@ GameObject:
   - component: {fileID: 555011141}
   - component: {fileID: 555011140}
   - component: {fileID: 555011139}
-  - component: {fileID: 555011142}
   - component: {fileID: 555011143}
+  - component: {fileID: 555011142}
   m_Layer: 5
   m_Name: 'SinglePlayerMenu//maybe we dont need this '
   m_TagString: CurScene
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &555011138
 RectTransform:
   m_ObjectHideFlags: 0
@@ -23443,7 +23443,6 @@ RectTransform:
   - {fileID: 1214561033}
   - {fileID: 894849405}
   - {fileID: 130804019}
-  - {fileID: 1090573026}
   m_Father: {fileID: 1007325080}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -23519,7 +23518,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FirstObject: {fileID: 1656432531}
   lastBtn: {fileID: 0}
-  system: {fileID: 0}
+  system: {fileID: 308992409}
   btnMenu: 0
 --- !u!114 &555011143
 MonoBehaviour:
@@ -23546,7 +23545,6 @@ MonoBehaviour:
   charIconParent: {fileID: 1214561032}
   charSelectIcon: {fileID: 1205553959995803810, guid: 2e191d9b4c921d34e97c5a1a59485142,
     type: 3}
-  tutorialAsk: {fileID: 0}
 --- !u!1 &557340623
 GameObject:
   m_ObjectHideFlags: 0
@@ -25101,7 +25099,6 @@ MonoBehaviour:
   charIconParent: {fileID: 1884228517}
   charSelectIcon: {fileID: 1205553959995803810, guid: 2e191d9b4c921d34e97c5a1a59485142,
     type: 3}
-  tutorialAsk: {fileID: 0}
 --- !u!114 &609864815
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33816,7 +33813,6 @@ MonoBehaviour:
   JoinInstructions: {fileID: 0}
   charIconParent: {fileID: 0}
   charSelectIcon: {fileID: 0}
-  tutorialAsk: {fileID: 0}
 --- !u!114 &733635568
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36346,7 +36342,7 @@ GameObject:
   m_Component:
   - component: {fileID: 819404182}
   m_Layer: 5
-  m_Name: Connect to screenSwaper (1)
+  m_Name: backBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -40201,7 +40197,7 @@ RectTransform:
   - {fileID: 1902654930}
   - {fileID: 5115802574363132758}
   m_Father: {fileID: 1007325080}
-  m_RootOrder: 12
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -41747,6 +41743,7 @@ RectTransform:
   - {fileID: 363271310}
   - {fileID: 1496374902}
   - {fileID: 197529934}
+  - {fileID: 1090573026}
   - {fileID: 1034912229}
   - {fileID: 954749195}
   - {fileID: 1571705717}
@@ -42183,6 +42180,18 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1090573025}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1027173244
 MonoBehaviour:
@@ -43836,7 +43845,6 @@ MonoBehaviour:
   charIconParent: {fileID: 393432624}
   charSelectIcon: {fileID: 1205553959995803810, guid: 2e191d9b4c921d34e97c5a1a59485142,
     type: 3}
-  tutorialAsk: {fileID: 0}
 --- !u!1 &1075207526
 GameObject:
   m_ObjectHideFlags: 0
@@ -44301,14 +44309,14 @@ GameObject:
   - component: {fileID: 1090573026}
   - component: {fileID: 1090573029}
   - component: {fileID: 1090573028}
-  - component: {fileID: 1090573027}
+  - component: {fileID: 1090573030}
   m_Layer: 5
-  m_Name: Image
-  m_TagString: Untagged
+  m_Name: TutoQuestion
+  m_TagString: navMenu
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1090573026
 RectTransform:
   m_ObjectHideFlags: 0
@@ -44317,34 +44325,18 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1090573025}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 88.61333}
+  m_LocalPosition: {x: 0, y: 0, z: 91.768524}
   m_LocalScale: {x: 1.4733, y: 1.4733, z: 1.4733}
   m_Children:
   - {fileID: 1866180631}
-  m_Father: {fileID: 555011138}
-  m_RootOrder: 4
+  m_Father: {fileID: 1007325080}
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: -0.000030517578}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1090573027
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1090573025}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9fada6ea9f0eb04478d5270b9332d3fd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  FirstObject: {fileID: 1027173241}
-  lastBtn: {fileID: 0}
-  system: {fileID: 308992409}
-  btnMenu: 0
 --- !u!114 &1090573028
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44383,6 +44375,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1090573025}
   m_CullTransparentMesh: 0
+--- !u!114 &1090573030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1090573025}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9fada6ea9f0eb04478d5270b9332d3fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FirstObject: {fileID: 1027173241}
+  lastBtn: {fileID: 0}
+  system: {fileID: 308992409}
+  btnMenu: 0
 --- !u!1 &1091107057
 GameObject:
   m_ObjectHideFlags: 0
@@ -44727,7 +44735,6 @@ MonoBehaviour:
   charIconParent: {fileID: 614037112}
   charSelectIcon: {fileID: 1205553959995803810, guid: 2e191d9b4c921d34e97c5a1a59485142,
     type: 3}
-  tutorialAsk: {fileID: 0}
 --- !u!114 &1107392007
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63201,7 +63208,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelVal: 0
+  TutoQuestionPanel: {fileID: 1090573025}
   allPlayersReady: 0
+  setPrefFalse: 1
 --- !u!4 &1493120870
 Transform:
   m_ObjectHideFlags: 0
@@ -64968,7 +64977,7 @@ RectTransform:
   m_Children:
   - {fileID: 32084404}
   m_Father: {fileID: 1007325080}
-  m_RootOrder: 13
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
@@ -71376,7 +71385,7 @@ GameObject:
   - component: {fileID: 1866180633}
   - component: {fileID: 1866180632}
   m_Layer: 5
-  m_Name: Ore
+  m_Name: BackGround
   m_TagString: navMenu
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -73880,6 +73889,18 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1289686607}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
         m_CallState: 2
       - m_Target: {fileID: 6386427657235907481}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
@@ -78907,6 +78928,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1493120869}
+        m_TargetAssemblyTypeName: LevelSelect, Assembly-CSharp
+        m_MethodName: SetPlayerPrefTutorial
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &3551985590502787380
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -79693,7 +79726,7 @@ PrefabInstance:
     - target: {fileID: 4119778939470943494, guid: aa19ae1f45f4cbc43b346a34ce07085f,
         type: 3}
       propertyPath: m_RootOrder
-      value: 11
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 4119778939470943494, guid: aa19ae1f45f4cbc43b346a34ce07085f,
         type: 3}
@@ -81016,6 +81049,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1493120869}
+        m_TargetAssemblyTypeName: LevelSelect, Assembly-CSharp
+        m_MethodName: CheckPlayerPrefTutorial
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!224 &6386427658283750811
 RectTransform:
   m_ObjectHideFlags: 0
@@ -81467,7 +81512,6 @@ MonoBehaviour:
   JoinInstructions: {fileID: 0}
   charIconParent: {fileID: 0}
   charSelectIcon: {fileID: 0}
-  tutorialAsk: {fileID: 0}
 --- !u!114 &7186953427608885802
 MonoBehaviour:
   m_ObjectHideFlags: 0
