@@ -13,7 +13,6 @@ public class FirstSelect : MonoBehaviour
     [SerializeField] GameObject lastBtn = null;
     [SerializeField] EventSystem system = null;
 
-
     public bool btnMenu = false;
 
     private void OnEnable()
@@ -22,12 +21,12 @@ public class FirstSelect : MonoBehaviour
         {
             system = GameObject.FindWithTag("Event").GetComponent<EventSystem>();
         }
-        if (gameObject.tag == "navMenu" && !btnMenu)
+        if (gameObject.tag == "navMenu" || gameObject.tag == "Tutorial" && !btnMenu)
         {
             SetBtn();
         }
-        
     }
+
 
     public void setLastBtn(GameObject obj)
     {
