@@ -18,7 +18,6 @@ public class Bench : Tool
         else
         {
             myObject.transform.localScale = baseScale;
-            print(myObject.transform.localScale + "  Out");
             hasContents = false;
             return myObject;
         }
@@ -28,7 +27,6 @@ public class Bench : Tool
     {
         myObject = Instantiate(item, benchmark);
         baseScale = myObject.transform.localScale;
-        print(myObject.transform.localScale + "  IN");
         switch (item.GetComponent<Item>().tool)
         {
             case Item.Tool.Furnace:
