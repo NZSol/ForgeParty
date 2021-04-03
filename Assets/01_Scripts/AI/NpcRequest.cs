@@ -9,6 +9,7 @@ public class NpcRequest : MonoBehaviour
 {
     public int playersCount = 0;
     GameObject teamVariables;
+    public GameObject god = null;
 
     public enum AIState { Queue, Flee, Fight};
     public AIState state = new AIState();
@@ -44,6 +45,9 @@ public class NpcRequest : MonoBehaviour
 
     [SerializeField] Image _sword = null;
     [SerializeField] Image _axe = null;
+
+    [SerializeField] Image _smile = null;
+    [SerializeField] Image _angry = null;
     [SerializeField] Image _activeWeapon = null;
 
     [SerializeField] Slider _slide = null;
@@ -81,6 +85,8 @@ public class NpcRequest : MonoBehaviour
         agent.SetDestination(CurrentQueuePos.transform.position);
         state = AIState.Queue;
 
+        _smile.enabled = false;
+        _angry.enabled = false;
         Bubble.gameObject.SetActive(false);
 
         alive = true;
@@ -150,6 +156,9 @@ public class NpcRequest : MonoBehaviour
                     case 2:
                         returnTime = heldWeapon.GetComponent<WeaponVars>().timeVal;
                         break;
+                    case 3:
+                        returnTime = (int)(heldWeapon.GetComponent<WeaponVars>().timeVal / 1.5f);
+                        break;
                     case 4:
                         returnTime = (int)(heldWeapon.GetComponent<WeaponVars>().timeVal / 1.5f);
                         break;
@@ -171,8 +180,6 @@ public class NpcRequest : MonoBehaviour
                 }
             }
         }
-
-
     }
 
     private void Update()
@@ -190,19 +197,26 @@ public class NpcRequest : MonoBehaviour
         }
         if (timer >= timerMax)
         {
+            if (god.GetComponent<StockMode>().isActiveAndEnabled)
+            {
+                god.GetComponent<StockMode>().ReduceChances();
+            }
             state = AIState.Flee;
             timer -= timerMax;
             agent.SetDestination(fleePos.transform.position);
             anim.SetBool("Moving", true);
-            Bubble.gameObject.SetActive(false);
+            _angry.enabled = true;
+            _activeWeapon.enabled = false;
         }
 
         if (GotWeapon == true)
         {
+            timer = 0;
+            _smile.enabled = true;
+            _activeWeapon.enabled = false;
             state = AIState.Fight;
             agent.SetDestination(battlePos.transform.position);
             anim.SetBool("Moving", true);
-            Bubble.gameObject.SetActive(false);
         }
 
         switch (state)
@@ -258,7 +272,6 @@ public class NpcRequest : MonoBehaviour
 
     void FleeFunc()
     {
-        Bubble.gameObject.SetActive(false);
         RemoveMe();
 
         if (agent.pathPending)

@@ -50,6 +50,16 @@ public class LevelSelect : MonoBehaviour
             god.GetComponent<LevelSet>().SetTargetLevel(levelVal);
         }
     }
+    public GameMode.gameMode myMode;
+    public void SetGameMode(int mode)
+    {
+        myMode = (GameMode.gameMode)mode;
+    }
+
+    public GameMode.gameMode GetGameMode()
+    {
+        return myMode;
+    }
 
     public void AssignLevelValue(int var)
     {
@@ -96,6 +106,12 @@ public class LevelSelect : MonoBehaviour
                 player3Ready = false;
                 break;
             case 4:
+                player4Ready = false;
+                break;
+            case 5:
+                player1Ready = false;
+                player2Ready = false;
+                player3Ready = false;
                 player4Ready = false;
                 break;
         }
@@ -171,6 +187,12 @@ public class LevelSelect : MonoBehaviour
             case 4:
                 player4Exists = true;
                 break;
+            case 5:
+                player1Exists = false;
+                player2Exists = false;
+                player3Exists = false;
+                player4Exists = false;
+                break;
         }
     }
 
@@ -188,5 +210,14 @@ public class LevelSelect : MonoBehaviour
             SetPlayerPrefTutorial();
         }
     }
+
+    public void playersReset()
+    {
+        print("HitTarget");
+        SetExistance(5);
+        SetPlayerReady(5);
+        allPlayersReady = false;
+    }
+
 
 }

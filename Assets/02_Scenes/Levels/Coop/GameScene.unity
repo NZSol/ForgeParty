@@ -2836,10 +2836,12 @@ GameObject:
   - component: {fileID: 1558826699264140045}
   - component: {fileID: 3316777352360396782}
   - component: {fileID: 3316777352360396779}
+  - component: {fileID: 3316777352360396784}
   - component: {fileID: 3316777352360396774}
   - component: {fileID: 3316777352360396775}
   - component: {fileID: 3316777352360396776}
   - component: {fileID: 3316777352360396777}
+  - component: {fileID: 3316777352360396783}
   - component: {fileID: 3316777352360396778}
   - component: {fileID: 3316777352360396780}
   - component: {fileID: 3316777352360396781}
@@ -2926,12 +2928,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3316777352360396773}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5650cb7f9f55a214ab2cd37182c1d553, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameState: {fileID: 0}
+  gameState: {fileID: 3316777352360396776}
   secondsLeft: 10
   takingAway: 0
   addseconds: 0
@@ -2942,6 +2944,7 @@ MonoBehaviour:
   endColor: {r: 1, g: 0, b: 0, a: 1}
   startColor: {r: 0, g: 0, b: 0, a: 0}
   threshHold: 0
+  timerObj: {fileID: 4058292623233364403}
   testing: 0
 --- !u!114 &3316777352360396779
 MonoBehaviour:
@@ -2955,7 +2958,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8da0ab9b2709e824cbead4fae2aa0b36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DesiredLvl: 4
+  DesiredLvl: 1
   Level01: {fileID: 4973023169813014739, guid: b277bccd4ca385d488fb4c89a99b9280, type: 3}
   Level02: {fileID: 5705761377717967221, guid: cdb877ad0e1ffb347830299a4047b83f, type: 3}
   Level03: {fileID: 8115305032363197409, guid: 3183af2ae5356a640bf892c6a62af972, type: 3}
@@ -3004,6 +3007,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   frames: 4
+--- !u!114 &3316777352360396783
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3316777352360396773}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67771a6e79ba5ea48b102dc556de26ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameState: {fileID: 3316777352360396776}
+  lives: 0
+  LivesMax: 5
+--- !u!114 &3316777352360396784
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3316777352360396773}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa59ee7bb7ecf78428344b24539162b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myMode: 0
+  timeAttack: {fileID: 3316777352360396778}
+  Survival: {fileID: 3316777352360396783}
+  SetManual: 1
 --- !u!1 &3767297806372516598
 GameObject:
   m_ObjectHideFlags: 0
@@ -3039,7 +3073,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &4119778938667405225
 GameObject:
   m_ObjectHideFlags: 0

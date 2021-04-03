@@ -100,6 +100,7 @@ public class NPCSpawner : MonoBehaviour
                 activeNpcs.Add(instance);
                 instanceComponent.myTeamList = TeamWeaponList;
                 instanceComponent.playersCount = PlayersCount;
+                instanceComponent.god = GodObj;
             }
         }
     }
