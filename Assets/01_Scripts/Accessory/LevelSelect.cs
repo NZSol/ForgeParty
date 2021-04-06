@@ -66,7 +66,7 @@ public class LevelSelect : MonoBehaviour
         levelVal = var;
     }
 
-    int maxPlayers = 0;
+    public int maxPlayers = 0;
     public void AssignPlayerCount (int i)
     {
         maxPlayers = i;
