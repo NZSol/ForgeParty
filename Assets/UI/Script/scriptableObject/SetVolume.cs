@@ -46,7 +46,6 @@ public class SetVolume : MonoBehaviour
 
             if (PlayerPrefs.GetInt("AmISet") == 0)
             {
-                print("running");
                 if (Resolution[i].width == 1920 && Resolution[i].height == 1080)
                 {
                     PlayerPrefs.SetInt("resolution", i);

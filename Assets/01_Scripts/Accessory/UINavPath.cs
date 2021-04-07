@@ -12,8 +12,6 @@ public class UINavPath : MonoBehaviour
     public Toggle[] ToggleObjs = null;
     public List<GameObject> contentChildren = new List<GameObject>();
 
-    Navigation scrollerNav = new Navigation();
-
     void Start()
     {
         scroller = gameObject.GetComponentInChildren<Scrollbar>();
@@ -24,41 +22,10 @@ public class UINavPath : MonoBehaviour
         {
             contentChildren.Add(obj.gameObject);
         }
-
-
-        //Create Navigation directory
-        Navigation toggleNav = new Navigation();
-        toggleNav.mode = Navigation.Mode.Explicit;
-
-
-        //Set buttons for directory
-        toggleNav.selectOnRight = scroller;
-        for (int i = 0; i < contentChildren.Count; i++)
-        {
-            if (i > 0)
-            {
-                toggleNav.selectOnUp = contentChildren[i-1].GetComponent<Toggle>();
-            }
-            if (i < contentChildren.Count - 1)
-            {
-                toggleNav.selectOnDown = contentChildren[i + 1].GetComponent<Toggle>();
-            }
-            contentChildren[i].GetComponent<Toggle>().navigation = toggleNav;
-        }
-
-        scrollerNav.selectOnLeft = contentChildren[PlayerPrefs.GetInt("resolution")].GetComponent<Toggle>();
-        toggleNav.mode = Navigation.Mode.Explicit;
     }
 
     private void Update()
     {
-        
-        if (scrollerNav.mode != Navigation.Mode.Explicit)
-        {
-            scrollerNav.mode = Navigation.Mode.Explicit;
-        }
-        scroller.navigation = scrollerNav;
-
         float value = (GetSelectedToggle() / contentChildren.Count) / 1 ;
         float invertValue = 1 - value;
         scroller.value = invertValue;
