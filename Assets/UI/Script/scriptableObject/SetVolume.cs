@@ -104,36 +104,18 @@ public class SetVolume : MonoBehaviour
     IEnumerator DisableSettingsOnDelay()
     {
         yield return new WaitForSeconds(0.0001f);
-        changeBool();
         myParent.SetActive(false);
     }
 
 
-    public void changeBool()
-    {
-        settingsOpen = !settingsOpen;
-    }
-
-    private void Update()
-    {
-        if (settingsOpen == true)
-        {
-            SetVolumeM();
-
-            SetDetail();
-
-            SetResolution();
-        }
-    }
-
-   void SetDetail()
+    public void SetDetail()
     {
         PlayerPrefs.SetInt("myQuality", Details.value);
         Settings.detail = PlayerPrefs.GetInt("myQuality");
         QualitySettings.SetQualityLevel(PlayerPrefs.GetInt("myQuality"));
     }
 
-    void SetResolution()
+    public void SetResolution()
     {
         Settings.resolution = ResolutionDropdown.value;
         PlayerPrefs.SetInt("resolution", ResolutionDropdown.value);
@@ -145,8 +127,9 @@ public class SetVolume : MonoBehaviour
         }
     }
 
-    void SetVolumeM()
+    public void SetVolumeM()
     {
+        print("Setting Resolution");
         PlayerPrefs.SetFloat("volume", VolumeSlider.value);
         Settings.Volume = PlayerPrefs.GetFloat("volume");
 
