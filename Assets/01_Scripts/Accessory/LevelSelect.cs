@@ -19,6 +19,9 @@ public class LevelSelect : MonoBehaviour
 
     public bool settingsDisable = false;
 
+
+    [SerializeField] CheckCode myLevelSet = null;
+
     private void Awake()
     {
         if (instance == null)
@@ -42,7 +45,9 @@ public class LevelSelect : MonoBehaviour
         {
             PlayerPrefs.SetInt("SeenTutorial", 0);
         }
+
     }
+
 
     public void setLevel()
     {
@@ -53,9 +58,9 @@ public class LevelSelect : MonoBehaviour
         }
     }
     public GameMode.gameMode myMode;
-    public void SetGameMode(int mode)
+    public void SetGameMode(GameMode.gameMode mode)
     {
-        myMode = (GameMode.gameMode)mode;
+        myMode = mode;
     }
 
     public GameMode.gameMode GetGameMode()
@@ -229,6 +234,11 @@ public class LevelSelect : MonoBehaviour
             {
                 Time.timeScale = 1;
             }
+        }
+
+        if (myLevelSet == null && SceneManager.GetActiveScene().buildIndex == 0)
+        {
+            myLevelSet = GameObject.FindWithTag("Event").GetComponent<CheckCode>();
         }
     }
 

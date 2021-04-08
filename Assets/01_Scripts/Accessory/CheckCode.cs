@@ -6,7 +6,9 @@ using UnityEngine.UI;
 public class CheckCode : MonoBehaviour
 {
     [SerializeField] InputField textInputField = null;
-    
+
+    public GameMode.gameMode mode;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -30,5 +32,11 @@ public class CheckCode : MonoBehaviour
         {
             textInputField.text = string.Empty;
         }
+    }
+
+    public void SetGameMode(int i)
+    {
+        mode = (GameMode.gameMode)i;
+        LevelSelect.instance.SetGameMode(mode);
     }
 }

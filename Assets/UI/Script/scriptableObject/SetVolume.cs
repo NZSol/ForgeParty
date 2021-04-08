@@ -102,10 +102,13 @@ public class SetVolume : MonoBehaviour
 
     private void Update()
     {
-        if (LevelSelect.instance.settingsDisable && myParent.activeSelf)
+        if (LevelSelect.instance != null)
         {
-            myParent.SetActive(false);
-            LevelSelect.instance.settingsDisable = false;
+            if (LevelSelect.instance.settingsDisable && myParent.activeSelf)
+            {
+                myParent.SetActive(false);
+                LevelSelect.instance.settingsDisable = false;
+            }
         }
     }
 

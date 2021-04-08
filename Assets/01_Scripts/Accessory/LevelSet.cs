@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelSet : MonoBehaviour
 {
@@ -26,6 +27,7 @@ public class LevelSet : MonoBehaviour
 
     [SerializeField]
     GameObject intSet = null;
+
 
     private void Start()
     {
