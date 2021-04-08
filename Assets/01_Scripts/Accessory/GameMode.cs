@@ -15,7 +15,10 @@ public class GameMode : MonoBehaviour
 
     private void Start()
     {
-        myMode = LevelSelect.instance.GetGameMode();
+        if (LevelSelect.instance != null)
+        {
+            myMode = LevelSelect.instance.GetGameMode();
+        }
         onStart(myMode);
     }
 

@@ -26,7 +26,7 @@ public class UINavPath : MonoBehaviour
 
     private void Update()
     {
-        float value = (GetSelectedToggle() / contentChildren.Count) / 1 ;
+        float value = (GetSelectedToggle() / contentChildren.Count);
         float invertValue = 1 - value;
         scroller.value = invertValue;
     }

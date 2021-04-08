@@ -42,13 +42,13 @@ public class PlayerThroughput : MonoBehaviour
         StartCoroutine(DelayedStart());
         spawned = false;
         CharSelectScript = GetComponent<CharSelect>();
+        titleScene = SceneManager.GetSceneByBuildIndex(0);
+        curScene = SceneManager.GetActiveScene();
     }
 
     IEnumerator DelayedStart()
     {
         yield return new WaitForSeconds(0.5f);
-        curScene = SceneManager.GetActiveScene();
-        titleScene = SceneManager.GetSceneByBuildIndex(0);
         DontDestroyOnLoad(this.gameObject);
 
         if (curScene.buildIndex == titleScene.buildIndex)
@@ -87,6 +87,7 @@ public class PlayerThroughput : MonoBehaviour
 
     IEnumerator DelayedUpdate()
     {
+        pauser = GameObject.FindWithTag("Viewport").GetComponent<PauseSystem>();
         yield return new WaitForSeconds(0.5f);
         curScene = SceneManager.GetActiveScene();
         position = GameObject.FindWithTag("LevelGod").GetComponent<StartPos>();
@@ -106,7 +107,7 @@ public class PlayerThroughput : MonoBehaviour
         position.Positioning(PlayerChar);
     }
 
-    public void readMove (CallbackContext context)
+    public void readMove(CallbackContext context)
     {
         switch (SceneManager.GetActiveScene().buildIndex)
         {
@@ -133,17 +134,19 @@ public class PlayerThroughput : MonoBehaviour
                 }
                 break;
 
-                //GAMEPLAY
+            //GAMEPLAY
             case 2:
-                if (moveScript != null)
+                if (!pauser.pauseNow)
                 {
-                    moveScript.stick = context.ReadValue<Vector2>();
-                    moveScript.Move(context);
-                    interactScript.DetectMove(context);
+                    if (moveScript != null)
+                    {
+                        moveScript.stick = context.ReadValue<Vector2>();
+                        moveScript.Move(context);
+                        interactScript.DetectMove(context);
+                    }
                 }
                 break;
         }
-
     }
 
     public void readDash(CallbackContext context)
@@ -167,11 +170,14 @@ public class PlayerThroughput : MonoBehaviour
                 }
                 break;
 
-                //GAMEPLAY
+            //GAMEPLAY
             case 2:
-                if (moveScript != null)
+                if (pauser != null)
                 {
-                    moveScript.Dash(context);
+                    if (moveScript != null)
+                    {
+                        moveScript.Dash(context);
+                    }
                 }
                 break;
         }
@@ -179,9 +185,12 @@ public class PlayerThroughput : MonoBehaviour
 
     public void readPress(CallbackContext context)
     {
-        if (interactScript != null)
+        if (!pauser.pauseNow)
         {
-            interactScript.InteractPress(context);
+            if (interactScript != null)
+            {
+                interactScript.InteractPress(context);
+            }
         }
     }
 
@@ -189,8 +198,7 @@ public class PlayerThroughput : MonoBehaviour
     {
         if (context.started && active)
         {
-            print("hitting");
-            if (curScene.buildIndex == titleScene.buildIndex)
+            if (curScene.buildIndex == 0)
             {
                 active = false;
                 if (ready)
@@ -249,5 +257,24 @@ public class PlayerThroughput : MonoBehaviour
     public void SetInput(PlayerInput input)
     {
         this.input = input;
+    }
+
+
+    [SerializeField] PauseSystem pauser = null;
+    public void Pause(CallbackContext context)
+    {
+        if (context.started && active)
+        {
+            active = false;
+            if (curScene.buildIndex == 2)
+            {
+                print("hitting");
+                pauser.Pause();
+            }
+        }
+        if (context.canceled)
+        {
+            active = true;
+        }
     }
 }

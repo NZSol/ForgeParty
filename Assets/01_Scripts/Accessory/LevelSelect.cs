@@ -17,6 +17,8 @@ public class LevelSelect : MonoBehaviour
 
     public bool setPrefFalse = false;
 
+    public bool settingsDisable = false;
+
     private void Awake()
     {
         if (instance == null)
@@ -219,5 +221,15 @@ public class LevelSelect : MonoBehaviour
         allPlayersReady = false;
     }
 
+    private void Update()
+    {
+        if (SceneManager.GetActiveScene().buildIndex != SceneManager.GetSceneByBuildIndex(2).buildIndex)
+        {
+            if (Time.timeScale != 1)
+            {
+                Time.timeScale = 1;
+            }
+        }
+    }
 
 }

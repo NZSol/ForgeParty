@@ -100,6 +100,14 @@ public class SetVolume : MonoBehaviour
         #endregion
     }
 
+    private void Update()
+    {
+        if (LevelSelect.instance.settingsDisable && myParent.activeSelf)
+        {
+            myParent.SetActive(false);
+            LevelSelect.instance.settingsDisable = false;
+        }
+    }
 
     IEnumerator DisableSettingsOnDelay()
     {
