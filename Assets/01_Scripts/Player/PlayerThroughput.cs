@@ -4,15 +4,20 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEngine.InputSystem.InputAction;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class PlayerThroughput : MonoBehaviour
 {
-    [SerializeField] GameObject myPlayer = null;
+    public bool canAct = false;
+
+    public GameObject myPlayer = null;
+    public CharSelect.skin mySkin = 0;
 
     Movement moveScript;
 
     Interact interactScript;
-    CharSelect CharSelectScript;
+    public CharSelect CharSelectScript;
 
     [SerializeField] Scene curScene;
     [SerializeField] Scene titleScene;
@@ -22,20 +27,25 @@ public class PlayerThroughput : MonoBehaviour
     [SerializeField] GameObject eventSystem = null;
 
     PlayerInput input;
-    bool active = false;
+    bool active = true;
 
     GameObject PlayerChar = null;
     public bool spawned = false;
+
+    public int playerIndex = 0;
+    public bool ready = false;
+
+    [SerializeField] GameObject IconSelect = null;
 
     private void Start()
     {
         StartCoroutine(DelayedStart());
         spawned = false;
+        CharSelectScript = GetComponent<CharSelect>();
     }
 
     IEnumerator DelayedStart()
     {
-        print("running");
         yield return new WaitForSeconds(0.5f);
         curScene = SceneManager.GetActiveScene();
         titleScene = SceneManager.GetSceneByBuildIndex(0);
@@ -44,12 +54,27 @@ public class PlayerThroughput : MonoBehaviour
         if (curScene.buildIndex == titleScene.buildIndex)
         {
             eventSystem = GameObject.FindWithTag("Event");
-
+            LevelSelect.instance.SetExistance(playerIndex);
         }
     }
 
+
     private void Update()
     {
+        if (curScene.buildIndex == titleScene.buildIndex)
+        {
+            if (ready && !LevelSelect.instance.GetPlayerReady(playerIndex))
+            {
+                LevelSelect.instance.SetPlayerReady(playerIndex);
+                CharSelectScript.InvertBtnActive();
+            }
+            if (!ready && LevelSelect.instance.GetPlayerReady(playerIndex))
+            {
+                LevelSelect.instance.SetPlayerUnready(playerIndex);
+                CharSelectScript.InvertBtnActive();
+            }
+        }
+
         if (PlayerChar == null)
         {
             if (SceneManager.GetActiveScene().buildIndex == SceneManager.GetSceneByBuildIndex(2).buildIndex && !spawned)
@@ -59,6 +84,7 @@ public class PlayerThroughput : MonoBehaviour
             }
         }
     }
+
     IEnumerator DelayedUpdate()
     {
         yield return new WaitForSeconds(0.5f);
@@ -73,27 +99,81 @@ public class PlayerThroughput : MonoBehaviour
         SceneManager.MoveGameObjectToScene(this.gameObject, SceneManager.GetActiveScene());
         eventSystem = GameObject.FindWithTag("Event");
         PlayerChar = Instantiate(myPlayer);
+        PlayerChar.GetComponent<CharSelect>().mySkin = mySkin;
         moveScript = PlayerChar.GetComponent<Movement>();
         interactScript = PlayerChar.GetComponent<Interact>();
         interactScript.active = true;
-        CharSelectScript = PlayerChar.GetComponent<CharSelect>();
         position.Positioning(PlayerChar);
     }
 
     public void readMove (CallbackContext context)
     {
-        if (moveScript != null)
+        switch (SceneManager.GetActiveScene().buildIndex)
         {
-            moveScript.stick = context.ReadValue<Vector2>();
-            moveScript.Move(context);
+            //MENUS
+            case 0:
+                if (!ready)
+                {
+                    if (context.ReadValue<Vector2>().x == 1 && active)
+                    {
+                        active = false;
+                        CharSelectScript.ChangeCharRight();
+                        CharSelectScript.IconSwitch(mySkin);
+                    }
+                    else if (context.ReadValue<Vector2>().x == -1 && active)
+                    {
+                        active = false;
+                        CharSelectScript.ChangeCharLeft();
+                        CharSelectScript.IconSwitch(mySkin);
+                    }
+                }
+                if (context.canceled)
+                {
+                    active = true;
+                }
+                break;
+
+                //GAMEPLAY
+            case 2:
+                if (moveScript != null)
+                {
+                    moveScript.stick = context.ReadValue<Vector2>();
+                    moveScript.Move(context);
+                    interactScript.DetectMove(context);
+                }
+                break;
         }
+
     }
 
     public void readDash(CallbackContext context)
     {
-        if (moveScript != null)
+        switch (SceneManager.GetActiveScene().buildIndex)
         {
-            moveScript.Dash(context);
+            //MENUS
+            case 0:
+                if (context.started && active)
+                {
+                    active = false;
+                    if (canAct)
+                    {
+                        ready = true;
+                    }
+
+                }
+                if (context.canceled)
+                {
+                    active = true;
+                }
+                break;
+
+                //GAMEPLAY
+            case 2:
+                if (moveScript != null)
+                {
+                    moveScript.Dash(context);
+                }
+                break;
         }
     }
 
@@ -103,12 +183,58 @@ public class PlayerThroughput : MonoBehaviour
         {
             interactScript.InteractPress(context);
         }
+    }
 
-        if (curScene.buildIndex == titleScene.buildIndex)
+    public void Cancel(CallbackContext context)
+    {
+        if (context.started && active)
         {
-            eventSystem.GetComponent<PlayerJoinHandler>().LeavePlayer(input);
-            eventSystem.GetComponent<PlayerJoinHandler>().CancelFunc();
+            print("hitting");
+            if (curScene.buildIndex == titleScene.buildIndex)
+            {
+                active = false;
+                if (ready)
+                {
+                    ready = false;
+                    print("ready");
+                    StartCoroutine(DeselectBtn());
+                }
+                else
+                {
+                    print("unready");
+                    if (eventSystem == null)
+                    {
+                        eventSystem = GameObject.FindWithTag("Event");
+                    }
+                    eventSystem.GetComponent<PlayerJoinHandler>().LeavePlayer(input);
+                    eventSystem.GetComponent<PlayerJoinHandler>().CancelFunc();
+                }
+            }
         }
+        if (context.canceled)
+        {
+            active = true;
+        }
+    }
+
+    public void anyKey(CallbackContext context)
+    {
+        if (context.started)
+        {
+            if (SceneManager.GetActiveScene().buildIndex == 1)
+            {
+                var loader = GameObject.FindWithTag("GameController").GetComponent<Loading>();
+                print(loader);
+                loader.contextReceived = true;
+            }
+        }
+    }
+
+    IEnumerator DeselectBtn()
+    {
+        yield return new WaitForSeconds(0.05f);
+        EventSystem.current.SetSelectedGameObject(null);
+        yield return null;
     }
 
     public void readHold(CallbackContext context)
@@ -119,23 +245,6 @@ public class PlayerThroughput : MonoBehaviour
         }
     }
 
-
-    public void Rush(CallbackContext context)
-    {
-        
-        if (context.started && active)
-        {
-            active = false;
-            if (CharSelectScript != null)
-            {
-                CharSelectScript.ChangeChar();
-            }
-        }
-        if (context.canceled)
-        {
-            active = true;
-        }
-    }
 
     public void SetInput(PlayerInput input)
     {

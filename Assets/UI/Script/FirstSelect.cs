@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -10,26 +10,38 @@ public class FirstSelect : MonoBehaviour
     [SerializeField]
     private GameObject FirstObject = null;
 
-    [SerializeField] Image[] insideImg = new Image[0];
-    [SerializeField] Image[] borderImg = new Image[0];
-
-    [SerializeField] Sprite imgActive = null;
-    [SerializeField] Sprite ImageInactive = null;
-    [SerializeField] Sprite borderActive = null;
-    [SerializeField] Sprite borderInactive = null;
+    [SerializeField] GameObject lastBtn = null;
+    [SerializeField] EventSystem system = null;
 
 
-    int playerCount = 0;
+    public bool btnMenu = false;
 
     private void OnEnable()
     {
-        if (gameObject.tag == "navMenu")
+        if (system == null)
+        {
+            system = GameObject.FindWithTag("Event").GetComponent<EventSystem>();
+        }
+        if (gameObject.tag == "navMenu" && !btnMenu)
         {
             SetBtn();
         }
+        
+    }
+
+    public void setLastBtn(GameObject obj)
+    {
+        lastBtn = obj;
+        FirstObject = lastBtn;
+        system.firstSelectedGameObject = lastBtn;
     }
 
     public void SetBtn()
+    {
+        StartCoroutine(highlight());
+    }
+
+    public void SetBtnTuto()
     {
         StartCoroutine(highlight());
     }

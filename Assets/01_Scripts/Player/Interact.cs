@@ -7,6 +7,7 @@ using static UnityEngine.InputSystem.InputAction;
 public class Interact : MonoBehaviour
 {
     //Setup
+    GameObject god = null;
     public bool active = false;
     bool inputArmed = true;
     Animator anim = null;
@@ -58,8 +59,10 @@ public class Interact : MonoBehaviour
     //Game Variables
     public float range = 5;
     float toolDist = 0;
-    Tool curTool;
-
+    float currentToolDist = 0;
+    public Tool curTool;
+    bool doChecks = false;
+    bool moving = false;
 
     public GameObject heldObj = null;
     [SerializeField] Transform LHand;
@@ -67,12 +70,18 @@ public class Interact : MonoBehaviour
     [SerializeField] Transform cruciblePos;
     [SerializeField] Transform headPos;
 
+    public float ValMultiplier = 0;
+    public float valMultiplierMax = 0;
+    bool heldCounter = false;
+    public bool canAnimate = true;
+
     // Start is called before the first frame update
     void Start()
     {
         active = true;
         if (active)
         {
+            god = GameObject.FindWithTag("LevelGod");
             toolsLayer = LayerMask.NameToLayer("Tools");
             Interactables = Tools(toolsLayer).ToList();
             anim = gameObject.GetComponent<Animator>();
@@ -87,13 +96,16 @@ public class Interact : MonoBehaviour
         curTool = activeTool;
     }
 
+
     // Update is called once per frame
     void Update()
     {
         activeTool = closestTool(Interactables.ToArray());
+        Debug.DrawRay(transform.position, (activeTool.transform.position - transform.position).normalized * range, Color.red);
         if (curTool != activeTool && curTool != null)
         {
             curTool.GetComponent<Outline>().OutlineColor = Color.white;
+            curTool.rangeCheck = false;
             curTool = activeTool;
         }
 
@@ -106,20 +118,43 @@ public class Interact : MonoBehaviour
             Debug.Log("No Active Tool");
         }
 
+        if (curTool != null)
+        {
+            currentToolDist = Vector3.Distance(transform.position, curTool.transform.position);
+        }
 
+
+        var toolComponent = activeTool.GetComponent<Tool>();
         if (toolDist >= range)
         {
-            activeTool.GetComponent<Tool>().charging = false;
             activeTool.GetComponent<Outline>().OutlineColor = Color.white;
+            toolComponent.rangeCheck = false;
         }
         else
         {
             activeTool.GetComponent<Outline>().OutlineColor = Color.yellow;
+            toolComponent.rangeCheck = true;
+            if (!moving && toolComponent.hasContents)
+            {
+                canAnimate = true;
+            }
+            else
+            {
+                canAnimate = false;
+                playerAnims.DefaultActionState();
+            }
         }
 
         if (heldObj == null)
         {
             anim.SetLayerWeight(1, 0);
+        }
+
+        //Increase Multiplier when started context on hold btn
+        if (heldCounter)
+        {
+            ValMultiplier += Time.deltaTime * 8;
+            ValMultiplier = Mathf.Clamp(ValMultiplier, 0, valMultiplierMax);
         }
     }
 
@@ -136,7 +171,7 @@ public class Interact : MonoBehaviour
 
     void checkItem()
     {
-        if (heldObj != null)
+        if (heldObj != null && god.GetComponent<StartPos>().playerArray.Length == 1)
         {
             switch (heldObj.GetComponent<Item>().tool)
             {
@@ -184,6 +219,18 @@ public class Interact : MonoBehaviour
         }
     }
 
+    public void DetectMove(CallbackContext context)
+    {
+        if (context.ReadValue<Vector2>() != Vector2.zero)
+        {
+            moving = true;
+        }
+        else
+        {
+            moving = false;
+        }
+    }
+
 
         //FUNCTION ON RIGHT BUTTON PRESS
     public void InteractPress(CallbackContext context)
@@ -192,25 +239,17 @@ public class Interact : MonoBehaviour
         {
             if (context.started && inputArmed)
             {
-                //drop item
-                if (toolDist > range)
+                inputArmed = false;
+                if (heldObj != null)
                 {
-                    dropItem();
+                    deliverItem();
+                    SetColors();
                 }
                 else
                 {
-                    if (heldObj != null)
-                    {
-                        deliverItem();
-                        SetColors();
-                    }
-                    else
-                    {
-                        collectItem();
-                        checkItem();
-                    }
+                    collectItem();
+                    checkItem();
                 }
-                inputArmed = false;
             }
             if (context.canceled)
             {
@@ -219,20 +258,6 @@ public class Interact : MonoBehaviour
         }
     }
 
-
-        void dropItem()
-        {
-            if (heldObj != null)
-            {
-                heldObj.transform.parent = null;
-                heldObj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
-                heldObj = null;
-            }
-            else
-            {
-                Debug.Log("Trying to drop empty heldObj");
-            }
-        }
 
         void collectItem()
         {
@@ -250,7 +275,6 @@ public class Interact : MonoBehaviour
             switch (heldObj.GetComponent<Item>().tool)
             {
                 case Item.Tool.Furnace:
-
                     if (activeTool.GetComponent<Tool>().tool == Tool.curTool.Furnace)
                     {
                         activeTool.GetComponent<Tool>().TakeItem(heldObj);
@@ -259,7 +283,6 @@ public class Interact : MonoBehaviour
                     break;
 
                 case Item.Tool.Cast:
-
                     if (activeTool.GetComponent<Tool>().tool == Tool.curTool.Cast && !activeTool.GetComponent<Tool>().hasContents)
                     {
                         activeTool.GetComponent<Tool>().TakeItem(heldObj);
@@ -270,7 +293,6 @@ public class Interact : MonoBehaviour
 
 
                 case Item.Tool.Anvil:
-
                     if (activeTool.GetComponent<Tool>().tool == Tool.curTool.Anvil && !activeTool.GetComponent<Tool>().hasContents)
                     {
                         activeTool.GetComponent<Tool>().TakeItem(heldObj);
@@ -279,14 +301,33 @@ public class Interact : MonoBehaviour
                     break;
 
                 case Item.Tool.Bucket:
-
                     if (activeTool.GetComponent<Tool>().tool == Tool.curTool.Bucket && !activeTool.GetComponent<Tool>().hasContents)
                     {
-                        activeTool.GetComponent<Tool>().TakeItem(heldObj);
-                        Destroy(heldObj);
+                        if (!heldObj.GetComponent<Weapon>().completed)
+                        {
+                            activeTool.GetComponent<Tool>().TakeItem(heldObj);
+                            Destroy(heldObj);
+                        }
                     }
                     break;
             }
+
+            switch (activeTool.currentTool())
+            {
+            case Tool.curTool.Bin:
+                Destroy(heldObj);
+                break;
+
+            case Tool.curTool.Bench:
+                if (activeTool.GetComponent<Tool>().tool == Tool.curTool.Bench && !activeTool.GetComponent<Tool>().hasContents)
+                {
+                    activeTool.GetComponent<Tool>().hasContents = true;
+                    activeTool.GetComponent<Tool>().TakeItem(heldObj);
+                    Destroy(heldObj);
+                }
+                break;
+            }
+
         }
 
     //FUNCTION ON LEFT BUTTON HOLD
@@ -294,36 +335,62 @@ public class Interact : MonoBehaviour
     {
         if (active)
         {
-            if (context.started)
+            var toolComponent = activeTool.GetComponent<Tool>();
+
+            if (toolDist < range && toolComponent.hasContents && !toolComponent.completed)
             {
-                if (toolDist <= range)
+
+                if (context.started && inputArmed && canAnimate)
                 {
-                    activeTool.GetComponent<Tool>().charging = true;
-                    switch (gameObject.GetComponent<Interact>().activeTool.currentTool())
+                    heldCounter = true;
+                    inputArmed = false;
+                    switch (activeTool.currentTool())
                     {
-
                         case Tool.curTool.Anvil:
-                            playerAnims.AnvilAnim();
-
+                            playerAnims.AnvilAnimRaise();
                             break;
 
                         case Tool.curTool.Furnace:
-                            playerAnims.furnaceAnim();
-
+                            playerAnims.furnaceAnimDrop();
                             break;
+
+
                     }
                 }
-            }
-            if (context.canceled)
-            {
-                activeTool.GetComponent<Tool>().charging = false;
-                playerAnims.DefaultActionState();
+                if (context.canceled)
+                {
+                    heldCounter = false;
+                    inputArmed = true;
+                    switch (activeTool.currentTool())
+                    {
+                        case Tool.curTool.Anvil:
+                            playerAnims.AnvilAnimDrop();
+                            StartCoroutine(HammerEnact());
+                            valMultiplierMax = 2.5f;
+                            break;
+
+                        case Tool.curTool.Furnace:
+                            playerAnims.furnaceAnimRaise();
+                            valMultiplierMax = 1.5f;
+                            activeTool.GetComponent<Furnace>().IncreaseTemperature(1 * ValMultiplier);
+                            ValMultiplier = 0;
+                            break;
+
+
+                    }
+                }
             }
         }
     }
 
-    //ACCESSORY
+    IEnumerator HammerEnact()
+    {
+        yield return new WaitForSeconds(0.2f);
+        activeTool.GetComponent<Anvil>().IncreaseTimer(1 * ValMultiplier);
+        ValMultiplier = 0;
+    }
 
+    //ACCESSORY
     void positionHeldObj()
     {
         switch (heldObj.GetComponent<Item>().tool)
@@ -333,6 +400,7 @@ public class Interact : MonoBehaviour
                 heldObj.transform.parent = LHand;
                 heldObj.transform.localPosition = new Vector3(-0.47f, 0.93f, 0.17f);
                 heldObj.transform.localRotation = Quaternion.Euler(Vector3.zero);
+                heldObj.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
                 break;
 
             case Item.Tool.Cast:

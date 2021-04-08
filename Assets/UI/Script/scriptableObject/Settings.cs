@@ -10,4 +10,5 @@ public class Settings : ScriptableObject
     public int detail;
     public int resolution;
 
+
  }

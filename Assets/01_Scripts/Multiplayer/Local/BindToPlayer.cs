@@ -22,12 +22,16 @@ public class BindToPlayer : MonoBehaviour
     Scene curScene;
     Scene titleScene;
 
-    [SerializeField] GameObject[] InputObjs = new GameObject[0];
+    [SerializeField] List<GameObject> InputObjs = new List<GameObject>();
 
     bool primed = true;
     [SerializeField] GameObject homeScreen = null;
 
+    [SerializeField]
+    GameObject JoinInstructions = null;
 
+    [SerializeField] GameObject charIconParent = null;
+    [SerializeField] GameObject charSelectIcon = null;
 
     private void OnEnable()
     {
@@ -46,21 +50,23 @@ public class BindToPlayer : MonoBehaviour
         {
             join.SetPlayerBind(this);
             Events.GetComponent<PlayerInputManager>().EnableJoining();
-            GetComponent<FirstSelect>().deselect();
+            //GetComponent<FirstSelect>().deselect();
             foreach (GameObject obj in players)
             {
                 Destroy(obj);
             }
-
             players.Clear();
+            InputObjs.Clear();
         }
+
+
     }
 
     private void OnDisable()
     {
         if (curScene != titleScene)
         {
-            Events.GetComponent<PlayerInputManager>().DisableJoining();
+            disableJoin();
         }
     }
 
@@ -79,8 +85,15 @@ public class BindToPlayer : MonoBehaviour
     public void JoinGame(PlayerInput input)
     {
         players.Add(input.gameObject);
+        var i = players.Count;
         input.gameObject.GetComponent<PlayerThroughput>().SetInput(input);
+        input.gameObject.GetComponent<PlayerThroughput>().playerIndex = i;
         DontDestroyOnLoad(input.gameObject);
+        input.gameObject.GetComponent<PlayerThroughput>().canAct = true;
+        var character = Instantiate(charSelectIcon, charIconParent.transform);
+        input.gameObject.GetComponent<CharSelect>().AssignSelect(character.GetComponent<PlayerSelectSetup>());
+        InputObjs.Add(character);
+        EnableButton();
     }
 
     private void Update()
@@ -88,11 +101,7 @@ public class BindToPlayer : MonoBehaviour
 
         if (SceneManager.GetActiveScene() == titleScene)
         {
-            if (players.Count >= 1)
-            {
-                Debug.Log(players.Count + "    " + InputObjs.Length);
-            }
-            if (players.Count == InputObjs.Length)
+            if (LevelSelect.instance.allPlayersReady)
             {
                 gameObject.GetComponent<FirstSelect>().SetBtn();
             }
@@ -100,10 +109,38 @@ public class BindToPlayer : MonoBehaviour
     }
 
 
+    void EnableButton()
+    {
+        for (int i = 0; i < players.Count; i++)
+        {
+            InputObjs[i].SetActive(true);
+            if (players.Count == InputObjs.Count)
+            {
+                 JoinInstructions.SetActive(false);
+            }
+        }    
+    }
+
+    void resetPanel()
+    {
+        foreach (GameObject obj in InputObjs)
+        {
+            obj.SetActive(false);
+        }
+        JoinInstructions.SetActive(false);
+    }
+
+    public void disableJoin()
+    {
+        Events.GetComponent<PlayerInputManager>().DisableJoining();
+    }
+
+
     public void Cancel()
     {
         if (curScene == titleScene && gameObject.tag == "CurScene")
         {
+            resetPanel();
             homeScreen.SetActive(true);
             Events.GetComponent<PlayerInputManager>().DisableJoining();
             Events.GetComponent<InputSystemUIInputModule>().enabled = false;

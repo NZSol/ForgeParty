@@ -1,15 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class CharSelect : MonoBehaviour
 {
+    PlayerThroughput playerInputs;
+
     [SerializeField] Material woody = null;
     [SerializeField] Material jacob = null;
     [SerializeField] Material bill = null;
     [SerializeField] Material cherry = null;
     [SerializeField] Material heather = null;
     [SerializeField] Material mark = null;
+    [SerializeField] Material frog = null;
 
     [SerializeField] GameObject[] baseMesh = null;
     [SerializeField] GameObject[] billMesh = null;
@@ -18,52 +23,104 @@ public class CharSelect : MonoBehaviour
     [SerializeField] GameObject[] cherryMesh = null;
     [SerializeField] GameObject[] heatherMesh = null;
     [SerializeField] GameObject[] markMesh = null;
+    [SerializeField] GameObject[] frogMesh = null;
+
+    public Image charImg;
+
+    [SerializeField] Sprite billImg = null;
+    [SerializeField] Sprite woodyImg = null;
+    [SerializeField] Sprite jacobImg = null;
+    [SerializeField] Sprite markImg = null;
+    [SerializeField] Sprite heatherImg = null;
+    [SerializeField] Sprite cherryImg = null;
+    [SerializeField] Sprite frogImage = null;
+
+    public Text txt = null;
+
+    public Image PlayerBtn = null;
+    public Sprite disabledImage = null;
+    public Sprite enabledImage = null;
 
     List<GameObject[]> allMesh = new List<GameObject[]>();
 
-    public enum skin { Bill, Woody, Jacob, Cherry, Heather, Mark, End}
+    public enum skin { Bill, Woody, Jacob, Cherry, Heather, Mark, Frog, End}
     public skin character;
 
     int curSkin = 0;
 
+    public skin mySkin;
+
     // Start is called before the first frame update
     void Start()
     {
+        playerInputs = gameObject.GetComponent<PlayerThroughput>();
         character = (skin)curSkin;
-        DisableAccessories();
-        charSwitch();
+        if (SceneManager.GetActiveScene().buildIndex == SceneManager.GetSceneByBuildIndex(0).buildIndex)
+        {
+            IconSwitch(character);
+        }
+        if (this.gameObject.tag == "Player")
+        {
+            DisableAccessories();
+            CharSwitch(mySkin);
+        }
+    }
+
+    public void AssignSelect(PlayerSelectSetup setupScript)
+    {
+        charImg = setupScript.CharacterImage;
+        txt = setupScript.NameText;
+        PlayerBtn = setupScript.buttonImage;
+        disabledImage = setupScript.disableImage;
+        enabledImage = setupScript.enableImage;
+    }
+
+    public void InvertBtnActive()
+    {
+        if (PlayerBtn.sprite == disabledImage)
+        {
+            PlayerBtn.sprite = enabledImage;
+        }
+        else
+        {
+            PlayerBtn.sprite = disabledImage;
+        }
     }
 
     void DisableAccessories()
     {
-        foreach(GameObject obj in billMesh)
+        foreach (GameObject obj in billMesh)
         {
             obj.SetActive(false);
         }
-        foreach(GameObject obj in woodyMesh)
+        foreach (GameObject obj in woodyMesh)
         {
             obj.SetActive(false);
         }
-        foreach(GameObject obj in jacobMesh)
+        foreach (GameObject obj in jacobMesh)
         {
             obj.SetActive(false);
         }
-        foreach(GameObject obj in cherryMesh)
+        foreach (GameObject obj in cherryMesh)
         {
             obj.SetActive(false);
         }
-        foreach(GameObject obj in heatherMesh)
+        foreach (GameObject obj in heatherMesh)
         {
             obj.SetActive(false);
         }
-        foreach(GameObject obj in markMesh)
+        foreach (GameObject obj in markMesh)
+        {
+            obj.SetActive(false);
+        }
+        foreach (GameObject obj in frogMesh)
         {
             obj.SetActive(false);
         }
     }
 
 
-    public void ChangeChar()
+    public void ChangeCharRight()
     {
         curSkin++;
         if (curSkin == (int)CharSelect.skin.End)
@@ -71,13 +128,23 @@ public class CharSelect : MonoBehaviour
             curSkin = 0;
         }
         character = (CharSelect.skin)curSkin;
-
-        charSwitch();
+        SendCharacterInfo(character);
+    }
+    public void ChangeCharLeft()
+    {
+        curSkin--;
+        if (curSkin < 0)
+        {
+            curSkin = (int)CharSelect.skin.End - 1;
+        }
+        character = (CharSelect.skin)curSkin;
+        SendCharacterInfo(character);
     }
 
-    void charSwitch()
+    public void CharSwitch(skin activeSkin)
     {
-        switch (character)
+        mySkin = activeSkin;
+        switch (mySkin)
         {
             case CharSelect.skin.Bill:
                 foreach (GameObject mesh in baseMesh)
@@ -189,6 +256,72 @@ public class CharSelect : MonoBehaviour
                 }
                 break;
 
+            case CharSelect.skin.Frog:
+                foreach (GameObject mesh in baseMesh)
+                {
+                    mesh.GetComponent<SkinnedMeshRenderer>().material = frog;
+                }
+
+                //Accessories
+                foreach (GameObject mesh in frogMesh)
+                {
+                    mesh.SetActive(true);
+                }
+
+                foreach (GameObject mesh in markMesh)
+                {
+                    mesh.SetActive(false);
+                }
+                break;
+
+        }
+    }
+
+    void SendCharacterInfo(skin texture)
+    {
+        playerInputs.mySkin = character;
+    }
+
+    public void IconSwitch(skin activeSkin)
+    {
+        character = activeSkin;
+        switch (character)
+        {
+            case CharSelect.skin.Bill:
+                charImg.sprite = billImg;
+                txt.text = "Bill";
+                break;
+
+            case CharSelect.skin.Woody:
+                charImg.sprite = woodyImg;
+                txt.text = "Woody";
+                break;
+
+            case CharSelect.skin.Jacob:
+                charImg.sprite = jacobImg;
+                txt.text = "Jacob";
+                break;
+
+
+            case CharSelect.skin.Cherry:
+                charImg.sprite = cherryImg;
+                txt.text = "Cherry";
+                break;
+
+            case CharSelect.skin.Heather:
+                charImg.sprite = heatherImg;
+                txt.text = "Heather";
+                break;
+
+            case CharSelect.skin.Mark:
+                charImg.sprite = markImg;
+                txt.text = "Mark";
+                break;
+
+            case CharSelect.skin.Frog:
+                charImg.sprite = markImg;
+                txt.text = "Forg";
+                break;
         }
     }
 

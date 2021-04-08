@@ -1,39 +1,19 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &7988400183784979164
-GameObject:
+--- !u!64 &7988400185337933346
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7988400183784979167}
-  m_Layer: 0
-  m_Name: FurnaceHolder
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &7988400183784979167
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7988400183784979164}
-  m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 30.299118, y: -1.6449795, z: 23.342834}
-  m_LocalScale: {x: 1.0392902, y: 0.77709734, z: 1.0392902}
-  m_Children:
-  - {fileID: 7590472861206238369}
-  - {fileID: 2622728486709781485}
-  - {fileID: 3978923008263847798}
-  - {fileID: 4985923610967767634}
-  m_Father: {fileID: 0}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_GameObject: {fileID: 253681051524210843}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 6386017947400397827, guid: 37fdaa8cda028144cb936464eb0f621c, type: 3}
 --- !u!114 &7988400184120110137
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -73,10 +53,12 @@ MonoBehaviour:
   outputPrefab: {fileID: 0}
   charging: 0
   tool: 1
+  hasContents: 0
   timer: 0
   maxTimer: 5
   temperature: 0
   activeMetal: 0
+  secondMetal: 0
   outputMet: 0
   meltingPoint: 0
   crucible: {fileID: 2220734233008931694, guid: 1571165cebb3c9844b6cae5702045aa2,
@@ -85,21 +67,41 @@ MonoBehaviour:
   smoke: {fileID: 2622728486709781484}
   fire: {fileID: 3978923008263847796}
   _slide: {fileID: 4058547805021894489}
-  coolingMultiplier: 1
---- !u!64 &7988400185337933346
-MeshCollider:
+  coolingMultiplier: 10
+--- !u!1 &7988400183784979164
+GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 253681051524210843}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 6386017947400397827, guid: 37fdaa8cda028144cb936464eb0f621c, type: 3}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7988400183784979167}
+  m_Layer: 0
+  m_Name: FurnaceHolder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7988400183784979167
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7988400183784979164}
+  m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 30.299118, y: -1.6449795, z: 23.342834}
+  m_LocalScale: {x: 1.0392902, y: 0.77709734, z: 1.0392902}
+  m_Children:
+  - {fileID: 7590472861206238369}
+  - {fileID: 2622728486709781485}
+  - {fileID: 3978923008263847798}
+  - {fileID: 4985923610967767634}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &4600125523207455147
 PrefabInstance:
   m_ObjectHideFlags: 0

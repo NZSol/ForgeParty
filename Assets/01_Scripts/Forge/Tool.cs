@@ -7,19 +7,24 @@ public abstract class Tool : MonoBehaviour
     [SerializeField]
     protected GameObject outputPrefab;
     public bool charging;
-    public enum curTool { Ore, Furnace, Cast, Anvil, Bucket}
+    public enum curTool { Ore, Furnace, Cast, Anvil, Bucket, Bench, Bin}
     public curTool tool;
 
     public bool hasContents = false;
+    public bool completed = false;
+    public float timer = 0;
+    public float completionTime = 5;
 
+    public bool rangeCheck = false;
     public abstract void TakeItem(GameObject item);
-    //public abstract void Use();
+
     public abstract GameObject GiveItem();
 
     public curTool currentTool()
     {
         return tool;
     }
+
 
 
 

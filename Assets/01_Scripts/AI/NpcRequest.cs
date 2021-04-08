@@ -7,6 +7,7 @@ using UnityEngine.AI;
 
 public class NpcRequest : MonoBehaviour
 {
+    public int playersCount = 0;
     GameObject teamVariables;
 
     public enum AIState { Queue, Flee, Fight};
@@ -62,6 +63,8 @@ public class NpcRequest : MonoBehaviour
     NPCSpawner parentScript;
     Animator anim;
 
+    int returnTime = 0;
+
     public void Start()
     {
         anim = gameObject.GetComponent<Animator>();
@@ -80,8 +83,6 @@ public class NpcRequest : MonoBehaviour
 
         Bubble.gameObject.SetActive(false);
 
-        _slide.maxValue = timerMax;
-
         alive = true;
 
         switch (weapon)
@@ -94,6 +95,26 @@ public class NpcRequest : MonoBehaviour
                 _activeWeapon = _axe;
                 break;
         }
+
+        switch (playersCount)
+        {
+            case 1:
+                timerMax = 80;
+                break;
+                
+            case 2:
+                timerMax = 60;
+                break;
+                
+            case 3:
+                timerMax = 40;
+                break;
+            
+            case 4:
+                timerMax = 50;
+                break;
+        }
+        _slide.maxValue = timerMax;
     }
 
     [SerializeField] GameObject heldWeapon = null;
@@ -120,6 +141,34 @@ public class NpcRequest : MonoBehaviour
                 heldWeapon.transform.localPosition = new Vector3(0, 3.5f, 0);
                 heldWeapon.transform.rotation = Quaternion.Euler(x: -90, y: +0, z: +90);
                 heldWeapon.GetComponent<WeaponVars>().setVar();
+
+                switch (teamVariables.GetComponent<StartPos>().playerCount)
+                {
+                    case 1:
+                        returnTime = (int)(heldWeapon.GetComponent<WeaponVars>().timeVal * 1.5f);
+                        break;
+                    case 2:
+                        returnTime = heldWeapon.GetComponent<WeaponVars>().timeVal;
+                        break;
+                    case 4:
+                        returnTime = (int)(heldWeapon.GetComponent<WeaponVars>().timeVal / 1.5f);
+                        break;
+                }
+                teamVariables.GetComponent<CountdownTimer>().GiveSeconds(time: heldWeapon.GetComponent<WeaponVars>().timeVal);
+                StatTracking.instance.addWeapon(i: 1);
+
+                switch (heldWeapon.GetComponent<Metal>().myMetal)
+                {
+                    case Metal.metal.Tin:
+                        StatTracking.instance.addToPoint(i: 1);
+                        break;
+                    case Metal.metal.Copper:
+                        StatTracking.instance.addToPoint(i: 2);
+                        break;
+                    case Metal.metal.Bronze:
+                        StatTracking.instance.addToPoint(i: 3);
+                        break;
+                }
             }
         }
 
@@ -236,7 +285,6 @@ public class NpcRequest : MonoBehaviour
             heldWeapon.GetComponentInChildren<MeshRenderer>().enabled = false;
             heldWeapon.GetComponent<WeaponVars>().inFight = true;
             //heldWeapon.transform.SetParent(myTeamList.transform);
-            teamVariables.GetComponent<CountdownTimer>().GiveSeconds(time: heldWeapon.GetComponent<WeaponVars>().timeVal);
             Destroy(gameObject);
         }
         Debug.Log("Fighting");

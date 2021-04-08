@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 public class Furnace : Tool
 {
-    [SerializeField] float timer = 0;
     [SerializeField] float maxTimer = 5;
     [SerializeField] float temperature = 0;
 
@@ -30,8 +29,26 @@ public class Furnace : Tool
     Vector3 endSize = new Vector3(1.5f, 1.5f, 1.5f);
 
     //Temperature Management
+    [SerializeField] Text displayCurTemperature = null;
     [SerializeField] Slider _slide = null;
     [SerializeField] float coolingMultiplier = 1;
+
+    //Input Metals
+    [SerializeField] Image met1 = null;
+    [SerializeField] Image met2 = null;
+
+    //Timer Assets
+    [SerializeField] Image timeToReadyGuage = null;
+    [SerializeField] Image check = null;
+    [SerializeField] Image clock = null;
+    [SerializeField] Image borderVal = null;
+    bool displayCheck = false;
+
+    //Colours for Metals
+    [SerializeField] Color copperCol;
+    [SerializeField] Color tinCol;
+    [SerializeField] Color bronzeCol;
+    [SerializeField] Color defaultCol;
 
     // Start is called before the first frame update
     void Start()
@@ -56,10 +73,6 @@ public class Furnace : Tool
             else
             {
                 activeMetal = secondMetal;
-                if (inputs.Count > 0)
-                {
-                    secondMetal = inputs.Dequeue();
-                }
             }
             checkContents();
         }
@@ -70,6 +83,7 @@ public class Furnace : Tool
                 secondMetal = inputs.Dequeue();
             }
         }
+        SetColours();
 
         if (secondMetal != Metal.metal.Blank)
         {
@@ -83,22 +97,33 @@ public class Furnace : Tool
     // Update is called once per frame
     void Update()
     {
-        //if charging bool in attached component is true, start increasing temperature
-        if (charging)
+        displayCurTemperature.text = (int)temperature + "°";
+
+        if (activeMetal != Metal.metal.Blank || secondMetal != Metal.metal.Blank)
         {
-            if (temperature < _slide.maxValue)
-            {
-                temperature += Time.deltaTime;
-            }
+            hasContents = true;
         }
         else
         {
-            if (temperature > 0)
-            {
-                temperature -= Time.deltaTime / coolingMultiplier;
-            }
+            hasContents = false;
+        }
+        if (activeMetal != Metal.metal.Blank)
+        {
+            displayCheck = true;
+        }
+        else
+        {
+            displayCheck = false;
         }
 
+        if (displayCheck || rangeCheck)
+        {
+            timeToReadyGuage.gameObject.SetActive(true);
+        }
+        else
+        {
+            timeToReadyGuage.gameObject.SetActive(false);
+        }
 
         _slide.value = temperature;
         fire.transform.localScale = Vector3.Lerp(startSize, endSize, (temperature / _slide.maxValue));
@@ -108,6 +133,9 @@ public class Furnace : Tool
             if (temperature >= meltingPoint && outputMet == Metal.metal.Blank)
             {
                 timer += Time.deltaTime;
+                borderVal.fillAmount = timer / maxTimer;
+                check.enabled = false;
+                clock.enabled = true;
             }
         }
         if (timer < maxTimer && timer > 0 && canActivate)
@@ -116,11 +144,13 @@ public class Furnace : Tool
             canActivate = false;
         }
 
-        if (timer >= maxTimer)
+        if (timer >= maxTimer && outputMet == Metal.metal.Blank)
         {
+            clock.enabled = false;
+            check.enabled = true;
+
             outputMet = activeMetal;
             outputPrefab = crucible;
-            activeMetal = Metal.metal.Blank;
 
             timer = 0;
             smoke.Stop();
@@ -131,6 +161,61 @@ public class Furnace : Tool
         {
             smoke.Play();
             playSmoke = false;
+        }
+    }
+
+    void SetColours()
+    {
+        switch (activeMetal)
+        {
+            case Metal.metal.Copper:
+                met1.color = copperCol;
+                break;
+            case Metal.metal.Tin:
+                met1.color = tinCol;
+                break;
+            case Metal.metal.Bronze:
+                met1.color = bronzeCol;
+                break;
+            case Metal.metal.Blank:
+                met1.color = defaultCol;
+                break;
+        }
+        switch (secondMetal)
+        {
+            case Metal.metal.Copper:
+                met2.color = copperCol;
+                break;
+            case Metal.metal.Tin:
+                met2.color = tinCol;
+                break;
+            case Metal.metal.Bronze:
+                met2.color = bronzeCol;
+                break;
+            case Metal.metal.Blank:
+                met2.color = defaultCol;
+                break;
+
+        }
+    }
+
+    public void IncreaseTemperature (float value)
+    {
+        if (temperature > _slide.maxValue)
+        {
+            temperature = _slide.maxValue;
+        }
+        else
+        {
+            temperature += value;
+        }
+    }
+    private void FixedUpdate()
+    {
+        //if charging bool in attached component is true, start increasing temperature
+        if (temperature > 0)
+        {
+            temperature -= Time.deltaTime / coolingMultiplier;
         }
     }
 
@@ -179,6 +264,7 @@ public class Furnace : Tool
                     break;
             }
             checkContents();
+            SetColours();
         }
     }
 
@@ -191,8 +277,13 @@ public class Furnace : Tool
         }
         else
         {
+            timer = 0;
+            borderVal.fillAmount = 0;
+            check.enabled = false;
+            clock.enabled = true;
+
             activeMetal = secondMetal;
-            if(inputs.Count > 0)
+            if (inputs.Count > 0)
             {
                 secondMetal = inputs.Dequeue();
             }
@@ -200,10 +291,17 @@ public class Furnace : Tool
             {
                 secondMetal = Metal.metal.Blank;
             }
+            checkAlloy();
+            SetColours();
+
+
             var outputCrucible = Instantiate(outputPrefab);
             outputCrucible.GetComponent<Metal>().myMetal = outputMet;
             outputMet = Metal.metal.Blank;
+            displayQueue = inputs.ToList();
             return outputCrucible;
+
+
         }
     }
 }

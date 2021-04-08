@@ -12,12 +12,19 @@ public class Movement : MonoBehaviour
     Rigidbody rb = null;
     GameObject Player = null;
 
+
     public float maxSpeed = 0;
     public float dashForce = 0;
     public float dashCool = 0;
+    public float dashCoolMax = 3;
     public float bompForce = 0;
     public float bompFalloff = 0;
     public float bompLimit = 0;
+    
+    [SerializeField]
+    GameObject staminaMeter = null;
+    [SerializeField]
+    Image staminaImg = null;
 
     public Vector2 stick = Vector2.zero;
 
@@ -29,7 +36,7 @@ public class Movement : MonoBehaviour
     [SerializeField] float moveTimer = 0;
     [SerializeField] float push = 0;
     
-    float dashing = 0;
+    public float dashing = 0;
     float haltTime = 0;
     float damping = 0;
 
@@ -40,11 +47,11 @@ public class Movement : MonoBehaviour
     Animator anim = null;
     float blendVal = 0;
 
-    [SerializeField] AnimationCurve animCurve;
 
     // Start is called before the first frame update
     void Start()
     {
+        dashCool = dashCoolMax;
         Player = this.gameObject;
         rb = Player.GetComponent<Rigidbody>();
         updateSpeed = speed;
@@ -64,11 +71,11 @@ public class Movement : MonoBehaviour
 
     public void Dash(CallbackContext context)
     {
-        if (context.started && inputArmed && dashCool <= 0)
+        if (context.started && inputArmed && dashCool >= dashCoolMax)
         {
             inputArmed = false;
             dashing = 1;
-            dashCool = 3;
+            dashCool = 0;
             blendVal = 3;
         }
         if (context.canceled)
@@ -76,8 +83,6 @@ public class Movement : MonoBehaviour
             inputArmed = true;
         }
     }
-
-    float t = 0;
 
     void Update()
     {
@@ -90,10 +95,24 @@ public class Movement : MonoBehaviour
             dashing = 0;
         }
 
-        if (dashCool > 0)
+        if (dashCool < dashCoolMax)
         {
-            dashCool -= Time.deltaTime / 2;
+            dashCool += Time.deltaTime / 2;
+            if (!staminaMeter.activeSelf)
+            {
+                staminaMeter.gameObject.SetActive(true);
+            }
         }
+        else
+        {
+            staminaMeter.gameObject.SetActive(false);
+        }
+        var timer = dashCool / dashCoolMax;
+        staminaImg.fillAmount = timer;
+        staminaImg.color = Color.Lerp(Color.red, Color.green, timer);
+
+
+
 
         anim.SetFloat("Blend", blendVal);
     }

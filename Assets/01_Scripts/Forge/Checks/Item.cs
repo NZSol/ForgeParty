@@ -5,7 +5,7 @@ using UnityEngine;
 public class Item : MonoBehaviour
 {
 
-    public enum Tool{Furnace, Cast, Anvil, Bucket}
+    public enum Tool{Furnace, Cast, Anvil, Bucket, Bench, Bin}
     public Tool tool;
 
     public Tool desiredTool()

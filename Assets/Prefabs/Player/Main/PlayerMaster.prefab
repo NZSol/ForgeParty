@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1333407521725570227}
   - component: {fileID: -6977860970510129612}
   - component: {fileID: -3889443434190174815}
+  - component: {fileID: 684344572378900407}
   m_Layer: 0
   m_Name: PlayerMaster
   m_TagString: Container
@@ -123,10 +124,15 @@ MonoBehaviour:
     m_ActionId: ecd733e0-0c84-4575-8eee-71d37c176b4e
     m_ActionName: Player/Dash[/DualShock4GamepadHID/buttonSouth,/XInputControllerWindows/buttonSouth]
   - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 07696023-cbe8-4188-beb9-c56004ea5d87
+    m_ActionName: Player/Rush[/DualShock4GamepadHID/buttonNorth,/Nintendo Wireless
+      Gamepad/button4]
+  - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: -3889443434190174815}
         m_TargetAssemblyTypeName: PlayerThroughput, Assembly-CSharp
-        m_MethodName: Rush
+        m_MethodName: Cancel
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -136,9 +142,24 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_ActionId: 07696023-cbe8-4188-beb9-c56004ea5d87
-    m_ActionName: Player/Rush[/DualShock4GamepadHID/buttonNorth,/Nintendo Wireless
-      Gamepad/button4]
+    m_ActionId: ecf9694a-8493-463f-b6b4-d3815d93bde1
+    m_ActionName: Player/Cancel[/Keyboard/escape,/XInputControllerWindows/buttonEast]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -3889443434190174815}
+        m_TargetAssemblyTypeName: PlayerThroughput, Assembly-CSharp
+        m_MethodName: anyKey
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: e191a4de-0a10-4411-a7b0-350e61a6b395
+    m_ActionName: Player/AnyKey[/Keyboard/anyKey,/XInputControllerWindows/buttonSouth,/XInputControllerWindows/start]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -156,10 +177,67 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07eaa4d3e08d1674b932dae07f348c98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canAct: 0
   myPlayer: {fileID: 8723602427150979079, guid: 37c9c2da7598f7044a2577328776c117,
     type: 3}
+  mySkin: 0
+  CharSelectScript: {fileID: 0}
   curScene:
     m_Handle: 0
   titleScene:
     m_Handle: 0
   eventSystem: {fileID: 0}
+  spawned: 0
+  playerIndex: 0
+  ready: 0
+  IconSelect: {fileID: 0}
+--- !u!114 &684344572378900407
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1333407521725570239}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6b723bde69b47041b8c5d6cb2923153, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  woody: {fileID: 2100000, guid: ff1607a0da52c9f49ac0aaf27f10bcec, type: 2}
+  jacob: {fileID: 2100000, guid: 07e6e8d38f543ba41b793f7a3d6e972d, type: 2}
+  bill: {fileID: 2100000, guid: 6c460b7c0b742b5428e00bc235ac9b7e, type: 2}
+  cherry: {fileID: 2100000, guid: 05105d9374abd3144879a3d47a966713, type: 2}
+  heather: {fileID: 2100000, guid: 71a55bf8693ebe640a85e1d85afe2cfe, type: 2}
+  mark: {fileID: 2100000, guid: f8d45da835ad2d64eb8bac497771fe26, type: 2}
+  frog: {fileID: 0}
+  baseMesh:
+  - {fileID: 6641713786794075059, guid: 37c9c2da7598f7044a2577328776c117, type: 3}
+  - {fileID: 579817064896489742, guid: 37c9c2da7598f7044a2577328776c117, type: 3}
+  billMesh:
+  - {fileID: 2923679003508166047, guid: 37c9c2da7598f7044a2577328776c117, type: 3}
+  woodyMesh:
+  - {fileID: 903673355239999614, guid: 37c9c2da7598f7044a2577328776c117, type: 3}
+  jacobMesh:
+  - {fileID: 594972789307085234, guid: 37c9c2da7598f7044a2577328776c117, type: 3}
+  cherryMesh:
+  - {fileID: 4127495218804577288, guid: 37c9c2da7598f7044a2577328776c117, type: 3}
+  - {fileID: 8544398362929864903, guid: 37c9c2da7598f7044a2577328776c117, type: 3}
+  heatherMesh:
+  - {fileID: 2972394598486676957, guid: 37c9c2da7598f7044a2577328776c117, type: 3}
+  markMesh:
+  - {fileID: 4253922651039149345, guid: 37c9c2da7598f7044a2577328776c117, type: 3}
+  frogMesh: []
+  charImg: {fileID: 0}
+  billImg: {fileID: 21300000, guid: c69e7e9ee5d214245bc2a01e44fbdc95, type: 3}
+  woodyImg: {fileID: 21300000, guid: 449c5821332730541bd45b15e8d0daa9, type: 3}
+  jacobImg: {fileID: 21300000, guid: 5c91759e9d8523e43804420b9f0d0154, type: 3}
+  markImg: {fileID: 21300000, guid: fcab5224bdcbcc543b039832fd649e8d, type: 3}
+  heatherImg: {fileID: 21300000, guid: b6d0d098505ed534ab7ee41b54c91874, type: 3}
+  cherryImg: {fileID: 21300000, guid: 3c6cca3b7e808584eaaf96c7088b64f9, type: 3}
+  frogImage: {fileID: 21300000, guid: f4842bf9bec2ee94abe8d2f3960e433c, type: 3}
+  txt: {fileID: 0}
+  PlayerBtn: {fileID: 0}
+  disabledImage: {fileID: 0}
+  enabledImage: {fileID: 0}
+  character: 0
+  mySkin: 0

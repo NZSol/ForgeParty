@@ -22,14 +22,19 @@ public class CountdownTimer : MonoBehaviour
     [SerializeField] Color startColor;
     [SerializeField]float threshHold;
 
+    public bool testing = false;
     private void Start()
     {
+        if (testing)
+        {
+            endgameTime = 5000;
+        }
         maxTimer = endgameTime;
         startColor = timerRadialAdjust.color;
         gameState = GetComponent<WinLose>();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (takingAway == false && secondsLeft > 0)
         {

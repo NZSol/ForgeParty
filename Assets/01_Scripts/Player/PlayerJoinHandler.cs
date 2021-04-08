@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.UI;
 
 public class PlayerJoinHandler : MonoBehaviour
 {
@@ -9,6 +11,8 @@ public class PlayerJoinHandler : MonoBehaviour
     private BindToPlayer CurrentPlayerBind;
     [SerializeField]
     GameObject lvlSelect = null;
+
+
     public void JoinPlayer(PlayerInput input)
     {
         CurrentPlayerBind.JoinGame(input);
@@ -23,6 +27,10 @@ public class PlayerJoinHandler : MonoBehaviour
     {
         CurrentPlayerBind.LeaveGame(input);
     }
+    public void Update()
+    {
+    }
+
     public void CancelFunc()
     {
         CurrentPlayerBind.Cancel();

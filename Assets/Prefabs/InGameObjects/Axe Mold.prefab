@@ -357,12 +357,20 @@ MonoBehaviour:
     type: 3}
   charging: 0
   tool: 2
+  hasContents: 0
   weapon: 2
   outputMet: 0
   input: 2
   _slide: {fileID: 8968812963904614876}
   timer: 0
   maxTimer: 5
+  CastInner: {fileID: 539764592236492604}
+  render: {fileID: 5625608408066956288}
+  moldInnerMat: {fileID: 2100000, guid: 6b0d57550fefb6e468ce856892a3ced9, type: 2}
+  bronzeCol: {r: 0.59607846, g: 0.35686275, b: 0.10196079, a: 0}
+  copperCol: {r: 0.5647059, g: 0.15294118, b: 0.078431375, a: 0}
+  tinCol: {r: 0.4901961, g: 0.43921572, b: 0.3921569, a: 0}
+  startCol: {r: 0.9450981, g: 0.8000001, b: 0.67058825, a: 0}
 --- !u!1 &3749561441829053050
 GameObject:
   m_ObjectHideFlags: 0
@@ -859,7 +867,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5833856372939395342}
-  m_Mesh: {fileID: -4916608628870663418, guid: 4abfc5d8c3aeebf4bb1df4d74e1d089b, type: 3}
+  m_Mesh: {fileID: -4916608628870663418, guid: 5d30db12a5099964cbec940c424ddefe, type: 3}
 --- !u!23 &2512344847029897380
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -879,7 +887,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b609fcb5a1d58a74c87d4cad16d35a08, type: 2}
+  - {fileID: 2100000, guid: 0c66213000725d0488dc7e2dc04c67ed, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
