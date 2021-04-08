@@ -62,12 +62,28 @@ public class BindToPlayer : MonoBehaviour
 
     }
 
+    public void clearList()
+    {
+    for (int i = 0; i < players.Count; i++)
+        {
+            Destroy(players[i]);
+        }
+        players.Clear();
+        InputObjs.Clear();
+    }
+
     private void OnDisable()
     {
         if (curScene != titleScene)
         {
             disableJoin();
         }
+
+        foreach(GameObject obj in InputObjs)
+        {
+            Destroy(obj);
+        }
+        InputObjs.Clear();
     }
 
     private void Awake()

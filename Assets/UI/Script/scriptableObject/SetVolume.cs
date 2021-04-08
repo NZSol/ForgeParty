@@ -46,7 +46,6 @@ public class SetVolume : MonoBehaviour
 
             if (PlayerPrefs.GetInt("AmISet") == 0)
             {
-                print("running");
                 if (Resolution[i].width == 1920 && Resolution[i].height == 1080)
                 {
                     PlayerPrefs.SetInt("resolution", i);
@@ -101,40 +100,33 @@ public class SetVolume : MonoBehaviour
         #endregion
     }
 
+    private void Update()
+    {
+        if (LevelSelect.instance != null)
+        {
+            if (LevelSelect.instance.settingsDisable && myParent.activeSelf)
+            {
+                myParent.SetActive(false);
+                LevelSelect.instance.settingsDisable = false;
+            }
+        }
+    }
 
     IEnumerator DisableSettingsOnDelay()
     {
         yield return new WaitForSeconds(0.0001f);
-        changeBool();
         myParent.SetActive(false);
     }
 
 
-    public void changeBool()
-    {
-        settingsOpen = !settingsOpen;
-    }
-
-    private void Update()
-    {
-        if (settingsOpen == true)
-        {
-            SetVolumeM();
-
-            SetDetail();
-
-            SetResolution();
-        }
-    }
-
-   void SetDetail()
+    public void SetDetail()
     {
         PlayerPrefs.SetInt("myQuality", Details.value);
         Settings.detail = PlayerPrefs.GetInt("myQuality");
         QualitySettings.SetQualityLevel(PlayerPrefs.GetInt("myQuality"));
     }
 
-    void SetResolution()
+    public void SetResolution()
     {
         Settings.resolution = ResolutionDropdown.value;
         PlayerPrefs.SetInt("resolution", ResolutionDropdown.value);
@@ -146,8 +138,9 @@ public class SetVolume : MonoBehaviour
         }
     }
 
-    void SetVolumeM()
+    public void SetVolumeM()
     {
+        print("Setting Resolution");
         PlayerPrefs.SetFloat("volume", VolumeSlider.value);
         Settings.Volume = PlayerPrefs.GetFloat("volume");
 

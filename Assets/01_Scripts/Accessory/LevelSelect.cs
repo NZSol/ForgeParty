@@ -17,6 +17,11 @@ public class LevelSelect : MonoBehaviour
 
     public bool setPrefFalse = false;
 
+    public bool settingsDisable = false;
+
+
+    [SerializeField] CheckCode myLevelSet = null;
+
     private void Awake()
     {
         if (instance == null)
@@ -40,7 +45,9 @@ public class LevelSelect : MonoBehaviour
         {
             PlayerPrefs.SetInt("SeenTutorial", 0);
         }
+
     }
+
 
     public void setLevel()
     {
@@ -50,13 +57,23 @@ public class LevelSelect : MonoBehaviour
             god.GetComponent<LevelSet>().SetTargetLevel(levelVal);
         }
     }
+    public GameMode.gameMode myMode;
+    public void SetGameMode(GameMode.gameMode mode)
+    {
+        myMode = mode;
+    }
+
+    public GameMode.gameMode GetGameMode()
+    {
+        return myMode;
+    }
 
     public void AssignLevelValue(int var)
     {
         levelVal = var;
     }
 
-    int maxPlayers = 0;
+    public int maxPlayers = 0;
     public void AssignPlayerCount (int i)
     {
         maxPlayers = i;
@@ -96,6 +113,12 @@ public class LevelSelect : MonoBehaviour
                 player3Ready = false;
                 break;
             case 4:
+                player4Ready = false;
+                break;
+            case 5:
+                player1Ready = false;
+                player2Ready = false;
+                player3Ready = false;
                 player4Ready = false;
                 break;
         }
@@ -171,6 +194,12 @@ public class LevelSelect : MonoBehaviour
             case 4:
                 player4Exists = true;
                 break;
+            case 5:
+                player1Exists = false;
+                player2Exists = false;
+                player3Exists = false;
+                player4Exists = false;
+                break;
         }
     }
 
@@ -186,6 +215,30 @@ public class LevelSelect : MonoBehaviour
         {
             TutoQuestionPanel.SetActive(true);
             SetPlayerPrefTutorial();
+        }
+    }
+
+    public void playersReset()
+    {
+        print("HitTarget");
+        SetExistance(5);
+        SetPlayerReady(5);
+        allPlayersReady = false;
+    }
+
+    private void Update()
+    {
+        if (SceneManager.GetActiveScene().buildIndex != SceneManager.GetSceneByBuildIndex(2).buildIndex)
+        {
+            if (Time.timeScale != 1)
+            {
+                Time.timeScale = 1;
+            }
+        }
+
+        if (myLevelSet == null && SceneManager.GetActiveScene().buildIndex == 0)
+        {
+            myLevelSet = GameObject.FindWithTag("Event").GetComponent<CheckCode>();
         }
     }
 

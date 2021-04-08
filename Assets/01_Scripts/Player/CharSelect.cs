@@ -43,7 +43,7 @@ public class CharSelect : MonoBehaviour
 
     List<GameObject[]> allMesh = new List<GameObject[]>();
 
-    public enum skin { Bill, Woody, Jacob, Cherry, Heather, Mark, Frog, End}
+    public enum skin { Bill, Cherry, Heather, Mark, Frog, Woody, Jacob, End }
     public skin character;
 
     int curSkin = 0;
@@ -122,23 +122,53 @@ public class CharSelect : MonoBehaviour
 
     public void ChangeCharRight()
     {
-        curSkin++;
-        if (curSkin == (int)CharSelect.skin.End)
+        switch (PlayerPrefs.GetInt("TutorsCode"))
         {
-            curSkin = 0;
+            case 0:
+                curSkin++;
+                if (curSkin == (int)CharSelect.skin.Woody)
+                {
+                    curSkin = 0;
+                }
+                character = (CharSelect.skin)curSkin;
+                SendCharacterInfo(character);
+                break;
+
+            case 1:
+                curSkin++;
+                if (curSkin == (int)CharSelect.skin.End)
+                {
+                    curSkin = 0;
+                }
+                character = (CharSelect.skin)curSkin;
+                SendCharacterInfo(character);
+                break;
         }
-        character = (CharSelect.skin)curSkin;
-        SendCharacterInfo(character);
     }
     public void ChangeCharLeft()
     {
-        curSkin--;
-        if (curSkin < 0)
+        switch (PlayerPrefs.GetInt("TutorsCode"))
         {
-            curSkin = (int)CharSelect.skin.End - 1;
+            case 0:
+                curSkin--;
+                if (curSkin < 0)
+                {
+                    curSkin = (int)CharSelect.skin.Woody - 1;
+                }
+                character = (CharSelect.skin)curSkin;
+                SendCharacterInfo(character);
+                break;
+
+            case 1:
+                curSkin--;
+                if (curSkin < 0)
+                {
+                    curSkin = (int)CharSelect.skin.End - 1;
+                }
+                character = (CharSelect.skin)curSkin;
+                SendCharacterInfo(character);
+                break;
         }
-        character = (CharSelect.skin)curSkin;
-        SendCharacterInfo(character);
     }
 
     public void CharSwitch(skin activeSkin)
@@ -310,7 +340,7 @@ public class CharSelect : MonoBehaviour
 
             case CharSelect.skin.Heather:
                 charImg.sprite = heatherImg;
-                txt.text = "Heather";
+                txt.text = "Hairther";
                 break;
 
             case CharSelect.skin.Mark:
@@ -319,7 +349,7 @@ public class CharSelect : MonoBehaviour
                 break;
 
             case CharSelect.skin.Frog:
-                charImg.sprite = markImg;
+                charImg.sprite = frogImage;
                 txt.text = "Forg";
                 break;
         }
