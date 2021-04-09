@@ -21,13 +21,11 @@ public class LevelSet : MonoBehaviour
     Vector3 position = new Vector3();
     public GameObject CurLvl = null;
 
-    [SerializeField]
-    Camera cam;
+    [SerializeField] Camera cam;
     Vector3 camPos;
 
-    [SerializeField]
-    GameObject intSet = null;
-
+    [SerializeField] GameObject intSet = null;
+    [SerializeField] GameObject[] dustClouds = null;
 
     private void Start()
     {
@@ -90,6 +88,11 @@ public class LevelSet : MonoBehaviour
                 CurLvl.transform.localPosition = position;
                 cam.transform.position = camPos;
                 break;
+        }
+        dustClouds = GameObject.FindGameObjectsWithTag("CurScene");
+        foreach(GameObject dust in dustClouds)
+        {
+            dust.transform.position = new Vector3(dust.transform.position.x, dust.transform.position.y + 10, dust.transform.position.z);
         }
     }
 }
