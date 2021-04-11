@@ -140,7 +140,6 @@ public class SetVolume : MonoBehaviour
 
     public void SetVolumeM()
     {
-        print("Setting Resolution");
         PlayerPrefs.SetFloat("volume", VolumeSlider.value);
         Settings.Volume = PlayerPrefs.GetFloat("volume");
 

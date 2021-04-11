@@ -12,7 +12,7 @@ public class CharSelect : MonoBehaviour
     [SerializeField] Material jacob = null;
     [SerializeField] Material bill = null;
     [SerializeField] Material cherry = null;
-    [SerializeField] Material heather = null;
+    //[SerializeField] Material heather = null;
     [SerializeField] Material mark = null;
     [SerializeField] Material frog = null;
 
@@ -21,7 +21,7 @@ public class CharSelect : MonoBehaviour
     [SerializeField] GameObject[] woodyMesh = null;
     [SerializeField] GameObject[] jacobMesh = null;
     [SerializeField] GameObject[] cherryMesh = null;
-    [SerializeField] GameObject[] heatherMesh = null;
+    //[SerializeField] GameObject[] heatherMesh = null;
     [SerializeField] GameObject[] markMesh = null;
     [SerializeField] GameObject[] frogMesh = null;
 
@@ -31,7 +31,7 @@ public class CharSelect : MonoBehaviour
     [SerializeField] Sprite woodyImg = null;
     [SerializeField] Sprite jacobImg = null;
     [SerializeField] Sprite markImg = null;
-    [SerializeField] Sprite heatherImg = null;
+    //[SerializeField] Sprite heatherImg = null;
     [SerializeField] Sprite cherryImg = null;
     [SerializeField] Sprite frogImage = null;
 
@@ -43,7 +43,7 @@ public class CharSelect : MonoBehaviour
 
     List<GameObject[]> allMesh = new List<GameObject[]>();
 
-    public enum skin { Bill, Cherry, Heather, Mark, Frog, Woody, Jacob, End }
+    public enum skin { Bill, Cherry, Mark, Frog, Woody, Jacob, End }
     public skin character;
 
     int curSkin = 0;
@@ -105,10 +105,10 @@ public class CharSelect : MonoBehaviour
         {
             obj.SetActive(false);
         }
-        foreach (GameObject obj in heatherMesh)
-        {
-            obj.SetActive(false);
-        }
+        //foreach (GameObject obj in heatherMesh)
+        //{
+        //    obj.SetActive(false);
+        //}
         foreach (GameObject obj in markMesh)
         {
             obj.SetActive(false);
@@ -250,23 +250,23 @@ public class CharSelect : MonoBehaviour
                 }
                 break;
 
-            case CharSelect.skin.Heather:
-                foreach (GameObject mesh in baseMesh)
-                {
-                    mesh.GetComponent<SkinnedMeshRenderer>().material = heather;
-                }
+            //case CharSelect.skin.Heather:
+            //    foreach (GameObject mesh in baseMesh)
+            //    {
+            //        mesh.GetComponent<SkinnedMeshRenderer>().material = heather;
+            //    }
 
-                //Accessories
-                foreach (GameObject mesh in heatherMesh)
-                {
-                    mesh.SetActive(true);
-                }
+            //    //Accessories
+            //    foreach (GameObject mesh in heatherMesh)
+            //    {
+            //        mesh.SetActive(true);
+            //    }
 
-                foreach (GameObject mesh in cherryMesh)
-                {
-                    mesh.SetActive(false);
-                }
-                break;
+                //foreach (GameObject mesh in cherryMesh)
+                //{
+                //    mesh.SetActive(false);
+                ////}
+                //break;
 
             case CharSelect.skin.Mark:
                 foreach (GameObject mesh in baseMesh)
@@ -279,12 +279,12 @@ public class CharSelect : MonoBehaviour
                 {
                     mesh.SetActive(true);
                 }
-
-                foreach (GameObject mesh in heatherMesh)
-                {
-                    mesh.SetActive(false);
-                }
                 break;
+                //foreach (GameObject mesh in heatherMesh)
+                //{
+                //    mesh.SetActive(false);
+                //}
+                //break;
 
             case CharSelect.skin.Frog:
                 foreach (GameObject mesh in baseMesh)
@@ -338,10 +338,10 @@ public class CharSelect : MonoBehaviour
                 txt.text = "Cherry";
                 break;
 
-            case CharSelect.skin.Heather:
-                charImg.sprite = heatherImg;
-                txt.text = "Hairther";
-                break;
+            //case CharSelect.skin.Heather:
+            //    charImg.sprite = heatherImg;
+            //    txt.text = "Hairther";
+            //    break;
 
             case CharSelect.skin.Mark:
                 charImg.sprite = markImg;

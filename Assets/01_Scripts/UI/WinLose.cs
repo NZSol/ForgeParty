@@ -17,6 +17,9 @@ public class WinLose : MonoBehaviour
     [SerializeField] InputSystemUIInputModule system;
     GameObject[] zone = null;
 
+    [SerializeField] GameObject lifePanel = null;
+    [SerializeField] Text gameOverText = null;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,6 +29,16 @@ public class WinLose : MonoBehaviour
 
     public void Lose()
     {
+        switch (gameObject.GetComponent<GameMode>().myMode)
+        {
+            case GameMode.gameMode.Survival:
+                gameOverText.text = "OUT OF LIVES!";
+                lifePanel.SetActive(false);
+                break;
+            case GameMode.gameMode.TimeAttack:
+                gameOverText.text = "TIMES UP!";
+                break;
+        }
         npc = GameObject.FindGameObjectsWithTag("NPC");
         Screen.SetActive(true);
         loss.gameObject.SetActive(true);

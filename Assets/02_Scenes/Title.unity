@@ -42511,8 +42511,6 @@ RectTransform:
   m_Children:
   - {fileID: 1557825991}
   - {fileID: 6386427657235907480}
-  - {fileID: 1391376782}
-  - {fileID: 1941804638}
   m_Father: {fileID: 1007325080}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -44227,13 +44225,13 @@ RectTransform:
   m_Children:
   - {fileID: 529521599}
   - {fileID: 802817031}
-  m_Father: {fileID: 1289686608}
-  m_RootOrder: 2
+  m_Father: {fileID: 6386427657235907480}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.04347924, y: 0.06114815}
   m_AnchorMax: {x: 0.123, y: 0.20085187}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -124.83043}
+  m_SizeDelta: {x: 0, y: 131.31033}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1403418458
 GameObject:
@@ -45242,7 +45240,7 @@ MonoBehaviour:
   levelVal: 0
   TutoQuestionPanel: {fileID: 1090573025}
   allPlayersReady: 0
-  setPrefFalse: 1
+  setPrefFalse: 0
   settingsDisable: 0
   myLevelSet: {fileID: 0}
   myMode: 0
@@ -51073,13 +51071,13 @@ RectTransform:
   - {fileID: 1542422032}
   - {fileID: 1990285264}
   - {fileID: 674387137}
-  m_Father: {fileID: 1289686608}
-  m_RootOrder: 3
+  m_Father: {fileID: 6386427657235907480}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.784, y: 0.138}
   m_AnchorMax: {x: 0.884, y: 0.229}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -75.484695}
+  m_SizeDelta: {x: 0, y: 85.532745}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1962504581
 GameObject:
@@ -56643,6 +56641,8 @@ RectTransform:
   - {fileID: 6386427658835938226}
   - {fileID: 6386427658345080561}
   - {fileID: 3551985589740382741}
+  - {fileID: 1941804638}
+  - {fileID: 1391376782}
   m_Father: {fileID: 1289686608}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

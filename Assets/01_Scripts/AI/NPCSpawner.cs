@@ -87,7 +87,6 @@ public class NPCSpawner : MonoBehaviour
         if (timer <= 0)
         {
             spawnDifference = Random.Range(spawnDiffLow, spawnDiffHigh);
-            print("hitting");
             timer = spawnTimer + spawnDifference;
 
             SetClass();

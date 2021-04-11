@@ -774,6 +774,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 358415077}
   m_CullTransparentMesh: 0
+--- !u!114 &394792204 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8895378760609398779, guid: 122b5ad2dd86062429f63afaa12ec62d,
+    type: 3}
+  m_PrefabInstance: {fileID: 856266417}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &416694806
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1851,6 +1863,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2389955784023988509, guid: 122b5ad2dd86062429f63afaa12ec62d,
+        type: 3}
+      propertyPath: m_TagString
+      value: navMenu
       objectReference: {fileID: 0}
     - target: {fileID: 2464714780526915183, guid: 122b5ad2dd86062429f63afaa12ec62d,
         type: 3}
@@ -6501,6 +6518,8 @@ MonoBehaviour:
   Screen: {fileID: 1881258683}
   npc: []
   system: {fileID: 1671417006}
+  lifePanel: {fileID: 496838069}
+  gameOverText: {fileID: 394792204}
 --- !u!114 &3316777352360396777
 MonoBehaviour:
   m_ObjectHideFlags: 0
